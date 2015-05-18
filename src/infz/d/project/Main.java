@@ -11,6 +11,8 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -24,7 +26,10 @@ import javax.swing.UIManager;
  * @author Method
  */
 public class Main extends javax.swing.JFrame {
+
     JMenuItem start, pauze, herstarten, stop;
+    String pauzeNaam = "Pauze";
+
     /**
      * Creates new form Main
      */
@@ -38,17 +43,65 @@ public class Main extends javax.swing.JFrame {
         add(doolhof.board);
         setDefaultCloseOperation(Main.EXIT_ON_CLOSE);
     }
-    
-    private void getMenu(){
+
+    private void getMenu() {
+
         JMenuBar menuBar = new JMenuBar();
         JMenu spelMenu = new JMenu("Spel...");
         JMenu configuratieMenu = new JMenu("Configuratie...");
-        
+
         start = new JMenuItem("Start");
+
+        start.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("start");
+                herstarten.setEnabled(true);
+
+            }
+        });
         pauze = new JMenuItem("Pauze");
+        pauze.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("pauze");
+                String naam = pauze.getText();
+                if (naam.equals("Pauze")) {
+                    pauze.setText("Onpauzeren");
+                } else {
+                    pauze.setText("Pauze");
+                }
+
+            }
+        });
         herstarten = new JMenuItem("Herstarten");
+        herstarten.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("herstart");
+                herstarten.setEnabled(false);
+                if (pauze.getText().equals("Onpauzeren")) {
+                    pauze.setText("Pauze");
+                }
+
+            }
+        });
         stop = new JMenuItem("Stoppen");
-        
+        stop.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("stop");
+                herstarten.setEnabled(false);
+                if (pauze.getText().equals("Onpauzeren")) {
+                    pauze.setText("Pauze");
+                }
+
+            }
+        });
         setJMenuBar(menuBar);
         spelMenu.add(start);
         spelMenu.add(pauze);
@@ -58,58 +111,67 @@ public class Main extends javax.swing.JFrame {
         menuBar.add(configuratieMenu);
         herstarten.setEnabled(false);
     }
-    
+
+    private void updatePauze() {
+
+        pauze = new JMenuItem("onpauzeren");
+    }
+
     // Test Methode(legacy)
     private void getPanel() {
         /*JPanel board = new JPanel();
-        board.setBackground(Color.BLACK);
-        board.setSize(600, 400);
-        add(board);
-        */
+         board.setBackground(Color.BLACK);
+         board.setSize(600, 400);
+         add(board);
+         */
     }
-    
+
     // Aparte klasse maken ipv nested.
     public class Doolhof extends JPanel {
-            JPanel board = new JPanel();
+
+        JPanel board = new JPanel();
+
         public Doolhof() {
             generate();
         }
 
         // Andere benaming
-        private void generate(){
+        private void generate() {
             board.setLayout(new GridLayout(5, 5));
             board.setSize(600, 400);
             boolean flag = false;
-            for(int i = 0; i < (5 * 5); i++){
-                if(flag){
+            for (int i = 0; i < (5 * 5); i++) {
+                if (flag) {
                     board.add(whiteCell());
                     flag = false;
-                }else{
+                } else {
                     board.add(blackCell());
                     flag = true;
                 }
-                    
+
             }
         }
-        
+
         // Moet 2d Array(?), tijdelijk voor weergave
-        private JPanel whiteCell(){
+        private JPanel whiteCell() {
             JPanel whiteCell = new JPanel();
             whiteCell.setBackground(Color.WHITE);
-            
+
             return whiteCell;
         }
-        
-        private JPanel blackCell(){
+
+        private JPanel blackCell() {
             JPanel blackCell = new JPanel();
             blackCell.setBackground(Color.BLACK);
-            
+
             return blackCell;
         }
-        public void paint(Graphics g){
+
+        public void paint(Graphics g) {
 
         }
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
