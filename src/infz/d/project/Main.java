@@ -13,6 +13,8 @@ import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -28,26 +30,68 @@ import javax.swing.UIManager;
 public class Main extends javax.swing.JFrame {
 
     JMenuItem start, pauze, herstarten, stop;
-    String pauzeNaam = "Pauze";
+    boolean isBezig = false;
 
     /**
      * Creates new form Main
      */
     public Main() {
         initComponents();
+
         this.setTitle("Pacman");
         this.setSize(610, 460); // Hardcoded, beter te veranderen in dynamische variable met JPanel/Menubar in mind.
         getMenu();
         //getPanel();
+        KeyListener listener = new MenuListener();
+        this.addKeyListener(listener);
         Doolhof doolhof = new Doolhof();
         add(doolhof.board);
         setDefaultCloseOperation(Main.EXIT_ON_CLOSE);
     }
 
+    class MenuListener implements KeyListener {
+
+        @Override
+        public void keyTyped(KeyEvent e) {
+
+        }
+
+        @Override
+        public void keyPressed(KeyEvent e) {
+
+        }
+
+        @Override
+        public void keyReleased(KeyEvent ke) {
+            switch (ke.getKeyCode()) {
+                case KeyEvent.VK_N:
+                    System.out.println("Start");
+                    herstarten.setEnabled(true);
+                    isBezig = true;
+                    break;
+                case KeyEvent.VK_P:
+                    System.out.println("Pauze");
+                    if (isBezig) {
+                        pauze.setText("Onpauzeren");
+                        isBezig = false;
+
+                    } else {
+                        pauze.setText("Pauze");
+                        isBezig = true;
+                    }
+                    break;
+
+            }
+
+        }
+    }
+
     private void getMenu() {
 
         JMenuBar menuBar = new JMenuBar();
+
         JMenu spelMenu = new JMenu("Spel...");
+
         JMenu configuratieMenu = new JMenu("Configuratie...");
 
         start = new JMenuItem("Start");
@@ -57,6 +101,7 @@ public class Main extends javax.swing.JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.out.println("start");
+                isBezig = true;
                 herstarten.setEnabled(true);
 
             }
@@ -69,8 +114,10 @@ public class Main extends javax.swing.JFrame {
                 System.out.println("pauze");
                 String naam = pauze.getText();
                 if (naam.equals("Pauze")) {
+                    isBezig = false;
                     pauze.setText("Onpauzeren");
                 } else {
+                    isBezig = true;
                     pauze.setText("Pauze");
                 }
 
@@ -84,6 +131,7 @@ public class Main extends javax.swing.JFrame {
                 System.out.println("herstart");
                 herstarten.setEnabled(false);
                 if (pauze.getText().equals("Onpauzeren")) {
+                    isBezig = true;
                     pauze.setText("Pauze");
                 }
 
@@ -96,6 +144,7 @@ public class Main extends javax.swing.JFrame {
             public void actionPerformed(ActionEvent e) {
                 System.out.println("stop");
                 herstarten.setEnabled(false);
+                isBezig = false;
                 if (pauze.getText().equals("Onpauzeren")) {
                     pauze.setText("Pauze");
                 }
