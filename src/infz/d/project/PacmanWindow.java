@@ -80,7 +80,6 @@ public class PacmanWindow extends javax.swing.JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.out.println("herstart");
-                
                 doolhof1.reset();
                 herstarten.setEnabled(false);
                 if (pauze.getText().equals("Onpauzeren")) {
@@ -96,6 +95,7 @@ public class PacmanWindow extends javax.swing.JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.out.println("stop");
+                doolhof1.reset(); // Tijdelijk (Stoppen = Applicatie stoppen )
                 herstarten.setEnabled(false);
                 isBezig = false;
                 if (pauze.getText().equals("Onpauzeren")) {
@@ -196,8 +196,8 @@ public class PacmanWindow extends javax.swing.JFrame {
             switch (ke.getKeyCode()) {
                 case KeyEvent.VK_N:
                     System.out.println("Start");
-                    doolhof1.start();
                     herstarten.setEnabled(true);
+                    doolhof1.start();
                     start.setEnabled(false);
                     isBezig = true;
                     break;

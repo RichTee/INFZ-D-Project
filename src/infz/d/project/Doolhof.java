@@ -7,8 +7,11 @@
 package infz.d.project;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.GridLayout;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import javax.swing.JPanel;
 
@@ -18,32 +21,34 @@ import javax.swing.JPanel;
  */
 public class Doolhof extends javax.swing.JPanel {
     ArrayList<Pacman> pacmanList = new ArrayList<Pacman>();
+    ArrayList<Integer> whiteCellList = new ArrayList<Integer>();
+    ArrayList<Integer> blackCellList = new ArrayList<Integer>();
+    
     /**
      * Creates new form Doolhof
      */
     public Doolhof() {
         initComponents();
-//        speelveld();
-            init();
-      
+        //speelveld();
+        init();
     }
-        public void reset(){
+     public void start(){
+        initComponents();
+        init();
+        KeyListener listener = new luisterenaub();
+        this.addKeyListener(listener);
+    }
+     
+     public void reset(){
         pacmanList.clear();
       
         initComponents();
       
         init();
-        }
-        
-        public void start(){
-        initComponents();
-        
-       
-        
-        }
+     }
         
         // Genereer het speelveld
-        private void speelveld() { 
+        private void speelveld() {
             String[][] celWaarden = new String[5][5];
             final String muur = "m";
             final String veld = "v";
@@ -73,19 +78,33 @@ public class Doolhof extends javax.swing.JPanel {
                     } /*else if(celWaarden[4][2] == celWaarden[i][j]) {
                         this.add(blackCell());
                     } */else {
-                        this.add(whiteCell());
+                        this.add(whiteCell(i, j));
                     }
                 }
-            }
-            System.out.println("speelveld Uitgevoerd");
+            }/*
+            for(int i = 0; i < whiteCellList.size(); i++){
+                System.out.println("White Cell: " + whiteCellList[i]);
+            }*/
             
         }
         private void init() {
             Pacman pacman = new Pacman();
-            
             pacmanList.add(pacman);
-            System.out.println("init uitgevoerd");
+
+            this.requestFocusInWindow();
+            this.repaint();
         }
+        
+        private void moveShapes(Direction direction){
+            for(Pacman shape : pacmanList){
+               shape.move(direction);
+               //check shape itself at edge
+               // AtEdge (0/maxHeigt/MaxWidth)
+            }
+
+            repaint();
+        }
+        
         @Override
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
@@ -104,21 +123,20 @@ public class Doolhof extends javax.swing.JPanel {
             boolean flag = false;
             for(int i = 0; i < (5 * 5); i++){
                 if(flag){
-                    this.add(whiteCell());
+                    //this.add(whiteCell());
                     flag = false;
                 }else{
                     this.add(blackCell());
                     flag = true;
                 }
-                    
             }
         }
         
         // Moet 2d Array(?), tijdelijk voor weergave
-        private JPanel whiteCell(){
+        private JPanel whiteCell(int row, int column){
             JPanel whiteCell = new JPanel();
             whiteCell.setBackground(Color.WHITE);
-            Pacman pacman = new Pacman();
+            whiteCellList.add(row, column);
             return whiteCell;
         }
         
@@ -150,6 +168,38 @@ public class Doolhof extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
 
+    public class luisterenaub implements KeyListener {
+        @Override
+       public void keyTyped(KeyEvent ke) {
+           System.out.println("Test: key typed");
+       }
+
+       @Override
+       public void keyReleased(KeyEvent ke) {
+           System.out.println("Test: key released");
+       }
+
+       @Override
+       public void keyPressed(KeyEvent ke) {
+           switch (ke.getKeyCode())
+           {
+               case KeyEvent.VK_R:
+                   break;
+               case KeyEvent.VK_DOWN:
+                   moveShapes(Direction.SOUTH);
+                   break;
+               case KeyEvent.VK_UP:
+                   moveShapes(Direction.NORTH);
+                   break;
+               case KeyEvent.VK_RIGHT:
+                   moveShapes(Direction.EAST);
+                   break;
+               case KeyEvent.VK_LEFT:
+                   moveShapes(Direction.WEST);
+                   break;
+           }
+       }   
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
 }
