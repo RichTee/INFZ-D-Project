@@ -22,70 +22,33 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
+import javax.swing.event.MenuListener;
 
 /**
  *
  * @author Method
  */
-public class Main extends javax.swing.JFrame {
-
+public class PacmanWindow extends javax.swing.JFrame {
     JMenuItem start, pauze, herstarten, stop;
     boolean isBezig = false;
-
+    
     /**
      * Creates new form Main
      */
-    public Main() {
+    public PacmanWindow() {
         initComponents();
-
         this.setTitle("Pacman");
         this.setSize(610, 460); // Hardcoded, beter te veranderen in dynamische variable met JPanel/Menubar in mind.
         getMenu();
         //getPanel();
         KeyListener listener = new MenuListener();
         this.addKeyListener(listener);
+        
         Doolhof doolhof = new Doolhof();
         add(doolhof.board);
-        setDefaultCloseOperation(Main.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(PacmanWindow.EXIT_ON_CLOSE);
     }
-
-    class MenuListener implements KeyListener {
-
-        @Override
-        public void keyTyped(KeyEvent e) {
-
-        }
-
-        @Override
-        public void keyPressed(KeyEvent e) {
-
-        }
-
-        @Override
-        public void keyReleased(KeyEvent ke) {
-            switch (ke.getKeyCode()) {
-                case KeyEvent.VK_N:
-                    System.out.println("Start");
-                    herstarten.setEnabled(true);
-                    isBezig = true;
-                    break;
-                case KeyEvent.VK_P:
-                    System.out.println("Pauze");
-                    if (isBezig) {
-                        pauze.setText("Onpauzeren");
-                        isBezig = false;
-
-                    } else {
-                        pauze.setText("Pauze");
-                        isBezig = true;
-                    }
-                    break;
-
-            }
-
-        }
-    }
-
+    
     private void getMenu() {
 
         JMenuBar menuBar = new JMenuBar();
@@ -160,67 +123,93 @@ public class Main extends javax.swing.JFrame {
         menuBar.add(configuratieMenu);
         herstarten.setEnabled(false);
     }
-
-    private void updatePauze() {
-
-        pauze = new JMenuItem("onpauzeren");
-    }
-
     // Test Methode(legacy)
     private void getPanel() {
         /*JPanel board = new JPanel();
-         board.setBackground(Color.BLACK);
-         board.setSize(600, 400);
-         add(board);
-         */
+        board.setBackground(Color.BLACK);
+        board.setSize(600, 400);
+        add(board);
+        */
     }
-
+    
     // Aparte klasse maken ipv nested.
     public class Doolhof extends JPanel {
-
-        JPanel board = new JPanel();
-
+            JPanel board = new JPanel();
         public Doolhof() {
-            generate();
+            speelveld();
         }
+        
+        // Test Methode
+        private void speelveld() {
+            String[][] celWaarden = new String[5][5];
+            final String muur = "m";
+            final String veld = "v";
 
+            for(int i=0; i < 5; i++){
+                for(int j=0; j < 5; j++){
+                    if(i == 0 || j == 0){
+                        celWaarden[i][j] = muur;
+                    } else if (i == celWaarden.length - 1 || j == celWaarden[0].length - 1) {
+                        celWaarden[i][j] = muur;
+                    } else {
+                        System.out.println("Row:" + celWaarden.length + "\nColumn:" + celWaarden[0].length);
+                        celWaarden[i][j] = veld;
+                    }
+                }
+            }
+            // Laatste edit voor celWaardes
+            celWaarden[2][2] = muur;
+            celWaarden[0][2] = veld;
+            celWaarden[4][2] = veld;
+            board.setLayout(new GridLayout(5, 5));
+            board.setSize(600, 400);
+
+            for(int i = 0; i < 5; i++){
+                for(int j = 0; j < 5; j++){
+                    if(celWaarden[i][j].toString().equals(muur)){
+                        board.add(blackCell());
+                    } else {
+                        board.add(whiteCell());
+                    }
+                }
+            }
+        }
+        
         // Andere benaming
-        private void generate() {
+        private void generate(){
             board.setLayout(new GridLayout(5, 5));
             board.setSize(600, 400);
             boolean flag = false;
-            for (int i = 0; i < (5 * 5); i++) {
-                if (flag) {
+            for(int i = 0; i < (5 * 5); i++){
+                if(flag){
                     board.add(whiteCell());
                     flag = false;
-                } else {
+                }else{
                     board.add(blackCell());
                     flag = true;
                 }
-
+                    
             }
         }
-
+        
         // Moet 2d Array(?), tijdelijk voor weergave
-        private JPanel whiteCell() {
+        private JPanel whiteCell(){
             JPanel whiteCell = new JPanel();
             whiteCell.setBackground(Color.WHITE);
-
+            
             return whiteCell;
         }
-
-        private JPanel blackCell() {
+        
+        private JPanel blackCell(){
             JPanel blackCell = new JPanel();
             blackCell.setBackground(Color.BLACK);
-
+            
             return blackCell;
         }
-
-        public void paint(Graphics g) {
+        public void paint(Graphics g){
 
         }
     }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -263,22 +252,59 @@ public class Main extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PacmanWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PacmanWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PacmanWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PacmanWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Main().setVisible(true);
+                new PacmanWindow().setVisible(true);
             }
         });
+    }
+    
+    class MenuListener implements KeyListener {
+
+        @Override
+        public void keyTyped(KeyEvent e) {
+
+        }
+
+        @Override
+        public void keyPressed(KeyEvent e) {
+
+        }
+
+        @Override
+        public void keyReleased(KeyEvent ke) {
+            switch (ke.getKeyCode()) {
+                case KeyEvent.VK_N:
+                    System.out.println("Start");
+                    herstarten.setEnabled(true);
+                    isBezig = true;
+                    break;
+                case KeyEvent.VK_P:
+                    System.out.println("Pauze");
+                    if (isBezig) {
+                        pauze.setText("Onpauzeren");
+                        isBezig = false;
+
+                    } else {
+                        pauze.setText("Pauze");
+                        isBezig = true;
+                    }
+                    break;
+
+            }
+
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
