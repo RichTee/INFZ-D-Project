@@ -51,6 +51,7 @@ public class PacmanWindow extends javax.swing.JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.out.println("start"); // vervangen door methode
+                doolhof1.start();
                 isBezig = true;
                 herstarten.setEnabled(true);
 
@@ -79,6 +80,8 @@ public class PacmanWindow extends javax.swing.JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.out.println("herstart");
+                
+                doolhof1.reset();
                 herstarten.setEnabled(false);
                 if (pauze.getText().equals("Onpauzeren")) {
                     isBezig = true;
@@ -193,7 +196,9 @@ public class PacmanWindow extends javax.swing.JFrame {
             switch (ke.getKeyCode()) {
                 case KeyEvent.VK_N:
                     System.out.println("Start");
+                    doolhof1.start();
                     herstarten.setEnabled(true);
+                    start.setEnabled(false);
                     isBezig = true;
                     break;
                 case KeyEvent.VK_P:
@@ -213,6 +218,8 @@ public class PacmanWindow extends javax.swing.JFrame {
                         // Pop up prompt om level te starten indien er op herstart is gedrukt?
                         // Pop up prompt voordat het spel herstart indien er op herstart is gedrukt?
                         System.out.println("Herstarten");
+                        herstarten.setEnabled(false);
+                        doolhof1.reset();
                         isBezig = false;
                     } else {
                         System.out.println("Niet herstarten"); // Onnodige statement, maar ter test.

@@ -23,13 +23,27 @@ public class Doolhof extends javax.swing.JPanel {
      */
     public Doolhof() {
         initComponents();
-        speelveld();
-        init();
+//        speelveld();
+            init();
+      
     }
+        public void reset(){
+        pacmanList.clear();
+      
+        initComponents();
+      
+        init();
+        }
         
+        public void start(){
+        initComponents();
+        
+       
+        
+        }
         
         // Genereer het speelveld
-        private void speelveld() {
+        private void speelveld() { 
             String[][] celWaarden = new String[5][5];
             final String muur = "m";
             final String veld = "v";
@@ -63,12 +77,14 @@ public class Doolhof extends javax.swing.JPanel {
                     }
                 }
             }
+            System.out.println("speelveld Uitgevoerd");
             
         }
         private void init() {
             Pacman pacman = new Pacman();
             
             pacmanList.add(pacman);
+            System.out.println("init uitgevoerd");
         }
         @Override
         protected void paintComponent(Graphics g) {
