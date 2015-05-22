@@ -18,7 +18,6 @@ public class Pacman extends Poppetje implements KeyListener {
     final int STAP = 1;
     final int STIL = 0;
     public enum Richting {
-
         NOORD,
         OOST,
         ZUID,
@@ -28,7 +27,7 @@ public class Pacman extends Poppetje implements KeyListener {
     private void bewegen(Richting richting) {
         switch(richting){
             case NOORD:
-                vakje.pacmanRichting(- STAP, STIL);
+                vakje.pacmanRichting(-STAP, STIL);
                 break;
             case OOST:
                 vakje.pacmanRichting(STIL, + STAP);

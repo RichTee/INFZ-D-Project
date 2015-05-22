@@ -21,13 +21,13 @@ import javax.swing.border.Border;
  * @author Method
  */
 public class Spelbord extends javax.swing.JPanel {
-    int xPos, yPos; // Positie
-    int cellBreedte, cellHoogte; // Cell dimensies
-    final static int CELL = 50;
+    private int xPos, yPos; // Positie
+    private int cellBreedte, cellHoogte; // Cell dimensies
+    private final static int CELL = 50;
     private Vakje[][] vakje;
-    ArrayList<String> vakjesInhoud = new ArrayList<String>();
-    Vakje[][] vakjeBuur = new Vakje[5][5];
-    Border lineBorder = BorderFactory.createLineBorder(Color.black);
+    private ArrayList<String> vakjesInhoud = new ArrayList<String>();
+    private Vakje[][] vakjeBuur = new Vakje[5][5];
+    private Border lineBorder = BorderFactory.createLineBorder(Color.black);
     
     /**
      * Creates new form Spelbord
@@ -40,15 +40,18 @@ public class Spelbord extends javax.swing.JPanel {
     // Panel gegevens
     private void genereerSpelbordPanelGegevens() {
         getSpelbordTxtFile();
-        genereerVakjes();
+        genereerGuiMap();
+        //genereerVakjes();
         setPreferredSize(new Dimension(CELL * cellBreedte, CELL * cellHoogte));
         // this.setBackground(Color.BLACK);
         this.setBorder(lineBorder);
     }
     
+    // Snelle start voor Spel om de veld te activeren met het spel.
     public void start() {
         genereerSpelbordPanelGegevens();
     }
+    
     // Get posities van entiteiten die een spel vormen uit de txt file.
     private void getSpelbordTxtFile() {
         try {
@@ -68,73 +71,82 @@ public class Spelbord extends javax.swing.JPanel {
 
             cellHoogte = vakjesInhoud.size();
             cellBreedte = vakjesInhoud.get(0).length();
-
-            for(int row = 0; row < cellHoogte; row++){
-                for(int column = 0; column < cellBreedte; column++){
-                    switch(charAt(row, column)){
-                        case 0:
-                            vakje[row][column] = new Vakje(row, column, "pad");
-                            break;
-                        case 1:
-                            // muur
-                            vakje[row][column] = new Vakje(row, column, "muur");
-                            System.out.println("Muur");
-                            break;
-                        case 2:
-                            // Bolletje
-                            break;
-                        case 3:
-                            // Superbolletje
-                            break;
-                        case 4:
-                            // Spookje
-                            break;
-                        case 5:
-                            // Pacman
-                            vakje[row][column] = new Vakje(row, column, "pacman");
-                            System.out.println("Pacman");
-                            break;
-                        default:
-                            break;
-                    }
-                    System.out.println(" CHar At:" + charAt(row, column));
-                }
-            }
+            
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
     }
-    // 
+    
+    // Genereer de map voor de GUI nadat de TXT is gelezen
+    private void genereerGuiMap() {
+        vakje = new Vakje[cellHoogte][cellBreedte];
+
+        for (int row = 0; row < cellHoogte; row++) {
+            for (int column = 0; column < cellBreedte; column++) {
+                switch (String.valueOf(charAt(row, column))) {
+                    case "0":
+                        vakje[row][column] = new Vakje(row, column, "pad");
+                        System.out.println("Pad");
+                        break;
+                    case "1":
+                        // muur
+                        vakje[row][column] = new Vakje(row, column, "muur");
+                        System.out.println("Muur");
+                        break;
+                    case "2":
+                        // Bolletje
+                        break;
+                    case "3":
+                        // Superbolletje
+                        break;
+                    case "4":
+                        // Spookje
+                        break;
+                    case "5":
+                        // Pacman
+                        vakje[row][column] = new Vakje(row, column, "pacman");
+                        System.out.println("Pacman");
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+    }
+    /*
     private void genereerVakjes() {
         Vakje vakje;
         int muurAantal = 0;
         
         for(int row = 0; row < cellHoogte; row++){
             for (int column = 0; column < cellBreedte; column++){
-                int output = charAt(row, column);
+                String output = String.valueOf(charAt(row, column));
                 System.out.println("Output: " + output);
-                if(output==1)
+                if(output.equals("1"))
                     muurAantal++;
             }
         }
         System.out.println("Totaal muur: " + muurAantal);
-        /*
+        
         for(int i = 0; i < 25; i++){
             vakje = new Vakje(rows, columns, (output == 1 ? true : false));
             System.out.println("Aantal row:" + rows + ""
                     + "\nAantal Column: " + columns + "Totaal muur: " + muurAantal);
-        }*/
+        }
+    }*/
+    
+    // Override paintComponent om spelElementen te laten zien in de map.
+    @Override
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        //g.setColor(Color.BLACK);
+        g.fillRect(0, 0, cellBreedte * CELL, cellHoogte * CELL);
     }
     
-   @Override
-   public void paintComponent(Graphics g) {
-       super.paintComponent(g);
-       g.setColor(Color.BLACK);
-       g.fillRect(0, 0, cellBreedte * CELL, cellHoogte * CELL);
-   }
+    // Makkelijk info halen uit een rij en kolom van vakjesInhoud.
     private char charAt(int row, int column) {
-            return vakjesInhoud.get(row).charAt(column);
-        }
+        return vakjesInhoud.get(row).charAt(column);
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
