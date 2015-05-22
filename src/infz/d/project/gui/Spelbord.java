@@ -101,6 +101,7 @@ public class Spelbord extends javax.swing.JPanel {
                         break;
                     case "4":
                         // Spookje
+                        vakje[row][column] = new Vakje(row, column, "spookje");
                         break;
                     case "5":
                         // Pacman
@@ -113,6 +114,7 @@ public class Spelbord extends javax.swing.JPanel {
             }
         }
     }
+    
     /*
     private void genereerVakjes() {
         Vakje vakje;
@@ -141,6 +143,11 @@ public class Spelbord extends javax.swing.JPanel {
         super.paintComponent(g);
         //g.setColor(Color.BLACK);
         g.fillRect(0, 0, cellBreedte * CELL, cellHoogte * CELL);
+        for(int i = 0; i < cellBreedte; i++){
+            for(int j = 0; j < cellHoogte; j++){
+                vakje[i][j].draw(g);
+            }
+        }
     }
     
     // Makkelijk info halen uit een rij en kolom van vakjesInhoud.

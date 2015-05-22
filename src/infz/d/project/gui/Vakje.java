@@ -13,7 +13,6 @@ package infz.d.project.gui;
 public class Vakje {
     int xPositie;
     int yPositie;
-    boolean muur;
     String element;
     SpelElement spelelement;
     Pacman pacman;
@@ -22,10 +21,6 @@ public class Vakje {
         this.xPositie = xPositie;
         this.yPositie = yPositie;
         this.element = element;
-        if(element.equals("muur"))
-            muur = true;
-        else
-            muur = false;
     }
     
     public void pacmanRichting(int row, int column) {
@@ -38,9 +33,13 @@ public class Vakje {
             
         }
     }
+
     // return of vakje een muur
     public boolean isMuur() {
-        return muur;
+        if(element.equals("muur"))
+            return true;
+        else
+            return false;
     }
     
     // Positie van vakje(X)
@@ -51,5 +50,10 @@ public class Vakje {
     // Positie van vakje(Y)
     public int getYPositie() {
         return yPositie;
+    }
+    
+    // Return SpelElement (muur of poppetje..)
+    public String getElement() {
+        return element;
     }
 }
