@@ -7,20 +7,27 @@
 package infz.d.project.gui;
 
 import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Graphics;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
+import javax.swing.BorderFactory;
+import javax.swing.border.Border;
 
 /**
  *
  * @author Method
  */
 public class Spelbord extends javax.swing.JPanel {
-    int breedte = 50, hoogte = 50, cellGrootte = 0;
-    int xPos, yPos, rows, columns;
+    int xPos, yPos; // Positie
+    int cellBreedte, cellHoogte; // Cell dimensies
+    final static int CELL = 50;
+    private Vakje[][] vakje;
     ArrayList<String> vakjesInhoud = new ArrayList<String>();
     Vakje[][] vakjeBuur = new Vakje[5][5];
+    Border lineBorder = BorderFactory.createLineBorder(Color.black);
     
     /**
      * Creates new form Spelbord
@@ -32,10 +39,11 @@ public class Spelbord extends javax.swing.JPanel {
     
     // Panel gegevens
     private void genereerSpelbordPanelGegevens() {
-        this.setSize(400, 600);
-        this.setBackground(Color.BLACK);
         getSpelbordTxtFile();
         genereerVakjes();
+        setPreferredSize(new Dimension(CELL * cellBreedte, CELL * cellHoogte));
+        // this.setBackground(Color.BLACK);
+        this.setBorder(lineBorder);
     }
     
     public void start() {
@@ -58,20 +66,19 @@ public class Spelbord extends javax.swing.JPanel {
             }
             read.close();
 
-            rows = vakjesInhoud.size();
-            columns = vakjesInhoud.get(0).length();
+            cellHoogte = vakjesInhoud.size();
+            cellBreedte = vakjesInhoud.get(0).length();
 
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        
-        for(int row = 0; row<rows; row++){
-                for(int column = 0; column<columns; column++){
+            for(int row = 0; row < cellHoogte; row++){
+                for(int column = 0; column < cellBreedte; column++){
                     switch(charAt(row, column)){
                         case 0:
+                            vakje[row][column] = new Vakje(row, column, "pad");
                             break;
                         case 1:
                             // muur
+                            vakje[row][column] = new Vakje(row, column, "muur");
+                            System.out.println("Muur");
                             break;
                         case 2:
                             // Bolletje
@@ -84,20 +91,26 @@ public class Spelbord extends javax.swing.JPanel {
                             break;
                         case 5:
                             // Pacman
+                            vakje[row][column] = new Vakje(row, column, "pacman");
+                            System.out.println("Pacman");
                             break;
                         default:
                             break;
                     }
+                    System.out.println(" CHar At:" + charAt(row, column));
                 }
             }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
     // 
     private void genereerVakjes() {
         Vakje vakje;
         int muurAantal = 0;
         
-        for(int row = 0; row < rows; row++){
-            for (int column = 0; column < columns; column++){
+        for(int row = 0; row < cellHoogte; row++){
+            for (int column = 0; column < cellBreedte; column++){
                 int output = charAt(row, column);
                 System.out.println("Output: " + output);
                 if(output==1)
@@ -113,6 +126,12 @@ public class Spelbord extends javax.swing.JPanel {
         }*/
     }
     
+   @Override
+   public void paintComponent(Graphics g) {
+       super.paintComponent(g);
+       g.setColor(Color.BLACK);
+       g.fillRect(0, 0, cellBreedte * CELL, cellHoogte * CELL);
+   }
     private char charAt(int row, int column) {
             return vakjesInhoud.get(row).charAt(column);
         }

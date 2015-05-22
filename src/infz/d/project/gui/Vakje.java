@@ -14,13 +14,18 @@ public class Vakje {
     int xPositie;
     int yPositie;
     boolean muur;
+    String element;
     SpelElement spelelement;
     Pacman pacman;
     
-    public Vakje(int xPositie, int yPositie, boolean muur) {
+    public Vakje(int xPositie, int yPositie, String element) {
         this.xPositie = xPositie;
         this.yPositie = yPositie;
-        this.muur = muur;
+        this.element = element;
+        if(element.equals("muur"))
+            muur = true;
+        else
+            muur = false;
     }
     
     public void pacmanRichting(int row, int column) {
