@@ -6,6 +6,10 @@
 
 package infz.d.project.gui;
 
+import java.awt.Color;
+import java.awt.Graphics;
+import java.util.Random;
+
 /**
  *
  * @author Method
@@ -13,6 +17,7 @@ package infz.d.project.gui;
 public class Vakje {
     int xPositie;
     int yPositie;
+    private final int CELL = 50;
     String element;
     SpelElement spelelement;
     Pacman pacman;
@@ -55,5 +60,26 @@ public class Vakje {
     // Return SpelElement (muur of poppetje..)
     public String getElement() {
         return element;
+    }
+    
+    // Draw Logic | Vakje moet zich kleuren op basis van inhoud.
+    public void draw(Graphics g){
+        g.setColor(randomKleur());
+        g.fillRect(xPositie * CELL /*Positie * cellGrootte*/, 
+                   yPositie * CELL/*Positie * cellHoogte*/, 
+                   CELL/*Breedte*/, 
+                   CELL/*Hoogte*/);
+    }
+    
+    // For funsies
+    private Color randomKleur(){
+        Random rand = new Random();
+        
+        float r = rand.nextFloat();
+        float g = rand.nextFloat();
+        float b = rand.nextFloat();
+        
+        Color randomColor = new Color(r, g, b);
+        return randomColor;
     }
 }

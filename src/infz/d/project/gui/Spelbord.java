@@ -141,7 +141,7 @@ public class Spelbord extends javax.swing.JPanel {
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        //g.setColor(Color.BLACK);
+        g.setColor(Color.BLACK);
         g.fillRect(0, 0, cellBreedte * CELL, cellHoogte * CELL);
         for(int i = 0; i < cellBreedte; i++){
             for(int j = 0; j < cellHoogte; j++){
