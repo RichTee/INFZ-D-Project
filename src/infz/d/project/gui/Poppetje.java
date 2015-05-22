@@ -4,15 +4,15 @@
  * and open the template in the editor.
  */
 
-package infz.d.project;
-
-import java.awt.Graphics;
+package infz.d.project.gui;
 
 /**
  *
  * @author Method
  */
-// Entiteit abstract
-    public abstract class Entiteit {
-        public abstract void draw(Graphics g);
+public class Poppetje extends SpelElement{
+    
+    public Poppetje() {
+        
     }
+}
