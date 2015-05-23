@@ -20,14 +20,22 @@ public class Muur extends SpelElement {
     int column;
     Color muurKleur = Color.decode("#003399");
     
-    public Muur(int row, int column) {
-        this.row = row;
-        this.column = column;
+    public Muur(Vakje vak) {
+        this.vakje = vak;
     }
     
     @Override
     public void draw(Graphics g) {
-        g.setColor(muurKleur);
-        g.fillRect(column*CELLSIZE, row*CELLSIZE, CELLSIZE, CELLSIZE);  
+        row = vakje.getXPositie();
+        column = vakje.getYPositie();
+        
+        // debug
+        if(row == 3 && column == 2){
+            g.setColor(Color.RED);
+        } else {
+            g.setColor(muurKleur);
+        }
+        
+        g.fillRect(column * CELL, row * CELL, CELL, CELL);  
     }
 }

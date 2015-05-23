@@ -13,7 +13,7 @@ import java.awt.Graphics;
  * @author Method
  */
 public abstract class SpelElement {
-    final int CELLSIZE = 50;
+    public final int CELL = 50;
     Vakje vakje;
     public SpelElement() {
         

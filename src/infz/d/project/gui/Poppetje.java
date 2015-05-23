@@ -10,7 +10,7 @@ package infz.d.project.gui;
  *
  * @author Method
  */
-public class Poppetje extends SpelElement{
+public abstract class Poppetje extends SpelElement{
     
     public Poppetje() {
         

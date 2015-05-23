@@ -6,8 +6,14 @@
 
 package infz.d.project.gui;
 
+import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.File;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 
 /**
  *
@@ -15,8 +21,11 @@ import java.awt.event.KeyListener;
  */
 public class Pacman extends Poppetje implements KeyListener {
 
-    final int STAP = 1;
-    final int STIL = 0;
+    private final int STAP = 1;
+    private final int STIL = 0;
+    private int row;
+    private int column;
+    
     public enum Richting {
         NOORD,
         OOST,
@@ -24,6 +33,10 @@ public class Pacman extends Poppetje implements KeyListener {
         WEST,
     };
 
+    public Pacman(Vakje vak) {
+        this.vakje = vak;
+    }
+    
     private void bewegen(Richting richting) {
         switch(richting){
             case NOORD:
@@ -42,6 +55,20 @@ public class Pacman extends Poppetje implements KeyListener {
                 break;
         }
     }
+    
+    @Override
+    public void draw(Graphics g) {
+        row = vakje.getXPositie();
+        column = vakje.getYPositie();
+        
+        try {
+            System.out.println("Draw Pacman");
+            g.drawImage(ImageIO.read(new File("afbeelding/Pacman_1.png")), row * CELL, column * CELL, 50, 50, null);
+        } catch (IOException ex) {
+            Logger.getLogger(Pacman.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
     @Override
     public void keyTyped(KeyEvent ke) {
         System.out.println("Test: key typed");

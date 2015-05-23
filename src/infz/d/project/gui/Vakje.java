@@ -8,6 +8,7 @@ package infz.d.project.gui;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.util.ArrayList;
 import java.util.Random;
 
 /**
@@ -19,9 +20,11 @@ public class Vakje {
     int yPositie;
     private final int CELL = 50;
     String element;
-    SpelElement spelelement;
+    ArrayList<SpelElement> spelElementList = new ArrayList<>();
+    Muur muur;
+    Spookje spookje;
     Pacman pacman;
-    
+
     public Vakje(int xPositie, int yPositie, String element) {
         this.xPositie = xPositie;
         this.yPositie = yPositie;
@@ -62,16 +65,45 @@ public class Vakje {
         return element;
     }
     
+    // Logischer in Spelbord voor minder Memory intake en makkelijkere toegang.
+    private void vulSpelElementList() {
+        muur = new Muur(this);
+        spookje = new Spookje();
+        pacman = new Pacman(this);
+        
+        spelElementList.add(muur);      // 1
+        spelElementList.add(spookje);   // 4
+        spelElementList.add(pacman);    // 5
+        
+    }
+
     // Draw Logic | Vakje moet zich kleuren op basis van inhoud.
     public void draw(Graphics g){
-        g.setColor(randomKleur());
-        g.fillRect(xPositie * CELL /*Positie * cellGrootte*/, 
-                   yPositie * CELL/*Positie * cellHoogte*/, 
-                   CELL/*Breedte*/, 
-                   CELL/*Hoogte*/);
+        vulSpelElementList();   // We vullen een array met classes erin
+        
+        switch(element){
+            case "pad":
+                break;
+            case "muur":
+                if(spelElementList.contains(muur))
+                    muur.draw(g);
+                break;
+            case "bolletje":
+                break;
+            case "superbolletje":
+                break;
+            case "spookje":
+                break;
+            case "pacman":
+                if(spelElementList.contains(pacman))
+                    //pacman.draw(g);
+                break;
+            default:
+                break;
+        }
     }
     
-    // For funsies
+    // For funsies (Misschien later wanneer Spookjes moeten gloeien op interval)
     private Color randomKleur(){
         Random rand = new Random();
         
