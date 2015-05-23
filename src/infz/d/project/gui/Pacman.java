@@ -37,6 +37,14 @@ public class Pacman extends Poppetje implements KeyListener {
         this.vakje = vak;
     }
     
+    public int pacmanKolom(){
+        return this.column;
+    }
+    
+    public int pacmanRow() {
+        return this.row;
+    }
+    
     private void bewegen(Richting richting) {
         switch(richting){
             case NOORD:
@@ -69,6 +77,7 @@ public class Pacman extends Poppetje implements KeyListener {
         }
     }
     
+    // Moet in speelbord
     @Override
     public void keyTyped(KeyEvent ke) {
         System.out.println("Test: key typed");
@@ -85,7 +94,6 @@ public class Pacman extends Poppetje implements KeyListener {
             case KeyEvent.VK_R:
                 break;
             case KeyEvent.VK_UP:
-                // Methode / Nieuw vakje
                 bewegen(Richting.NOORD);
                 break;
             case KeyEvent.VK_RIGHT:

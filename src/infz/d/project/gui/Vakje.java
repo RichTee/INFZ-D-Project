@@ -18,9 +18,9 @@ import java.util.Random;
 public class Vakje {
     int xPositie;
     int yPositie;
-    private final int CELL = 50;
     String element;
     ArrayList<SpelElement> spelElementList = new ArrayList<>();
+    Spelbord spelbord;
     Muur muur;
     Spookje spookje;
     Pacman pacman;
@@ -32,14 +32,7 @@ public class Vakje {
     }
     
     public void pacmanRichting(int row, int column) {
-        row = xPositie + row;
-        column = yPositie + column;
-        Vakje buur;
-        if(/*buur.isMuur() 8 */true) {
-            
-        } else {
-            
-        }
+        cellNavigeerbaar(row, column);
     }
 
     // return of vakje een muur
@@ -69,6 +62,11 @@ public class Vakje {
         this.element = element;
     }
     
+    public boolean cellNavigeerbaar(int richtingX, int richtingY) {
+        spelbord.getVakjeEnNavigeerbaar(richtingX, richtingY, this);
+        return true;
+    }
+    
     // Logischer in Spelbord voor minder Memory intake en makkelijkere toegang.
     private void vulSpelElementList() {
         muur = new Muur(this);
@@ -80,7 +78,7 @@ public class Vakje {
         spelElementList.add(pacman);    // 5
         
     }
-
+    
     // Draw Logic | Vakje moet zich kleuren op basis van inhoud.
     public void draw(Graphics g){
         vulSpelElementList();   // We vullen een array met classes erin

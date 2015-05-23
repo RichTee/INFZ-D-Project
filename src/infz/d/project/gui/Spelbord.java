@@ -26,7 +26,6 @@ public class Spelbord extends javax.swing.JPanel {
     private final static int CELL = 50;
     private Vakje[][] vakje;
     private ArrayList<String> vakjesInhoud = new ArrayList<String>();
-    private Vakje[][] vakjeBuur = new Vakje[5][5];
     private Border lineBorder = BorderFactory.createLineBorder(Color.black);
     
     /**
@@ -50,6 +49,30 @@ public class Spelbord extends javax.swing.JPanel {
     // Snelle start voor Spel om de veld te activeren met het spel.
     public void start() {
         genereerSpelbordPanelGegevens();
+        this.requestFocusInWindow();
+    }
+    
+    // Bekijk of een Poppetje naar een cell mag gaan
+    public boolean getVakjeEnNavigeerbaar(int richtingX, int richtingY, Vakje vakje) {
+        Graphics g;
+        // Out of bounds check
+        if(vakje.xPositie + richtingX == -1 
+            || vakje.yPositie + richtingY == -1
+            || richtingX + vakje.xPositie == this.cellBreedte + 1
+            || richtingY + vakje.yPositie == this.cellHoogte + 1)
+            return false;
+        
+        // Muur check
+        if(this.vakje[vakje.xPositie + richtingX][vakje.yPositie + richtingY].isMuur())
+            return false;
+                
+        // Set nieuw spelElement voor Vakjes
+        this.vakje[vakje.xPositie + richtingX][vakje.yPositie + richtingY].setElement(vakje.getElement());
+        vakje.setElement("pad");
+        
+        repaint();
+        
+        return true;
     }
     
     // Get posities van entiteiten die een spel vormen uit de txt file.
@@ -111,28 +134,6 @@ public class Spelbord extends javax.swing.JPanel {
             }
         }
     }
-    
-    /*
-    private void genereerVakjes() {
-        Vakje vakje;
-        int muurAantal = 0;
-        
-        for(int row = 0; row < cellHoogte; row++){
-            for (int column = 0; column < cellBreedte; column++){
-                String output = String.valueOf(charAt(row, column));
-                System.out.println("Output: " + output);
-                if(output.equals("1"))
-                    muurAantal++;
-            }
-        }
-        System.out.println("Totaal muur: " + muurAantal);
-        
-        for(int i = 0; i < 25; i++){
-            vakje = new Vakje(rows, columns, (output == 1 ? true : false));
-            System.out.println("Aantal row:" + rows + ""
-                    + "\nAantal Column: " + columns + "Totaal muur: " + muurAantal);
-        }
-    }*/
     
     // Override paintComponent om spelElementen te laten zien in de map.
     @Override
