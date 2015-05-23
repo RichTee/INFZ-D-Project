@@ -86,12 +86,10 @@ public class Spelbord extends javax.swing.JPanel {
                 switch (String.valueOf(charAt(row, column))) {
                     case "0":
                         vakje[row][column] = new Vakje(row, column, "pad");
-                        System.out.println("Pad");
                         break;
                     case "1":
                         // muur
                         vakje[row][column] = new Vakje(row, column, "muur");
-                        System.out.println("Muur");
                         break;
                     case "2":
                         // Bolletje
@@ -106,7 +104,6 @@ public class Spelbord extends javax.swing.JPanel {
                     case "5":
                         // Pacman
                         vakje[row][column] = new Vakje(row, column, "pacman");
-                        System.out.println("Pacman");
                         break;
                     default:
                         break;
@@ -141,10 +138,10 @@ public class Spelbord extends javax.swing.JPanel {
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.setColor(Color.BLACK);
-        g.fillRect(0, 0, cellBreedte * CELL, cellHoogte * CELL);
-        for(int i = 0; i < cellBreedte; i++){
-            for(int j = 0; j < cellHoogte; j++){
+        //g.setColor(Color.BLACK);
+        //g.fillRect(0, 0, cellBreedte * CELL, cellHoogte * CELL);
+        for(int i = 0; i < cellHoogte; i++){
+            for(int j = 0; j < cellBreedte; j++){
                 vakje[i][j].draw(g);
             }
         }

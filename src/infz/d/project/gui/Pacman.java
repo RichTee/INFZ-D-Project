@@ -62,8 +62,8 @@ public class Pacman extends Poppetje implements KeyListener {
         column = vakje.getYPositie();
         
         try {
-            System.out.println("Draw Pacman");
-            g.drawImage(ImageIO.read(new File("afbeelding/Pacman_1.png")), row * CELL, column * CELL, 50, 50, null);
+            System.out.println("Pacman Rij: " + row + "\nPacmanKolom: " + column);
+            g.drawImage(ImageIO.read(new File("afbeelding/Pacman_1.png")), column * CELL, row * CELL, 50, 50, null);
         } catch (IOException ex) {
             Logger.getLogger(Pacman.class.getName()).log(Level.SEVERE, null, ex);
         }

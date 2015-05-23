@@ -28,13 +28,10 @@ public class Muur extends SpelElement {
     public void draw(Graphics g) {
         row = vakje.getXPositie();
         column = vakje.getYPositie();
+        System.out.println("Vak Rij: " + row + "\nVak Kolom: " + column);
+
+        g.setColor(muurKleur);
         
-        // debug
-        if(row == 3 && column == 2){
-            g.setColor(Color.RED);
-        } else {
-            g.setColor(muurKleur);
-        }
         
         g.fillRect(column * CELL, row * CELL, CELL, CELL);  
     }

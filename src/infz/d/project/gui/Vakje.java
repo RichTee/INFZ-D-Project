@@ -100,7 +100,7 @@ public class Vakje {
                 break;
             case "pacman":
                 if(spelElementList.contains(pacman))
-                    //pacman.draw(g);
+                    pacman.draw(g);
                 break;
             default:
                 break;
