@@ -65,6 +65,10 @@ public class Vakje {
         return element;
     }
     
+    public void setElement(String element) {
+        this.element = element;
+    }
+    
     // Logischer in Spelbord voor minder Memory intake en makkelijkere toegang.
     private void vulSpelElementList() {
         muur = new Muur(this);
