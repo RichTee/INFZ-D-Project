@@ -28,7 +28,7 @@ public class Muur extends SpelElement {
     public void draw(Graphics g) {
         row = vakje.getXPositie();
         column = vakje.getYPositie();
-        System.out.println("Vak Rij: " + row + "\nVak Kolom: " + column);
+//        System.out.println("Vak Rij: " + row + "\nVak Kolom: " + column);
 
         g.setColor(muurKleur);
         
