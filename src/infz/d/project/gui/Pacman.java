@@ -38,6 +38,7 @@ public class Pacman extends Poppetje {
     }
 
     public void setVakje(Vakje vakje) {
+        System.out.println("Vakje: " + vakje.getXPositie() + " " + vakje.getYPositie());
         this.vakje = vakje;
     }
     
@@ -63,7 +64,7 @@ public class Pacman extends Poppetje {
                 vakje.pacmanRichting(STIL, +STAP);
                 break;
             case ZUID:
-                vakje.pacmanRichting(-STAP, STIL);
+                vakje.pacmanRichting(STAP, STIL);
                 break;
             case WEST:
                 vakje.pacmanRichting(STIL, -STAP);
