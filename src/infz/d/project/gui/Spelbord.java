@@ -57,8 +57,16 @@ public class Spelbord extends javax.swing.JPanel {
 
     // Snelle start voor Spel om de veld te activeren met het spel.
     public void start() {
+        reset();
+        
         genereerSpelbordPanelGegevens();
         this.requestFocusInWindow();
+    }
+    
+    public void reset() {
+        this.vakjesInhoud.clear();
+        for( int i = 0; i < vakje.length; i++ )
+            vakje[i] = null;
     }
 
     // Bekijk of een Poppetje naar een cell mag gaan
@@ -91,32 +99,36 @@ public class Spelbord extends javax.swing.JPanel {
             for (int j = 0; j < cellBreedte; j++) {
 
                outOfBoundsCheck(i, j);
-
+               
+               //System.out.println(i + " " + j + " Size: " + vakje[i][j].buurVakje.size());
             }
 
         }
-
     }
 
     private void outOfBoundsCheck(int xPos, int yPos) {
         try {
             vakje[xPos-1][yPos].getElement();
             vakje[xPos][yPos].voegtBuurToe(vakje[xPos-1][yPos]);
+            //System.out.println(xPos + "  " + yPos);
         } catch (IndexOutOfBoundsException e) {
         }
         try {
             vakje[xPos+1][yPos].getElement();
             vakje[xPos][yPos].voegtBuurToe(vakje[xPos+1][yPos]);
+            //System.out.println(xPos + "  " + yPos);
         } catch (IndexOutOfBoundsException e) {
         }
         try {
             vakje[xPos][yPos-1].getElement();
             vakje[xPos][yPos].voegtBuurToe(vakje[xPos][yPos-1]);
+            //System.out.println(xPos + "  " + yPos);
         } catch (IndexOutOfBoundsException e) {
         }
         try {
             vakje[xPos][yPos+1].getElement();
             vakje[xPos][yPos].voegtBuurToe(vakje[xPos][yPos+1]);
+            //System.out.println(xPos + "  " + yPos);
         } catch (IndexOutOfBoundsException e) {
         }
     }
@@ -148,7 +160,7 @@ public class Spelbord extends javax.swing.JPanel {
     // Genereer de map voor de GUI nadat de TXT is gelezen
     private void genereerGuiMap() {
         vakje = new Vakje[cellHoogte][cellBreedte];
-
+        
         for (int row = 0; row < cellHoogte; row++) {
             for (int column = 0; column < cellBreedte; column++) {
                 switch (String.valueOf(charAt(row, column))) {
@@ -224,11 +236,11 @@ public class Spelbord extends javax.swing.JPanel {
                     System.out.println("oost");
                     break;
                 case KeyEvent.VK_DOWN:
-//                    pacman.bewegen(Pacman.Richting.ZUID);
+                    pacman.bewegen(Pacman.Richting.ZUID);
                     System.out.println("zuid");
                     break;
                 case KeyEvent.VK_LEFT:
-//                    pacman.bewegen(Pacman.Richting.WEST);
+                    pacman.bewegen(Pacman.Richting.WEST);
                     System.out.println("west");
                     break;
             }

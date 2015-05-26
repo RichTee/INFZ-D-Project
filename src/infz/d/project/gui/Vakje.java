@@ -45,18 +45,20 @@ public class Vakje {
 
         xpos = xpos + xPositie;
         ypos = ypos + yPositie;
+        
         for (Vakje vakje : buurVakje) {
             System.out.println("Entered loop 1#");
             if (vakje.getXPositie() == xpos) {
                 System.out.println("xPos passed");
                 if (vakje.getYPositie() == ypos) {
                     System.out.println("yPos passed");
-                    if (!isMuur()) {
+                    if (!vakje.isMuur()) {
                         System.out.println("Geen muur passed");
-                        vakje.setElement(element);
+                        vakje.setElement(this.getElement());
                         this.setElement("pad");
                         pacman.setVakje(vakje);
                         spelbord.tekenOpnieuw();
+                        break;
                     }
                 }
             }
