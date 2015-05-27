@@ -6,13 +6,35 @@
 
 package infz.d.project.gui;
 
+import java.awt.Graphics;
+import java.io.File;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
+
 /**
  *
  * @author Method
  */
 public class Spookje extends Poppetje {
+    private int row;
+    private int column;
     
-    public Spookje() {
-        
+    public Spookje(Vakje vakje) {
+        this.vakje = vakje;
+    }
+    
+    @Override
+    public void draw(Graphics g) {
+        row = vakje.getXPositie();
+        column = vakje.getYPositie();
+
+        try {
+            System.out.println("Pacman Rij: " + row + "\nPacmanKolom: " + column);
+            g.drawImage(ImageIO.read(new File("afbeelding/Spookje.png")), column * CELL, row * CELL, 50, 50, null);
+        } catch (IOException ex) {
+            Logger.getLogger(Pacman.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }

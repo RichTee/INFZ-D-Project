@@ -104,7 +104,7 @@ public class Vakje {
     // Logischer in Spelbord voor minder Memory intake en makkelijkere toegang.
     private void vulSpelElementList() {
         muur = new Muur(this);
-        spookje = new Spookje();
+        spookje = new Spookje(this);
         pacman = new Pacman(this);
       
 
@@ -133,6 +133,9 @@ public class Vakje {
             case "superbolletje":
                 break;
             case "spookje":
+                if (spelElementList.contains(spookje)) {
+                    spookje.draw(g);
+                }
                 break;
             case "pacman":
                 if (spelElementList.contains(pacman)) {
