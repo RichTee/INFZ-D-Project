@@ -19,12 +19,9 @@ public class Spel extends javax.swing.JFrame {
         initComponents();
         this.setTitle("Pacman");
         this.setSize(600, 500);
-        call();
+        btnHerstarten.setEnabled(false);
     }
-    
-    public void call() {
-        System.out.println("call");
-    }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -35,15 +32,16 @@ public class Spel extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton1 = new javax.swing.JButton();
+        btnStart = new javax.swing.JButton();
         spelbord2 = new infz.d.project.gui.Spelbord();
+        btnHerstarten = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jButton1.setText("Start");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnStart.setText("Start");
+        btnStart.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnStartActionPerformed(evt);
             }
         });
 
@@ -55,8 +53,15 @@ public class Spel extends javax.swing.JFrame {
         );
         spelbord2Layout.setVerticalGroup(
             spelbord2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 491, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
+
+        btnHerstarten.setText("Herstarten");
+        btnHerstarten.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnHerstartenActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -64,18 +69,22 @@ public class Spel extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(39, 39, 39)
-                .addComponent(jButton1)
-                .addContainerGap(481, Short.MAX_VALUE))
+                .addComponent(btnStart)
+                .addGap(27, 27, 27)
+                .addComponent(btnHerstarten)
+                .addContainerGap(349, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(spelbord2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(spelbord2, javax.swing.GroupLayout.DEFAULT_SIZE, 555, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(9, 9, 9)
-                .addComponent(jButton1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnStart)
+                    .addComponent(btnHerstarten))
                 .addGap(18, 18, 18)
                 .addComponent(spelbord2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 39, Short.MAX_VALUE))
@@ -84,10 +93,21 @@ public class Spel extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnStartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStartActionPerformed
         System.out.println("Start");
         this.spelbord2.start();
-    }//GEN-LAST:event_jButton1ActionPerformed
+        btnStart.setEnabled(false);
+        btnHerstarten.setEnabled(true);
+    }//GEN-LAST:event_btnStartActionPerformed
+
+    private void btnHerstartenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHerstartenActionPerformed
+        System.out.println("Herstarten");
+        if(!btnStart.isEnabled()) { 
+           this.spelbord2.herstart();
+           btnStart.setEnabled(true);
+           btnHerstarten.setEnabled(false);
+        }
+    }//GEN-LAST:event_btnHerstartenActionPerformed
 
     /**
      * @param args the command line arguments
@@ -125,7 +145,8 @@ public class Spel extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnHerstarten;
+    private javax.swing.JButton btnStart;
     private infz.d.project.gui.Spelbord spelbord2;
     // End of variables declaration//GEN-END:variables
 }

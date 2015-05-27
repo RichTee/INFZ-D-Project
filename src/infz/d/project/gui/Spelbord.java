@@ -63,10 +63,18 @@ public class Spelbord extends javax.swing.JPanel {
         this.requestFocusInWindow();
     }
     
+    public void herstart() {
+        reset();
+        
+        genereerSpelbordPanelGegevens();
+        this.requestFocusInWindow();
+    }
+    
     public void reset() {
         this.vakjesInhoud.clear();
         for( int i = 0; i < vakje.length; i++ )
             vakje[i] = null;
+        repaint();
     }
 
     // Bekijk of een Poppetje naar een cell mag gaan
