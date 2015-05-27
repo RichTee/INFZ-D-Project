@@ -120,8 +120,8 @@ public class Vakje {
 
         switch (element) {
             case "pad":
-                g.setColor(Color.orange);
-                g.fillRect(yPositie * 50/*yPositie*/, xPositie * 50/*xPositie*/, 50, 50);
+                // g.setColor(Color.orange);
+                // g.fillRect(yPositie * 50/*yPositie*/, xPositie * 50/*xPositie*/, 50, 50);
                 break;
             case "muur":
                 if (spelElementList.contains(muur)) {

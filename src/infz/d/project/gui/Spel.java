@@ -104,8 +104,7 @@ public class Spel extends javax.swing.JFrame {
         System.out.println("Herstarten");
         if(!btnStart.isEnabled()) { 
            this.spelbord2.herstart();
-           btnStart.setEnabled(true);
-           btnHerstarten.setEnabled(false);
+           btnStart.setEnabled(false);
         }
     }//GEN-LAST:event_btnHerstartenActionPerformed
 
