@@ -24,6 +24,7 @@ import javax.swing.border.Border;
 public class Spelbord extends javax.swing.JPanel {
 
     Pacman pacman;
+    Spel spel;
     private int xPos, yPos; // Positie
 
     private int cellBreedte, cellHoogte; // Cell dimensies
@@ -31,7 +32,6 @@ public class Spelbord extends javax.swing.JPanel {
     private Vakje[][] vakje;
     private ArrayList<String> vakjesInhoud = new ArrayList<String>();
     private Border lineBorder = BorderFactory.createLineBorder(Color.black);
-    private int count = 0;
     /**
      * Creates new form Spelbord
      */
@@ -77,6 +77,10 @@ public class Spelbord extends javax.swing.JPanel {
         repaint();
     }
 
+    // Moet anders kunnen...
+    public void setSpel(Spel spel) {
+        this.spel = spel;
+    }
     public void isBuur() {
 
         for (int i = 0; i < cellHoogte; i++) {
@@ -97,24 +101,28 @@ public class Spelbord extends javax.swing.JPanel {
             vakje[xPos][yPos].voegtBuurToe(vakje[xPos-1][yPos]);
             //System.out.println(xPos + "  " + yPos);
         } catch (IndexOutOfBoundsException e) {
+            //System.out.println("xPos-1 : " + e );
         }
         try {
             vakje[xPos+1][yPos].getElement();
             vakje[xPos][yPos].voegtBuurToe(vakje[xPos+1][yPos]);
             //System.out.println(xPos + "  " + yPos);
         } catch (IndexOutOfBoundsException e) {
+            //System.out.println("xPos+1 : " + e );
         }
         try {
             vakje[xPos][yPos-1].getElement();
             vakje[xPos][yPos].voegtBuurToe(vakje[xPos][yPos-1]);
             //System.out.println(xPos + "  " + yPos);
         } catch (IndexOutOfBoundsException e) {
+            //System.out.println("yPos-1 : " + e );
         }
         try {
             vakje[xPos][yPos+1].getElement();
             vakje[xPos][yPos].voegtBuurToe(vakje[xPos][yPos+1]);
             //System.out.println(xPos + "  " + yPos);
         } catch (IndexOutOfBoundsException e) {
+            //System.out.println("yPos+1 : " + e );
         }
     }
 
@@ -158,6 +166,7 @@ public class Spelbord extends javax.swing.JPanel {
                         break;
                     case "2":
                         // Bolletje
+                        vakje[row][column] = new Vakje(row, column, "bolletje", this);
                         break;
                     case "3":
                         // Superbolletje
@@ -176,6 +185,11 @@ public class Spelbord extends javax.swing.JPanel {
                 }
             }
         }
+    }
+    
+    // Aparte klasse(?)
+    public void setScore(int punten){
+        spel.setScore(punten);
     }
     
     private void findPacman() {

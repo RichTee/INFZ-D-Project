@@ -12,11 +12,13 @@ package infz.d.project.gui;
  */
 public class Spel extends javax.swing.JFrame {
 
+    private int punten = 0;
     /**
      * Creates new form Spel
      */
     public Spel() {
         initComponents();
+        this.spelbord2.setSpel(this);
         this.setTitle("Pacman");
         this.setSize(600, 500);
         btnHerstarten.setEnabled(false);
@@ -35,6 +37,7 @@ public class Spel extends javax.swing.JFrame {
         btnStart = new javax.swing.JButton();
         spelbord2 = new infz.d.project.gui.Spelbord();
         btnHerstarten = new javax.swing.JButton();
+        lblScore = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -72,7 +75,9 @@ public class Spel extends javax.swing.JFrame {
                 .addComponent(btnStart)
                 .addGap(27, 27, 27)
                 .addComponent(btnHerstarten)
-                .addContainerGap(349, Short.MAX_VALUE))
+                .addGap(112, 112, 112)
+                .addComponent(lblScore, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(129, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(spelbord2, javax.swing.GroupLayout.DEFAULT_SIZE, 555, Short.MAX_VALUE)
@@ -84,7 +89,8 @@ public class Spel extends javax.swing.JFrame {
                 .addGap(9, 9, 9)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnStart)
-                    .addComponent(btnHerstarten))
+                    .addComponent(btnHerstarten)
+                    .addComponent(lblScore))
                 .addGap(18, 18, 18)
                 .addComponent(spelbord2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 39, Short.MAX_VALUE))
@@ -108,6 +114,12 @@ public class Spel extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnHerstartenActionPerformed
 
+    public void setScore(int punten) {
+        this.punten += punten;
+        String puntenString = Integer.toString(this.punten);
+        
+        lblScore.setText("Score: "  + puntenString);
+    }
     /**
      * @param args the command line arguments
      */
@@ -146,6 +158,7 @@ public class Spel extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnHerstarten;
     private javax.swing.JButton btnStart;
+    private javax.swing.JLabel lblScore;
     private infz.d.project.gui.Spelbord spelbord2;
     // End of variables declaration//GEN-END:variables
 }

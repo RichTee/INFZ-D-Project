@@ -26,7 +26,8 @@ public class Vakje {
     Muur muur;
     Spookje spookje;
     Pacman pacman;
-
+    Bolletje bolletje;
+    
     public Vakje(int xPositie, int yPositie, String element, Spelbord spelBord) {
         this.xPositie = xPositie;
         this.yPositie = yPositie;
@@ -47,6 +48,12 @@ public class Vakje {
             if (vakje.getXPositie() == xpos) {
                 if (vakje.getYPositie() == ypos) {
                     if (!vakje.isMuur()) {
+                        if(vakje.getElement().equals("bolletje")
+                                || vakje.getElement().equals("superbolletje")
+                                || vakje.getElement().equals("spookje")){
+                            System.out.println("Gegeten: " + vakje.getElement());
+                            spelbord.setScore(vakje.getSpelElement().getPunten());
+                        }
                         System.out.println("Vakje Element : " + vakje.getElement());
                         vakje.setElement(this.getElement());
                         this.setElement("pad");
@@ -87,13 +94,18 @@ public class Vakje {
         this.element = element;
     }
     
+    public SpelElement getSpelElement(){
+        return bolletje; // Moet globaal, SpelElement, niet specifiek.
+    }
     // Logischer in Spelbord voor minder Memory intake en makkelijkere toegang.
     private void vulSpelElementList() {
         muur = new Muur(this);
         spookje = new Spookje(this);
         pacman = new Pacman(this);
+        bolletje = new Bolletje(this);
       
         spelElementList.add(muur);      // 1
+        spelElementList.add(bolletje);  // 2
         spelElementList.add(spookje);   // 4
         spelElementList.add(pacman);    // 5
 
@@ -114,6 +126,9 @@ public class Vakje {
                 }
                 break;
             case "bolletje":
+                if (spelElementList.contains(bolletje)){
+                    bolletje.draw(g);
+                }
                 break;
             case "superbolletje":
                 break;

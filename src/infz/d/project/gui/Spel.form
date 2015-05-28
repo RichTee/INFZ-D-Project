@@ -28,7 +28,9 @@
               <Component id="btnStart" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
               <Component id="btnHerstarten" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="349" max="32767" attributes="0"/>
+              <EmptySpace min="-2" pref="112" max="-2" attributes="0"/>
+              <Component id="lblScore" min="-2" pref="108" max="-2" attributes="0"/>
+              <EmptySpace pref="129" max="32767" attributes="0"/>
           </Group>
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
@@ -44,6 +46,7 @@
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="btnStart" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="btnHerstarten" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblScore" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="spelbord2" min="-2" max="-2" attributes="0"/>
@@ -83,6 +86,8 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnHerstartenActionPerformed"/>
       </Events>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblScore">
     </Component>
   </SubComponents>
 </Form>

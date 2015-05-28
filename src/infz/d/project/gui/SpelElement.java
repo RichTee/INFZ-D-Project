@@ -14,9 +14,14 @@ import java.awt.Graphics;
  */
 public abstract class SpelElement {
     public final int CELL = 50;
+    public int punten = 0;
     Vakje vakje;
     public SpelElement() {
         
+    }
+    
+    public int getPunten() {
+        return punten;
     }
     
     public void draw(Graphics g) {}

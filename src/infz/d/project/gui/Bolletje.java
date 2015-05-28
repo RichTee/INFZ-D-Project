@@ -6,6 +6,7 @@
 
 package infz.d.project.gui;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.io.File;
 import java.io.IOException;
@@ -17,13 +18,13 @@ import javax.imageio.ImageIO;
  *
  * @author Method
  */
-public class Spookje extends Poppetje {
+public class Bolletje extends SpelElement {
     private int row;
     private int column;
     
-    public Spookje(Vakje vakje) {
+    public Bolletje(Vakje vakje) {
         this.vakje = vakje;
-        this.punten = 200;
+        this.punten = 10;
     }
     
     @Override
@@ -31,10 +32,8 @@ public class Spookje extends Poppetje {
         row = vakje.getXPositie();
         column = vakje.getYPositie();
 
-        try {
-            g.drawImage(ImageIO.read(new File("afbeelding/Spookje.png")), column * CELL, row * CELL, CELL, CELL, null);
-        } catch (IOException ex) {
-            Logger.getLogger(Pacman.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        g.setColor(Color.YELLOW);
+        g.fillOval(column * CELL, row * CELL, CELL / 2, CELL / 2);
+        
     }
 }
