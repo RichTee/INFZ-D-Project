@@ -47,13 +47,13 @@ public class Vakje {
         ypos = ypos + yPositie;
         
         for (Vakje vakje : buurVakje) {
-            System.out.println("Entered loop 1#");
+
             if (vakje.getXPositie() == xpos) {
-                System.out.println("xPos passed");
+
                 if (vakje.getYPositie() == ypos) {
-                    System.out.println("yPos passed");
+
                     if (!vakje.isMuur()) {
-                        System.out.println("Geen muur passed");
+
                         vakje.setElement(this.getElement());
                         this.setElement("pad");
                         pacman.setVakje(vakje);
@@ -95,12 +95,7 @@ public class Vakje {
     public void setElement(String element) {
         this.element = element;
     }
-
-    public boolean cellNavigeerbaar(int richtingX, int richtingY) {
-        spelbord.getVakjeEnNavigeerbaar(richtingX, richtingY, this);
-        return true;
-    }
-
+    
     // Logischer in Spelbord voor minder Memory intake en makkelijkere toegang.
     private void vulSpelElementList() {
         muur = new Muur(this);

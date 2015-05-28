@@ -31,7 +31,7 @@ public class Spelbord extends javax.swing.JPanel {
     private Vakje[][] vakje;
     private ArrayList<String> vakjesInhoud = new ArrayList<String>();
     private Border lineBorder = BorderFactory.createLineBorder(Color.black);
-
+    private int count = 0;
     /**
      * Creates new form Spelbord
      */
@@ -75,29 +75,6 @@ public class Spelbord extends javax.swing.JPanel {
         for( int i = 0; i < vakje.length; i++ )
             vakje[i] = null;
         repaint();
-    }
-
-    // Bekijk of een Poppetje naar een cell mag gaan
-    public boolean getVakjeEnNavigeerbaar(int richtingX, int richtingY, Vakje vakje) {
-        Graphics g;
-        // Out of bounds check
-        if (vakje.xPositie + richtingX == -1
-                || vakje.yPositie + richtingY == -1
-                || richtingX + vakje.xPositie == this.cellBreedte + 1
-                || richtingY + vakje.yPositie == this.cellHoogte + 1) {
-            return false;
-        }
-        // Muur check
-        if (this.vakje[vakje.xPositie + richtingX][vakje.yPositie + richtingY].isMuur()) {
-            return false;
-        }
-        // Set nieuw spelElement voor Vakjes
-        this.vakje[vakje.xPositie + richtingX][vakje.yPositie + richtingY].setElement(vakje.getElement());
-        vakje.setElement("pad");
-
-        repaint();
-
-        return true;
     }
 
     public void isBuur() {
@@ -192,7 +169,7 @@ public class Spelbord extends javax.swing.JPanel {
                     case "5":
                         // Pacman
                         vakje[row][column] = new Vakje(row, column, "pacman", this);
-                        pacman = new Pacman(vakje[row][column]);
+                        //pacman = new Pacman(vakje[row][column]);
                         break;
                     default:
                         break;
@@ -201,6 +178,14 @@ public class Spelbord extends javax.swing.JPanel {
         }
     }
     
+    private void findPacman() {
+        for (int i = 0; i < cellHoogte; i++) {
+            for (int j = 0; j < cellBreedte; j++) {
+                if(vakje[i][j].getElement().equals("pacman"))
+                pacman = vakje[i][j].pacman;
+            }
+        }
+    }
     public void tekenOpnieuw(){
         repaint();
     }
@@ -232,6 +217,8 @@ public class Spelbord extends javax.swing.JPanel {
 
         @Override
         public void keyReleased(KeyEvent ke) {
+            findPacman();
+            
             switch (ke.getKeyCode()) {
                 case KeyEvent.VK_R:
                     break;

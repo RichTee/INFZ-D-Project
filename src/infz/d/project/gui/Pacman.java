@@ -19,7 +19,7 @@ import javax.imageio.ImageIO;
  * @author Method
  */
 public class Pacman extends Poppetje {
-
+    private int count = 0;
     private final int STAP = 1;
     private final int STIL = 0;
     private int row;
@@ -80,7 +80,8 @@ public class Pacman extends Poppetje {
         column = vakje.getYPositie();
 
         try {
-            System.out.println("Pacman Rij: " + row + "\nPacmanKolom: " + column);
+            
+            System.out.println("Count:  " + ++count);
             g.drawImage(ImageIO.read(new File("afbeelding/Pacman_1.png")), column * CELL, row * CELL, 50, 50, null);
         } catch (IOException ex) {
             Logger.getLogger(Pacman.class.getName()).log(Level.SEVERE, null, ex);

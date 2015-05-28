@@ -31,7 +31,6 @@ public class Spookje extends Poppetje {
         column = vakje.getYPositie();
 
         try {
-            System.out.println("Pacman Rij: " + row + "\nPacmanKolom: " + column);
             g.drawImage(ImageIO.read(new File("afbeelding/Spookje.png")), column * CELL, row * CELL, 50, 50, null);
         } catch (IOException ex) {
             Logger.getLogger(Pacman.class.getName()).log(Level.SEVERE, null, ex);
