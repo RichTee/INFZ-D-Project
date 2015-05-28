@@ -101,7 +101,7 @@ public class Vakje {
 
     // Draw Logic | Vakje moet zich kleuren op basis van inhoud.
     public void draw(Graphics g) {
-//        vulSpelElementList();   // We vullen een array met classes erin
+       vulSpelElementList();   // We vullen een array met classes erin
 
         switch (element) {
             case "pad":
