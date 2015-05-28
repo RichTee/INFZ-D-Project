@@ -39,7 +39,7 @@ public class Spelbord extends javax.swing.JPanel {
 
         initComponents();
         genereerSpelbordPanelGegevens();
-        KeyListener listener = new KeyPressedListener();
+        KeyListener listener = new KeyboardListener();
         this.addKeyListener(listener);
         this.setFocusable(true);
     }
@@ -181,8 +181,10 @@ public class Spelbord extends javax.swing.JPanel {
     private void findPacman() {
         for (int i = 0; i < cellHoogte; i++) {
             for (int j = 0; j < cellBreedte; j++) {
-                if(vakje[i][j].getElement().equals("pacman"))
-                pacman = vakje[i][j].pacman;
+                if(vakje[i][j].getElement().equals("pacman")){
+                    pacman = vakje[i][j].pacman;
+                    pacman.getVakje().getXPositie();
+                }
             }
         }
     }
@@ -208,7 +210,7 @@ public class Spelbord extends javax.swing.JPanel {
         return vakjesInhoud.get(row).charAt(column);
     }
 
-    class KeyPressedListener implements KeyListener {
+    class KeyboardListener implements KeyListener {
 
         @Override
         public void keyTyped(KeyEvent ke) {

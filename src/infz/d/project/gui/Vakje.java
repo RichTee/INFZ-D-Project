@@ -40,20 +40,14 @@ public class Vakje {
     }
 
     public void pacmanRichting(int xpos, int ypos) {
-        //System.out.println(row + " " + column);
-        //cellNavigeerbaar(row, column);
-
         xpos = xpos + xPositie;
         ypos = ypos + yPositie;
         
         for (Vakje vakje : buurVakje) {
-
             if (vakje.getXPositie() == xpos) {
-
                 if (vakje.getYPositie() == ypos) {
-
                     if (!vakje.isMuur()) {
-
+                        System.out.println("Vakje Element : " + vakje.getElement());
                         vakje.setElement(this.getElement());
                         this.setElement("pad");
                         pacman.setVakje(vakje);
@@ -63,9 +57,6 @@ public class Vakje {
                 }
             }
         }
-        // buurvakje vragen of ismuur vakjebuur.contains of beter een loop
-        // false = set pacman als inhoud
-        // true = niks
     }
 
     // return of vakje een muur
@@ -102,7 +93,6 @@ public class Vakje {
         spookje = new Spookje(this);
         pacman = new Pacman(this);
       
-
         spelElementList.add(muur);      // 1
         spelElementList.add(spookje);   // 4
         spelElementList.add(pacman);    // 5
@@ -140,17 +130,5 @@ public class Vakje {
             default:
                 break;
         }
-    }
-
-    // For funsies (Misschien later wanneer Spookjes moeten gloeien op interval)
-    private Color randomKleur() {
-        Random rand = new Random();
-
-        float r = rand.nextFloat();
-        float g = rand.nextFloat();
-        float b = rand.nextFloat();
-
-        Color randomColor = new Color(r, g, b);
-        return randomColor;
     }
 }

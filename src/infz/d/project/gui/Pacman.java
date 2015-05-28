@@ -60,8 +60,7 @@ public class Pacman extends Poppetje {
                 vakje.pacmanRichting(-STAP, STIL);
                 break;
             case OOST:
-                System.out.println("gelukt");
-                vakje.pacmanRichting(STIL, +STAP);
+                vakje.pacmanRichting(STIL, STAP);
                 break;
             case ZUID:
                 vakje.pacmanRichting(STAP, STIL);
