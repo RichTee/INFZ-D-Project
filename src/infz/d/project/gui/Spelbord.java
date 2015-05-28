@@ -97,6 +97,7 @@ public class Spelbord extends javax.swing.JPanel {
 
     private void outOfBoundsCheck(int xPos, int yPos) {
         try {
+            // Noord
             vakje[xPos-1][yPos].getElement();
             vakje[xPos][yPos].voegtBuurToe(vakje[xPos-1][yPos]);
             //System.out.println(xPos + "  " + yPos);
@@ -104,22 +105,25 @@ public class Spelbord extends javax.swing.JPanel {
             //System.out.println("xPos-1 : " + e );
         }
         try {
-            vakje[xPos+1][yPos].getElement();
-            vakje[xPos][yPos].voegtBuurToe(vakje[xPos+1][yPos]);
+            // Oost
+            vakje[xPos][yPos+1].getElement();
+            vakje[xPos][yPos].voegtBuurToe(vakje[xPos][yPos+1]);
             //System.out.println(xPos + "  " + yPos);
         } catch (IndexOutOfBoundsException e) {
             //System.out.println("xPos+1 : " + e );
         }
         try {
-            vakje[xPos][yPos-1].getElement();
-            vakje[xPos][yPos].voegtBuurToe(vakje[xPos][yPos-1]);
+            // Zuid
+            vakje[xPos+1][yPos].getElement();
+            vakje[xPos][yPos].voegtBuurToe(vakje[xPos+1][yPos]);
             //System.out.println(xPos + "  " + yPos);
         } catch (IndexOutOfBoundsException e) {
             //System.out.println("yPos-1 : " + e );
         }
         try {
-            vakje[xPos][yPos+1].getElement();
-            vakje[xPos][yPos].voegtBuurToe(vakje[xPos][yPos+1]);
+            // West
+            vakje[xPos][yPos-1].getElement();
+            vakje[xPos][yPos].voegtBuurToe(vakje[xPos][yPos-1]);
             //System.out.println(xPos + "  " + yPos);
         } catch (IndexOutOfBoundsException e) {
             //System.out.println("yPos+1 : " + e );

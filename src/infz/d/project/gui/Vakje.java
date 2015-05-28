@@ -131,6 +131,7 @@ public class Vakje {
                 }
                 break;
             case "superbolletje":
+                // Superbolletje
                 break;
             case "spookje":
                 if (spelElementList.contains(spookje)) {

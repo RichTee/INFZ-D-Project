@@ -22,6 +22,7 @@ public class Spel extends javax.swing.JFrame {
         this.setTitle("Pacman");
         this.setSize(600, 500);
         btnHerstarten.setEnabled(false);
+        lblScore.setText("Score: " + punten);
     }
 
 
