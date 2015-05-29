@@ -13,6 +13,7 @@ package infz.d.project.gui;
 public class Spel extends javax.swing.JFrame {
 
     private int punten = 0;
+    private int levens = 3;
     /**
      * Creates new form Spel
      */
@@ -23,6 +24,7 @@ public class Spel extends javax.swing.JFrame {
         this.setSize(600, 500);
         btnHerstarten.setEnabled(false);
         lblScore.setText("Score: " + punten);
+        lblLevens.setText("Levens: " + levens);
     }
 
 
@@ -39,6 +41,7 @@ public class Spel extends javax.swing.JFrame {
         spelbord2 = new infz.d.project.gui.Spelbord();
         btnHerstarten = new javax.swing.JButton();
         lblScore = new javax.swing.JLabel();
+        lblLevens = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -67,6 +70,10 @@ public class Spel extends javax.swing.JFrame {
             }
         });
 
+        lblScore.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+
+        lblLevens.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -76,9 +83,11 @@ public class Spel extends javax.swing.JFrame {
                 .addComponent(btnStart)
                 .addGap(27, 27, 27)
                 .addComponent(btnHerstarten)
-                .addGap(112, 112, 112)
+                .addGap(65, 65, 65)
                 .addComponent(lblScore, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(129, Short.MAX_VALUE))
+                .addGap(57, 57, 57)
+                .addComponent(lblLevens, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(24, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(spelbord2, javax.swing.GroupLayout.DEFAULT_SIZE, 555, Short.MAX_VALUE)
@@ -88,13 +97,15 @@ public class Spel extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(9, 9, 9)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnStart)
-                    .addComponent(btnHerstarten)
-                    .addComponent(lblScore))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblScore, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnStart, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnHerstarten, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lblLevens, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGap(18, 18, 18)
                 .addComponent(spelbord2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 39, Short.MAX_VALUE))
+                .addGap(39, 39, 39))
         );
 
         pack();
@@ -120,6 +131,31 @@ public class Spel extends javax.swing.JFrame {
         String puntenString = Integer.toString(this.punten);
         
         lblScore.setText("Score: "  + puntenString);
+    }
+    
+    public void resetScore() {
+        this.punten = 0;
+        String puntenString = Integer.toString(this.punten);
+        lblScore.setText("Score: " + puntenString);
+
+    }
+
+    public void setLevens(int levens) {
+        if (this.levens == 0) {
+            System.out.println("GameOver");
+            spelbord2.herstart();
+        } else {
+            this.levens -= levens;
+            String levensString = Integer.toString(this.levens);
+
+            lblLevens.setText("Levens: " + levensString);
+        }
+    }
+
+    public void resetLevens() {
+        this.levens = 3;
+        String levensString = Integer.toString(this.levens);
+        lblLevens.setText("Levens: " + levensString);
     }
     /**
      * @param args the command line arguments
@@ -159,6 +195,7 @@ public class Spel extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnHerstarten;
     private javax.swing.JButton btnStart;
+    private javax.swing.JLabel lblLevens;
     private javax.swing.JLabel lblScore;
     private infz.d.project.gui.Spelbord spelbord2;
     // End of variables declaration//GEN-END:variables

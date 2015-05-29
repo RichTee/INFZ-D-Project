@@ -71,6 +71,8 @@ public class Spelbord extends javax.swing.JPanel {
     }
     
     public void reset() {
+        spel.resetLevens();
+        spel.resetScore();
         this.vakjesInhoud.clear();
         for( int i = 0; i < vakje.length; i++ )
             vakje[i] = null;
@@ -129,6 +131,7 @@ public class Spelbord extends javax.swing.JPanel {
             //System.out.println("yPos+1 : " + e );
         }
     }
+    
 
     // Get posities van entiteiten die een spel vormen uit de txt file.
     private void getSpelbordTxtFile() {
@@ -174,6 +177,7 @@ public class Spelbord extends javax.swing.JPanel {
                         break;
                     case "3":
                         // Superbolletje
+                        vakje[row][column] = new Vakje(row, column, "superbolletje", this);
                         break;
                     case "4":
                         // Spookje
@@ -196,6 +200,24 @@ public class Spelbord extends javax.swing.JPanel {
         spel.setScore(punten);
     }
     
+    public void setLevens(){
+    spel.setLevens(1);
+    }
+    
+    public void resetPoppetje() {
+        for (int i = 0; i < cellHoogte; i++) {
+            for (int j = 0; j < cellBreedte; j++) {
+                if (vakje[i][j].getElement().equals("pacman")) {
+                    pacman = vakje[i][j].pacman;
+                    vakje[i][j].setElement("pad", null);
+                    System.out.println("gevonden");
+                }
+            }
+        }
+        pacman.setVakje(vakje[yPos][xPos]);
+        vakje[yPos][xPos].setElement("pacman", pacman);
+    }
+ 
     private void findPacman() {
         for (int i = 0; i < cellHoogte; i++) {
             for (int j = 0; j < cellBreedte; j++) {

@@ -19,6 +19,7 @@ import javax.imageio.ImageIO;
  * @author Method
  */
 public class Pacman extends Poppetje {
+    boolean heeftSuperKracht = false;
     private int count = 0;
     private final int STAP = 1;
     private final int STIL = 0;
@@ -35,6 +36,14 @@ public class Pacman extends Poppetje {
 
     public Pacman(Vakje vak) {
         this.vakje = vak;
+    }
+    
+    public void setKracht(boolean kracht){
+    this.heeftSuperKracht = kracht;
+    }
+    
+    public boolean getKracht(){
+    return heeftSuperKracht;
     }
 
     public void setVakje(Vakje vakje) {
@@ -75,12 +84,20 @@ public class Pacman extends Poppetje {
 
     @Override
     public void draw(Graphics g) {
+        
         row = vakje.getXPositie();
         column = vakje.getYPositie();
+        if (count == 1) {
+            System.out.println("Boolean: " + count);
+            count = 0;
+
+        } else {
+            System.out.println("Boolean: " + count);
+            count++;
+        }
+
 
         try {
-            
-            System.out.println("Count:  " + ++count);
             g.drawImage(ImageIO.read(new File("afbeelding/Pacman_1.png")), column * CELL, row * CELL, 50, 50, null);
         } catch (IOException ex) {
             Logger.getLogger(Pacman.class.getName()).log(Level.SEVERE, null, ex);
