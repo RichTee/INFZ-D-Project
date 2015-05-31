@@ -49,61 +49,51 @@ public class Vakje {
             if (vakje.getXPositie() == xpos) {
                 if (vakje.getYPositie() == ypos) {
                     if (!vakje.isMuur()) {
-                        if (vakje.getElement().equals("bolletje")) //                                || vakje.getElement().equals("superbolletje")
-                        //                                || vakje.getElement().equals("spookje"))
-                        {
-
-                            System.out.println("Gegeten: " + vakje.getElement());
-                            spelbord.setScore(vakje.getSpelElement().getPunten());
-                            System.out.println("Vakje Element : " + vakje.getElement());
-                            vakje.setElement(this.getElement(), pacman);
-                            this.setElement("pad", null);
-                            pacman.setVakje(vakje);
-                            spelbord.tekenOpnieuw();
-                            break;
-                        }
-                        else if (vakje.getElement().equals("superbolletje")) {
-                            pacman.setKracht(true);
-                            vakje.setElement(this.getElement(), pacman);
-                            this.setElement("pad", null);
-                            pacman.setVakje(vakje);
-                            spelbord.tekenOpnieuw();
-                            break;
-                        }
-                        else if (vakje.getElement().equals("pad")) {
-                            vakje.setElement(this.getElement(), null);
-                            this.setElement("pad", null);
-                            pacman.setVakje(vakje);
-                            spelbord.tekenOpnieuw();
-                            break;
-                        }
-                        else if(vakje.getElement().equals("spookje")&&pacman.getKracht()==true){
-                            spelbord.setScore(vakje.getSpelElement().getPunten());
-                            vakje.setElement(this.getElement(), pacman);
-                            this.setElement("pad", null);
-                            pacman.setVakje(vakje);
-                            spelbord.tekenOpnieuw();
-                            break;
-                        }
-                        else if(vakje.getElement().equals("spookje")&&pacman.getKracht()==false){
-                            System.out.println("VERLOREN");
-                            spelbord.setLevens();
-                            spelbord.resetPoppetje();
-//                            spelbord.herstart();
-//                            vakje.setElement(this.getElement(), pacman);
-//                            this.setElement("pad", null);
-//                            pacman.setVakje(vakje);
-                            spelbord.tekenOpnieuw();
-                            break;
-                        }
-                       
-
+                        checkElement(vakje);
                     }
                 }
             }
         }
     }
 
+    private void checkElement(Vakje vakje){
+        if (vakje.getElement().equals("bolletje"))
+        {
+            spelbord.setScore(vakje.getSpelElement().getPunten());
+            spelbord.checkOfKersKan();
+            vakje.setElement(this.getElement(), pacman);
+            this.setElement("pad", null);
+            pacman.setVakje(vakje);
+            spelbord.tekenOpnieuw();
+
+        } else if (vakje.getElement().equals("superbolletje")) {
+            spelbord.geefPacmanSuperkracht();
+            vakje.setElement(this.getElement(), pacman);
+            this.setElement("pad", null);
+            pacman.setVakje(vakje);
+            spelbord.tekenOpnieuw();
+
+        } else if (vakje.getElement().equals("pad")) {
+            vakje.setElement(this.getElement(), null);
+            this.setElement("pad", null);
+            pacman.setVakje(vakje);
+            spelbord.tekenOpnieuw();
+
+        } else if (vakje.getElement().equals("spookje") && pacman.getKracht() == true) {
+            spelbord.setScore(vakje.getSpelElement().getPunten());
+            vakje.setElement(this.getElement(), pacman);
+            this.setElement("pad", null);
+            pacman.setVakje(vakje);
+            spelbord.tekenOpnieuw();
+
+        } else if (vakje.getElement().equals("spookje") && pacman.getKracht() == false) {
+            System.out.println("VERLOREN");
+            spelbord.setLevens();
+            spelbord.resetPoppetje();
+            spelbord.tekenOpnieuw();
+
+        }
+    }
     // return of vakje een muur
     public boolean isMuur() {
         if (element.equals("muur")) {
@@ -176,7 +166,7 @@ public class Vakje {
         spelElementList.add(superbolletje); // 3
         spelElementList.add(spookje);       // 4
         spelElementList.add(pacman);        // 5
-
+       
     }
 
     // Draw Logic | Vakje moet zich kleuren op basis van inhoud.

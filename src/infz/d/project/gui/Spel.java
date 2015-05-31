@@ -141,7 +141,7 @@ public class Spel extends javax.swing.JFrame {
     }
 
     public void setLevens(int levens) {
-        if (this.levens == 0) {
+        if (this.levens == 1) {
             System.out.println("GameOver");
             spelbord2.herstart();
         } else {

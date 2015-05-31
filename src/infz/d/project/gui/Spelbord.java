@@ -14,6 +14,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.Timer;
+import java.util.TimerTask;
 import javax.swing.BorderFactory;
 import javax.swing.border.Border;
 
@@ -25,13 +27,18 @@ public class Spelbord extends javax.swing.JPanel {
 
     Pacman pacman;
     Spel spel;
+    Timer tijd;
     private int xPos, yPos; // Positie
-
+    private int aantalBolletjes = 0;
+    private int huidigAantalBolletjes = 0;
     private int cellBreedte, cellHoogte; // Cell dimensies
     private final static int CELL = 50;
     private Vakje[][] vakje;
     private ArrayList<String> vakjesInhoud = new ArrayList<String>();
     private Border lineBorder = BorderFactory.createLineBorder(Color.black);
+    boolean timerIsBezig = false;
+     public int seconden = 0;
+    
     /**
      * Creates new form Spelbord
      */
@@ -69,14 +76,28 @@ public class Spelbord extends javax.swing.JPanel {
         genereerSpelbordPanelGegevens();
         this.requestFocusInWindow();
     }
-    
+ 
     public void reset() {
+        stopTimer();
+        
+        this.aantalBolletjes=0;
+        this.huidigAantalBolletjes = this.aantalBolletjes;
         spel.resetLevens();
         spel.resetScore();
         this.vakjesInhoud.clear();
+        
         for( int i = 0; i < vakje.length; i++ )
             vakje[i] = null;
         repaint();
+    }
+    
+    private void stopTimer() {
+        if (timerIsBezig) {
+            tijd.cancel();
+            tijd.purge();
+            timerIsBezig = false;
+            seconden = 0;
+        }
     }
 
     // Moet anders kunnen...
@@ -156,7 +177,7 @@ public class Spelbord extends javax.swing.JPanel {
             e.printStackTrace();
         }
     }
-
+    
     // Genereer de map voor de GUI nadat de TXT is gelezen
     private void genereerGuiMap() {
         vakje = new Vakje[cellHoogte][cellBreedte];
@@ -174,6 +195,8 @@ public class Spelbord extends javax.swing.JPanel {
                     case "2":
                         // Bolletje
                         vakje[row][column] = new Vakje(row, column, "bolletje", this);
+                        this.aantalBolletjes ++;
+                        this.huidigAantalBolletjes ++;
                         break;
                     case "3":
                         // Superbolletje
@@ -193,11 +216,76 @@ public class Spelbord extends javax.swing.JPanel {
                 }
             }
         }
+        System.out.println("***** " + huidigAantalBolletjes + " " + aantalBolletjes );
     }
     
     // Aparte klasse(?)
-    public void setScore(int punten){
+    public void setScore(int punten) {
         spel.setScore(punten);
+        
+    }
+    
+    public void geefPacmanSuperkracht(){
+        pacman.heeftSuperKracht = true;
+        maakTimer();
+    }
+
+    private void maakTimer() {
+
+        int delay = 1000;
+
+        TimerTask task = new TimerTask() {
+
+            public void run() {
+
+                System.out.println("yeahh");
+                seconden++;
+                System.out.println(seconden);
+
+                if (seconden == 10) {
+                    timerIsBezig = false;
+                    zetSuperKrachtUit();
+                    seconden = 0;
+                    tijd.cancel();
+                    tijd.purge();
+                    System.out.println("bezig");
+
+                }
+            }
+
+        };
+
+        if (timerIsBezig) {
+            tijd.cancel();
+            tijd.purge();
+            seconden = 0;
+            tijd = new Timer();
+            tijd.scheduleAtFixedRate(task, 0, delay);
+
+        } else {
+            timerIsBezig = true;
+            tijd = new Timer();
+            tijd.scheduleAtFixedRate(task, 0, delay);
+        }
+    }
+
+    
+    private void zetSuperKrachtUit(){
+    pacman.heeftSuperKracht=false;
+    }
+    
+    public void checkOfKersKan(){
+        System.out.println("******" + this.huidigAantalBolletjes);
+    if (this.huidigAantalBolletjes == 1) {
+            System.out.println("GEWONNEN");
+        } else if (this.huidigAantalBolletjes == ((this.aantalBolletjes / 2)+1)) {
+            System.out.println("KERS");
+
+            System.out.println(this.huidigAantalBolletjes);
+            this.huidigAantalBolletjes--;
+        } else {
+            this.huidigAantalBolletjes--;
+        }
     }
     
     public void setLevens(){
@@ -217,7 +305,7 @@ public class Spelbord extends javax.swing.JPanel {
         pacman.setVakje(vakje[yPos][xPos]);
         vakje[yPos][xPos].setElement("pacman", pacman);
     }
- 
+  
     private void findPacman() {
         for (int i = 0; i < cellHoogte; i++) {
             for (int j = 0; j < cellBreedte; j++) {
