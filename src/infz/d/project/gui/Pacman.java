@@ -19,31 +19,23 @@ import javax.imageio.ImageIO;
  * @author Method
  */
 public class Pacman extends Poppetje {
-    boolean heeftSuperKracht = false;
+    private boolean heeftSuperKracht = false;
     private int count = 0;
     private final int STAP = 1;
     private final int STIL = 0;
     private int row;
     private int column;
-
-    public enum Richting {
-
-        NOORD,
-        OOST,
-        ZUID,
-        WEST,
-    };
-
+    
     public Pacman(Vakje vak) {
         this.vakje = vak;
     }
     
     public void setKracht(boolean kracht){
-    this.heeftSuperKracht = kracht;
+        this.heeftSuperKracht = kracht;
     }
     
     public boolean getKracht(){
-    return heeftSuperKracht;
+        return heeftSuperKracht;
     }
 
     public void setVakje(Vakje vakje) {

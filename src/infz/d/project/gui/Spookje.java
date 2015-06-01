@@ -26,6 +26,8 @@ public class Spookje extends Poppetje {
         this.punten = 200;
     }
     
+    public void bewegen(Richting richting) { /* rand bewegen */}
+    
     @Override
     public void draw(Graphics g) {
         row = vakje.getXPositie();

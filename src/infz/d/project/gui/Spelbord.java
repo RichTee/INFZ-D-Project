@@ -10,12 +10,15 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+
 import java.io.File;
 import java.io.FileNotFoundException;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.Timer;
 import java.util.TimerTask;
+
 import javax.swing.BorderFactory;
 import javax.swing.border.Border;
 
@@ -31,7 +34,7 @@ public class Spelbord extends javax.swing.JPanel {
     private int xPos, yPos; // Positie
     private int aantalBolletjes = 0;
     private int huidigAantalBolletjes = 0;
-    private int cellBreedte, cellHoogte; // Cell dimensies
+    private int arrayBreedte, arrayHoogte; // Cell dimensies
     private final static int CELL = 50;
     private Vakje[][] vakje;
     private ArrayList<String> vakjesInhoud = new ArrayList<String>();
@@ -57,7 +60,7 @@ public class Spelbord extends javax.swing.JPanel {
         genereerGuiMap();
         isBuur();
         //genereerVakjes();
-        setPreferredSize(new Dimension(CELL * cellBreedte, CELL * cellHoogte));
+        setPreferredSize(new Dimension(CELL * arrayBreedte, CELL * arrayHoogte));
         // this.setBackground(Color.BLACK);
         this.setBorder(lineBorder);
     }
@@ -88,6 +91,7 @@ public class Spelbord extends javax.swing.JPanel {
         
         for( int i = 0; i < vakje.length; i++ )
             vakje[i] = null;
+        
         repaint();
     }
     
@@ -104,55 +108,6 @@ public class Spelbord extends javax.swing.JPanel {
     public void setSpel(Spel spel) {
         this.spel = spel;
     }
-    public void isBuur() {
-
-        for (int i = 0; i < cellHoogte; i++) {
-
-            for (int j = 0; j < cellBreedte; j++) {
-
-               outOfBoundsCheck(i, j);
-               
-               //System.out.println(i + " " + j + " Size: " + vakje[i][j].buurVakje.size());
-            }
-
-        }
-    }
-
-    private void outOfBoundsCheck(int xPos, int yPos) {
-        try {
-            // Noord
-            vakje[xPos-1][yPos].getElement();
-            vakje[xPos][yPos].voegtBuurToe(vakje[xPos-1][yPos]);
-            //System.out.println(xPos + "  " + yPos);
-        } catch (IndexOutOfBoundsException e) {
-            //System.out.println("xPos-1 : " + e );
-        }
-        try {
-            // Oost
-            vakje[xPos][yPos+1].getElement();
-            vakje[xPos][yPos].voegtBuurToe(vakje[xPos][yPos+1]);
-            //System.out.println(xPos + "  " + yPos);
-        } catch (IndexOutOfBoundsException e) {
-            //System.out.println("xPos+1 : " + e );
-        }
-        try {
-            // Zuid
-            vakje[xPos+1][yPos].getElement();
-            vakje[xPos][yPos].voegtBuurToe(vakje[xPos+1][yPos]);
-            //System.out.println(xPos + "  " + yPos);
-        } catch (IndexOutOfBoundsException e) {
-            //System.out.println("yPos-1 : " + e );
-        }
-        try {
-            // West
-            vakje[xPos][yPos-1].getElement();
-            vakje[xPos][yPos].voegtBuurToe(vakje[xPos][yPos-1]);
-            //System.out.println(xPos + "  " + yPos);
-        } catch (IndexOutOfBoundsException e) {
-            //System.out.println("yPos+1 : " + e );
-        }
-    }
-    
 
     // Get posities van entiteiten die een spel vormen uit de txt file.
     private void getSpelbordTxtFile() {
@@ -170,8 +125,8 @@ public class Spelbord extends javax.swing.JPanel {
             }
             read.close();
 
-            cellHoogte = vakjesInhoud.size();
-            cellBreedte = vakjesInhoud.get(0).length();
+            arrayHoogte = vakjesInhoud.size();
+            arrayBreedte = vakjesInhoud.get(0).length();
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -180,10 +135,10 @@ public class Spelbord extends javax.swing.JPanel {
     
     // Genereer de map voor de GUI nadat de TXT is gelezen
     private void genereerGuiMap() {
-        vakje = new Vakje[cellHoogte][cellBreedte];
+        vakje = new Vakje[arrayHoogte][arrayBreedte];
         
-        for (int row = 0; row < cellHoogte; row++) {
-            for (int column = 0; column < cellBreedte; column++) {
+        for (int row = 0; row < arrayHoogte; row++) {
+            for (int column = 0; column < arrayBreedte; column++) {
                 switch (String.valueOf(charAt(row, column))) {
                     case "0":
                         vakje[row][column] = new Vakje(row, column, "pad", this);
@@ -219,18 +174,70 @@ public class Spelbord extends javax.swing.JPanel {
         System.out.println("***** " + huidigAantalBolletjes + " " + aantalBolletjes );
     }
     
+    // Elk vakje moet zijn buren weten
+    public void isBuur() {
+
+        for (int i = 0; i < arrayHoogte; i++) {
+
+            for (int j = 0; j < arrayBreedte; j++) {
+
+               isBuurOutOfBounds(i, j);
+               
+               //System.out.println(i + " " + j + " Size: " + vakje[i][j].buurVakje.size());
+            }
+
+        }
+    }
+
+    // Niet elk vakje heeft een even aantal buren die in een array zit, met try catch vangen we excepties.
+    private void isBuurOutOfBounds(int xPos, int yPos) {
+        try {
+            // Noord
+            vakje[xPos-1][yPos].getElement();
+            vakje[xPos][yPos].voegtBuurToe(vakje[xPos-1][yPos]);
+            //System.out.println(xPos + "  " + yPos);
+        } catch (IndexOutOfBoundsException e) {
+            //System.out.println("xPos-1 : " + e );
+        }
+        try {
+            // Oost
+            vakje[xPos][yPos+1].getElement();
+            vakje[xPos][yPos].voegtBuurToe(vakje[xPos][yPos+1]);
+            //System.out.println(xPos + "  " + yPos);
+        } catch (IndexOutOfBoundsException e) {
+            //System.out.println("xPos+1 : " + e );
+        }
+        try {
+            // Zuid
+            vakje[xPos+1][yPos].getElement();
+            vakje[xPos][yPos].voegtBuurToe(vakje[xPos+1][yPos]);
+            //System.out.println(xPos + "  " + yPos);
+        } catch (IndexOutOfBoundsException e) {
+            //System.out.println("yPos-1 : " + e );
+        }
+        try {
+            // West
+            vakje[xPos][yPos-1].getElement();
+            vakje[xPos][yPos].voegtBuurToe(vakje[xPos][yPos-1]);
+            //System.out.println(xPos + "  " + yPos);
+        } catch (IndexOutOfBoundsException e) {
+            //System.out.println("yPos+1 : " + e );
+        }
+    }
+    
     // Aparte klasse(?)
     public void setScore(int punten) {
         spel.setScore(punten);
         
     }
     
+    // in pacman zelf zetten
     public void geefPacmanSuperkracht(){
-        pacman.heeftSuperKracht = true;
-        maakTimer();
+        pacman.setKracht(true);
+        maakSuperbolletjeTimer();
     }
 
-    private void maakTimer() {
+    private void maakSuperbolletjeTimer() {
 
         int delay = 1000;
 
@@ -271,7 +278,7 @@ public class Spelbord extends javax.swing.JPanel {
 
     
     private void zetSuperKrachtUit(){
-    pacman.heeftSuperKracht=false;
+        pacman.setKracht(false);
     }
     
     public void checkOfKersKan(){
@@ -289,16 +296,19 @@ public class Spelbord extends javax.swing.JPanel {
     }
     
     public void setLevens(){
-    spel.setLevens(1);
+        spel.setLevens(1);
     }
     
+    // Alle bewegende entiteiten moeten op hun eigen plek verschijnen.
     public void resetPoppetje() {
-        for (int i = 0; i < cellHoogte; i++) {
-            for (int j = 0; j < cellBreedte; j++) {
+        for (int i = 0; i < arrayHoogte; i++) {
+            for (int j = 0; j < arrayBreedte; j++) {
                 if (vakje[i][j].getElement().equals("pacman")) {
                     pacman = vakje[i][j].pacman;
                     vakje[i][j].setElement("pad", null);
                     System.out.println("gevonden");
+                } else if (vakje[i][j].getElement().equals("spookje")){
+                    // Methode voor spookje, Blinky, Pinky, Inky, Clyde.
                 }
             }
         }
@@ -306,9 +316,9 @@ public class Spelbord extends javax.swing.JPanel {
         vakje[yPos][xPos].setElement("pacman", pacman);
     }
   
-    private void findPacman() {
-        for (int i = 0; i < cellHoogte; i++) {
-            for (int j = 0; j < cellBreedte; j++) {
+    private void getPacmanHuidigePositie() {
+        for (int i = 0; i < arrayHoogte; i++) {
+            for (int j = 0; j < arrayBreedte; j++) {
                 if(vakje[i][j].getElement().equals("pacman")){
                     pacman = vakje[i][j].pacman;
                     pacman.getVakje().getXPositie();
@@ -325,9 +335,9 @@ public class Spelbord extends javax.swing.JPanel {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         //g.setColor(Color.BLACK);
-        //g.fillRect(0, 0, cellBreedte * CELL, cellHoogte * CELL);
-        for (int i = 0; i < cellHoogte; i++) {
-            for (int j = 0; j < cellBreedte; j++) {
+        //g.fillRect(0, 0, arrayBreedte * CELL, arrayHoogte * CELL);
+        for (int i = 0; i < arrayHoogte; i++) {
+            for (int j = 0; j < arrayBreedte; j++) {
                 vakje[i][j].draw(g);
             }
         }
@@ -347,7 +357,7 @@ public class Spelbord extends javax.swing.JPanel {
 
         @Override
         public void keyReleased(KeyEvent ke) {
-            findPacman();
+            getPacmanHuidigePositie();
             
             switch (ke.getKeyCode()) {
                 case KeyEvent.VK_R:

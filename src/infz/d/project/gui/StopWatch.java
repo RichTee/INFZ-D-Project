@@ -15,15 +15,12 @@ import java.util.TimerTask;
 public class StopWatch {
     Spelbord bord;
 
-    public int seconden = 0;
+    private int seconden = 0;
 
-    public StopWatch() {
-   
-    }
+    public StopWatch() { }
     
     
-    
-    public void maakTimer(){
+    public void maakSuperbolletjeTimer(){
     Timer tijd = new Timer();
 
         TimerTask task = new TimerTask() {

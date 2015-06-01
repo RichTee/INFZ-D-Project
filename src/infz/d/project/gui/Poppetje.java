@@ -12,7 +12,15 @@ package infz.d.project.gui;
  */
 public abstract class Poppetje extends SpelElement{
     
-    public Poppetje() {
-        
-    }
+    public Poppetje() { }
+    
+    public enum Richting {
+
+        NOORD,
+        OOST,
+        ZUID,
+        WEST,
+    };
+    
+    public void bewegen(Richting richting) { }
 }
