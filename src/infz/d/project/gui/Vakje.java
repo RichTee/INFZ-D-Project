@@ -60,7 +60,7 @@ public class Vakje {
         if (vakje.getElement().equals("bolletje"))
         {
             spelbord.setScore(vakje.getSpelElement().getPunten());
-            spelbord.checkOfKersKan();
+            spelbord.setBolletje(-1);
             vakje.setElement(this.getElement(), pacman);
             this.setElement("pad", null);
             pacman.setVakje(vakje);

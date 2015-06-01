@@ -27,13 +27,11 @@ import javax.swing.border.Border;
  * @author Method
  */
 public class Spelbord extends javax.swing.JPanel {
-
+    SpelInformatie spelInformatie;
     Pacman pacman;
     Spel spel;
     Timer tijd;
     private int xPos, yPos; // Positie
-    private int aantalBolletjes = 0;
-    private int huidigAantalBolletjes = 0;
     private int arrayBreedte, arrayHoogte; // Cell dimensies
     private final static int CELL = 50;
     private Vakje[][] vakje;
@@ -46,7 +44,6 @@ public class Spelbord extends javax.swing.JPanel {
      * Creates new form Spelbord
      */
     public Spelbord() {
-
         initComponents();
         genereerSpelbordPanelGegevens();
         KeyListener listener = new KeyboardListener();
@@ -82,11 +79,10 @@ public class Spelbord extends javax.swing.JPanel {
  
     public void reset() {
         stopTimer();
-        
-        this.aantalBolletjes=0;
-        this.huidigAantalBolletjes = this.aantalBolletjes;
-        spel.resetLevens();
-        spel.resetScore();
+  
+        spelInformatie.setTotaalAantalBolletjes(0);
+        spelInformatie.reset();
+
         this.vakjesInhoud.clear();
         
         for( int i = 0; i < vakje.length; i++ )
@@ -107,6 +103,7 @@ public class Spelbord extends javax.swing.JPanel {
     // Moet anders kunnen...
     public void setSpel(Spel spel) {
         this.spel = spel;
+        spelInformatie = new SpelInformatie(spel);
     }
 
     // Get posities van entiteiten die een spel vormen uit de txt file.
@@ -135,6 +132,7 @@ public class Spelbord extends javax.swing.JPanel {
     
     // Genereer de map voor de GUI nadat de TXT is gelezen
     private void genereerGuiMap() {
+                spelInformatie = new SpelInformatie(spel);
         vakje = new Vakje[arrayHoogte][arrayBreedte];
         
         for (int row = 0; row < arrayHoogte; row++) {
@@ -150,8 +148,7 @@ public class Spelbord extends javax.swing.JPanel {
                     case "2":
                         // Bolletje
                         vakje[row][column] = new Vakje(row, column, "bolletje", this);
-                        this.aantalBolletjes ++;
-                        this.huidigAantalBolletjes ++;
+                        spelInformatie.setTotaalAantalBolletjesIncrement(1);
                         break;
                     case "3":
                         // Superbolletje
@@ -171,7 +168,6 @@ public class Spelbord extends javax.swing.JPanel {
                 }
             }
         }
-        System.out.println("***** " + huidigAantalBolletjes + " " + aantalBolletjes );
     }
     
     // Elk vakje moet zijn buren weten
@@ -225,10 +221,20 @@ public class Spelbord extends javax.swing.JPanel {
         }
     }
     
-    // Aparte klasse(?)
-    public void setScore(int punten) {
-        spel.setScore(punten);
-        
+    
+    public void setScore(int score)
+    {  
+    spelInformatie.setScore(score);
+    }
+    
+    public void setBolletje(int punten)
+    {
+     spelInformatie.setHuidigeAantalBolletjes(-1); 
+    }
+    
+    public void setLevens()
+    {
+    spelInformatie.setLevens();
     }
     
     // in pacman zelf zetten
@@ -281,23 +287,7 @@ public class Spelbord extends javax.swing.JPanel {
         pacman.setKracht(false);
     }
     
-    public void checkOfKersKan(){
-        System.out.println("******" + this.huidigAantalBolletjes);
-    if (this.huidigAantalBolletjes == 1) {
-            System.out.println("GEWONNEN");
-        } else if (this.huidigAantalBolletjes == ((this.aantalBolletjes / 2)+1)) {
-            System.out.println("KERS");
-
-            System.out.println(this.huidigAantalBolletjes);
-            this.huidigAantalBolletjes--;
-        } else {
-            this.huidigAantalBolletjes--;
-        }
-    }
-    
-    public void setLevens(){
-        spel.setLevens(1);
-    }
+ 
     
     // Alle bewegende entiteiten moeten op hun eigen plek verschijnen.
     public void resetPoppetje() {
