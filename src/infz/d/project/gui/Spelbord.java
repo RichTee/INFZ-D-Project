@@ -132,7 +132,7 @@ public class Spelbord extends javax.swing.JPanel {
     
     // Genereer de map voor de GUI nadat de TXT is gelezen
     private void genereerGuiMap() {
-                spelInformatie = new SpelInformatie(spel);
+        spelInformatie = new SpelInformatie(spel);
         vakje = new Vakje[arrayHoogte][arrayBreedte];
         
         for (int row = 0; row < arrayHoogte; row++) {
@@ -221,20 +221,15 @@ public class Spelbord extends javax.swing.JPanel {
         }
     }
     
-    
-    public void setScore(int score)
-    {  
-    spelInformatie.setScore(score);
-    }
-    
-    public void setBolletje(int punten)
-    {
-     spelInformatie.setHuidigeAantalBolletjes(-1); 
-    }
-    
-    public void setLevens()
-    {
-    spelInformatie.setLevens();
+    public void setSpelInformatie(int score, int levens, String bolletje) {
+        if(!bolletje.equals("")){
+            spelInformatie.setScore(score);
+        } else if(levens == 0){
+            spelInformatie.setScoreZonderBolletje(score);
+        } else {
+            spelInformatie.setLevens(levens);
+        }
+        
     }
     
     // in pacman zelf zetten

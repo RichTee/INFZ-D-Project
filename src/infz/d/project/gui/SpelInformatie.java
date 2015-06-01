@@ -19,59 +19,49 @@ public class SpelInformatie {
         this.spel = spel;
     }
 
-    public void setScore(int punten) {
-        spel.setScore(punten);
-        checkKers();
-        checkOfGewonnen();
-    }
-
-    public void setLevens() {
-        spel.setLevens(-1);
-    }
-
     public void reset() {
         spel.resetLevens();
         spel.resetScore();
         this.huidigeAantalBolletjes = this.totaalAantalBolletjes;
     }
-
-    public void setTotaalAantalBolletjesIncrement(int aantal) {
-        this.totaalAantalBolletjes += aantal;
-        this.huidigeAantalBolletjes = this.totaalAantalBolletjes;
+    
+    public void setScore(int score){
+        spel.setScore(score);
+        this.huidigeAantalBolletjes--;
+        checkKers();
+        checkOfGewonnen();
+        System.out.println("Bolletjes: " + huidigeAantalBolletjes);
     }
 
-    public void setKers() {
-
+    public void setScoreZonderBolletje(int score){
+        spel.setScore(score);
+        System.out.println("Bolletjes: " + huidigeAantalBolletjes);
     }
-
-    public void setTotaalAantalBolletjes(int totaalAantalBolletjes) {
-        this.totaalAantalBolletjes = totaalAantalBolletjes;
+    
+    public void setLevens(int leven){
+        System.out.println("Called");
+        spel.setLevens(leven);
     }
-
-    public void setHuidigeAantalBolletjes(int huidigeBolletjes) {
-        this.huidigeAantalBolletjes += huidigeBolletjes;
+    
+    public void setTotaalAantalBolletjesIncrement(int aantal){
+        totaalAantalBolletjes += aantal;
+        huidigeAantalBolletjes = totaalAantalBolletjes;
     }
-
-    public int getTotaalAantalBolletjes() {
-        return totaalAantalBolletjes;
+    
+    public void setTotaalAantalBolletjes(int aantal) {
+        this.totaalAantalBolletjes = aantal;
     }
-
+    
     public void checkOfGewonnen() {
         if (this.huidigeAantalBolletjes == 0) {
             System.out.println("GEWONNEN");
 
-        }
-         else{
-            System.out.println("OKE" + this.huidigeAantalBolletjes);
         }
     }
 
     public void checkKers() {
         if (this.huidigeAantalBolletjes == ((this.totaalAantalBolletjes / 2) + 1)) {
             System.out.println("KERS");
-        }
-        else{
-            System.out.println("OKE" + this.huidigeAantalBolletjes);
         }
     }
 

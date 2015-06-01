@@ -59,8 +59,8 @@ public class Vakje {
     private void checkElement(Vakje vakje){
         if (vakje.getElement().equals("bolletje"))
         {
-            spelbord.setScore(vakje.getSpelElement().getPunten());
-            spelbord.setBolletje(-1);
+            System.out.println("BOLLETJE");
+            spelbord.setSpelInformatie(vakje.getSpelElement().getPunten(), 0, "bolletje");
             vakje.setElement(this.getElement(), pacman);
             this.setElement("pad", null);
             pacman.setVakje(vakje);
@@ -80,7 +80,8 @@ public class Vakje {
             spelbord.tekenOpnieuw();
 
         } else if (vakje.getElement().equals("spookje") && pacman.getKracht() == true) {
-            spelbord.setScore(vakje.getSpelElement().getPunten());
+            System.out.println("SPOOKJE");
+            spelbord.setSpelInformatie(vakje.getSpelElement().getPunten(), 0, "");
             vakje.setElement(this.getElement(), pacman);
             this.setElement("pad", null);
             pacman.setVakje(vakje);
@@ -88,7 +89,7 @@ public class Vakje {
 
         } else if (vakje.getElement().equals("spookje") && pacman.getKracht() == false) {
             System.out.println("VERLOREN");
-            spelbord.setLevens();
+            spelbord.setSpelInformatie(0, -1, "");
             spelbord.resetPoppetje();
             spelbord.tekenOpnieuw();
 
