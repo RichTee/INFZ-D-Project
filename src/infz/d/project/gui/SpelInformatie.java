@@ -11,9 +11,9 @@ package infz.d.project.gui;
  */
 public class SpelInformatie {
 
-    Spel spel;
-    private int huidigeAantalBolletjes = 0;
-    private int totaalAantalBolletjes = 0;
+    private Spel        spel;
+    private int         huidigeAantalBolletjes = 0;
+    private int         totaalAantalBolletjes = 0;
 
     public SpelInformatie(Spel spel) {
         this.spel = spel;
@@ -30,12 +30,10 @@ public class SpelInformatie {
         this.huidigeAantalBolletjes--;
         checkKers();
         checkOfGewonnen();
-        System.out.println("Bolletjes: " + huidigeAantalBolletjes);
     }
 
     public void setScoreZonderBolletje(int score){
         spel.setScore(score);
-        System.out.println("Bolletjes: " + huidigeAantalBolletjes);
     }
     
     public void setLevens(int leven){

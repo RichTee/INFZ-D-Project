@@ -8,6 +8,7 @@ package infz.d.project.gui;
 
 import java.awt.Color;
 import java.awt.Graphics;
+
 import java.util.ArrayList;
 
 /**
@@ -15,10 +16,8 @@ import java.util.ArrayList;
  * @author Method
  */
 public class Muur extends SpelElement {
-    ArrayList<String> lines = new ArrayList<String>();
-    int row;
-    int column;
-    Color muurKleur = Color.decode("#003399");
+    //ArrayList<String> lines = new ArrayList<String>();
+    private Color muurKleur = Color.decode("#003399");
     
     public Muur(Vakje vak) {
         this.vakje = vak;
@@ -28,11 +27,8 @@ public class Muur extends SpelElement {
     public void draw(Graphics g) {
         row = vakje.getXPositie();
         column = vakje.getYPositie();
-//        System.out.println("Vak Rij: " + row + "\nVak Kolom: " + column);
 
         g.setColor(muurKleur);
-        
-        
         g.fillRect(column * CELL, row * CELL, CELL, CELL);  
     }
 }

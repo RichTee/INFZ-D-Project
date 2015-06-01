@@ -13,9 +13,8 @@ import java.awt.Graphics;
  * @author Sebastiaan
  */
 public class Kers extends SpelElement {
-
-    private int row;
-    private int column;
+    private int         row;
+    private int         column;
 
     public Kers(Vakje vakje) {
         this.vakje = vakje;
@@ -23,12 +22,11 @@ public class Kers extends SpelElement {
     }
     
     public void setVakje(Vakje vakje) {
-        System.out.println("Vakje: " + vakje.getXPositie() + " " + vakje.getYPositie());
         this.vakje = vakje;
     }
     
     public Vakje getVakje(){
-    return vakje;
+        return vakje;
     }
 
     @Override

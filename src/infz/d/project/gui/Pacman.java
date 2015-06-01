@@ -20,11 +20,8 @@ import javax.imageio.ImageIO;
  */
 public class Pacman extends Poppetje {
     private boolean heeftSuperKracht = false;
-    private int count = 0;
     private final int STAP = 1;
     private final int STIL = 0;
-    private int row;
-    private int column;
     
     public Pacman(Vakje vak) {
         this.vakje = vak;
@@ -39,12 +36,11 @@ public class Pacman extends Poppetje {
     }
 
     public void setVakje(Vakje vakje) {
-        System.out.println("Vakje: " + vakje.getXPositie() + " " + vakje.getYPositie());
         this.vakje = vakje;
     }
     
     public Vakje getVakje(){
-    return vakje;
+        return vakje;
     }
 
     public int pacmanKolom() {
@@ -77,20 +73,11 @@ public class Pacman extends Poppetje {
     @Override
     public void draw(Graphics g) {
         
-        row = vakje.getXPositie();
-        column = vakje.getYPositie();
-        if (count == 1) {
-            System.out.println("Boolean: " + count);
-            count = 0;
-
-        } else {
-            System.out.println("Boolean: " + count);
-            count++;
-        }
-
+        this.row = vakje.getXPositie();
+        this.column = vakje.getYPositie();
 
         try {
-            g.drawImage(ImageIO.read(new File("afbeelding/Pacman_1.png")), column * CELL, row * CELL, 50, 50, null);
+            g.drawImage(ImageIO.read(new File("afbeelding/Pacman_1.png")), this.column * CELL, this.row * CELL, 50, 50, null);
         } catch (IOException ex) {
             Logger.getLogger(Pacman.class.getName()).log(Level.SEVERE, null, ex);
         }

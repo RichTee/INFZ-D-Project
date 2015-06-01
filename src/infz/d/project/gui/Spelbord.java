@@ -27,25 +27,27 @@ import javax.swing.border.Border;
  * @author Method
  */
 public class Spelbord extends javax.swing.JPanel {
-    SpelInformatie spelInformatie;
-    Pacman pacman;
-    Spel spel;
-    Timer tijd;
-    private int xPos, yPos; // Positie
-    private int arrayBreedte, arrayHoogte; // Cell dimensies
-    private final static int CELL = 50;
-    private Vakje[][] vakje;
-    private ArrayList<String> vakjesInhoud = new ArrayList<String>();
-    private Border lineBorder = BorderFactory.createLineBorder(Color.black);
-    boolean timerIsBezig = false;
-     public int seconden = 0;
+    private SpelInformatie      spelInformatie;
+    private Pacman              pacman;
+    private Spel                spel;
+    private Timer               tijd;
+    private boolean             timerIsBezig = false;
+    private int                 xPos, yPos; // Positie
+    private int                 arrayBreedte, arrayHoogte; // Cell dimensies
+    private int                 seconden = 0;
+    private final static int    CELL = 50;
+    private Vakje[][]           vakje;
+    private ArrayList<String>   vakjesInhoud = new ArrayList<String>();
+    private Border              lineBorder = BorderFactory.createLineBorder(Color.black);
     
     /**
      * Creates new form Spelbord
      */
     public Spelbord() {
         initComponents();
+        
         genereerSpelbordPanelGegevens();
+        
         KeyListener listener = new KeyboardListener();
         this.addKeyListener(listener);
         this.setFocusable(true);
@@ -56,9 +58,7 @@ public class Spelbord extends javax.swing.JPanel {
         getSpelbordTxtFile();
         genereerGuiMap();
         isBuur();
-        //genereerVakjes();
         setPreferredSize(new Dimension(CELL * arrayBreedte, CELL * arrayHoogte));
-        // this.setBackground(Color.BLACK);
         this.setBorder(lineBorder);
     }
 
@@ -172,16 +172,10 @@ public class Spelbord extends javax.swing.JPanel {
     
     // Elk vakje moet zijn buren weten
     public void isBuur() {
-
         for (int i = 0; i < arrayHoogte; i++) {
-
             for (int j = 0; j < arrayBreedte; j++) {
-
                isBuurOutOfBounds(i, j);
-               
-               //System.out.println(i + " " + j + " Size: " + vakje[i][j].buurVakje.size());
             }
-
         }
     }
 
@@ -222,13 +216,13 @@ public class Spelbord extends javax.swing.JPanel {
     }
     
     public void setSpelInformatie(int score, int levens, String bolletje) {
-        if(!bolletje.equals("")){
+        if(!bolletje.equals(""))
             spelInformatie.setScore(score);
-        } else if(levens == 0){
+        else if(levens == 0)
             spelInformatie.setScoreZonderBolletje(score);
-        } else {
+        else
             spelInformatie.setLevens(levens);
-        }
+        
         
     }
     
@@ -239,13 +233,10 @@ public class Spelbord extends javax.swing.JPanel {
     }
 
     private void maakSuperbolletjeTimer() {
-
         int delay = 1000;
-
         TimerTask task = new TimerTask() {
-
+            
             public void run() {
-
                 System.out.println("yeahh");
                 seconden++;
                 System.out.println(seconden);
@@ -257,10 +248,8 @@ public class Spelbord extends javax.swing.JPanel {
                     tijd.cancel();
                     tijd.purge();
                     System.out.println("bezig");
-
                 }
             }
-
         };
 
         if (timerIsBezig) {
@@ -282,18 +271,17 @@ public class Spelbord extends javax.swing.JPanel {
         pacman.setKracht(false);
     }
     
- 
-    
     // Alle bewegende entiteiten moeten op hun eigen plek verschijnen.
     public void resetPoppetje() {
         for (int i = 0; i < arrayHoogte; i++) {
             for (int j = 0; j < arrayBreedte; j++) {
                 if (vakje[i][j].getElement().equals("pacman")) {
-                    pacman = vakje[i][j].pacman;
+                    pacman = (Pacman) vakje[i][j].getSpelElement();
                     vakje[i][j].setElement("pad", null);
                     System.out.println("gevonden");
                 } else if (vakje[i][j].getElement().equals("spookje")){
                     // Methode voor spookje, Blinky, Pinky, Inky, Clyde.
+                    // blinky = vakje[i][j].spookje;
                 }
             }
         }
@@ -305,7 +293,7 @@ public class Spelbord extends javax.swing.JPanel {
         for (int i = 0; i < arrayHoogte; i++) {
             for (int j = 0; j < arrayBreedte; j++) {
                 if(vakje[i][j].getElement().equals("pacman")){
-                    pacman = vakje[i][j].pacman;
+                    pacman = (Pacman) vakje[i][j].getSpelElement();
                     pacman.getVakje().getXPositie();
                 }
             }
@@ -319,8 +307,7 @@ public class Spelbord extends javax.swing.JPanel {
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        //g.setColor(Color.BLACK);
-        //g.fillRect(0, 0, arrayBreedte * CELL, arrayHoogte * CELL);
+
         for (int i = 0; i < arrayHoogte; i++) {
             for (int j = 0; j < arrayBreedte; j++) {
                 vakje[i][j].draw(g);
@@ -336,9 +323,7 @@ public class Spelbord extends javax.swing.JPanel {
     class KeyboardListener implements KeyListener {
 
         @Override
-        public void keyTyped(KeyEvent ke) {
-            System.out.println("Test: key typed");
-        }
+        public void keyTyped(KeyEvent ke) { }
 
         @Override
         public void keyReleased(KeyEvent ke) {
@@ -349,27 +334,21 @@ public class Spelbord extends javax.swing.JPanel {
                     break;
                 case KeyEvent.VK_UP:
                     pacman.bewegen(Pacman.Richting.NOORD);
-                    System.out.println("noord");
                     break;
                 case KeyEvent.VK_RIGHT:
                     pacman.bewegen(Pacman.Richting.OOST);
-                    System.out.println("oost");
                     break;
                 case KeyEvent.VK_DOWN:
                     pacman.bewegen(Pacman.Richting.ZUID);
-                    System.out.println("zuid");
                     break;
                 case KeyEvent.VK_LEFT:
                     pacman.bewegen(Pacman.Richting.WEST);
-                    System.out.println("west");
                     break;
             }
         }
 
         @Override
-        public void keyPressed(KeyEvent ke) {
-            System.out.println("Test: key typed");
-        }
+        public void keyPressed(KeyEvent ke) { }
 
     }
 

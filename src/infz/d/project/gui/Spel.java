@@ -19,9 +19,11 @@ public class Spel extends javax.swing.JFrame {
      */
     public Spel() {
         initComponents();
+        
         this.spelbord2.setSpel(this);
         this.setTitle("Pacman");
         this.setSize(600, 600);
+        
         btnHerstarten.setEnabled(false);
         lblScore.setText("Score: " + punten);
         lblLevens.setText("Levens: " + levens);
@@ -114,6 +116,7 @@ public class Spel extends javax.swing.JFrame {
     private void btnStartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStartActionPerformed
         System.out.println("Start");
         this.spelbord2.start();
+        
         btnStart.setEnabled(false);
         btnHerstarten.setEnabled(true);
     }//GEN-LAST:event_btnStartActionPerformed
@@ -128,15 +131,14 @@ public class Spel extends javax.swing.JFrame {
 
     public void setScore(int punten) {
         this.punten += punten;
-        String puntenString = Integer.toString(this.punten);
         
-        lblScore.setText("Score: "  + puntenString);
+        lblScore.setText("Score: "  + this.punten);
     }
     
     public void resetScore() {
         this.punten = 0;
-        String puntenString = Integer.toString(this.punten);
-        lblScore.setText("Score: " + puntenString);
+        
+        lblScore.setText("Score: " + punten);
 
     }
 
@@ -146,17 +148,17 @@ public class Spel extends javax.swing.JFrame {
             spelbord2.herstart();
         } else {
             this.levens += levens;
-            String levensString = Integer.toString(this.levens);
 
-            lblLevens.setText("Levens: " + levensString);
+            lblLevens.setText("Levens: " + levens);
         }
     }
 
     public void resetLevens() {
         this.levens = 3;
-        String levensString = Integer.toString(this.levens);
-        lblLevens.setText("Levens: " + levensString);
+        
+        lblLevens.setText("Levens: " + levens);
     }
+    
     /**
      * @param args the command line arguments
      */

@@ -13,12 +13,13 @@ import java.awt.Graphics;
  * @author Method
  */
 public abstract class SpelElement {
-    public final int CELL = 50;
-    public int punten = 0;
-    Vakje vakje;
-    public SpelElement() {
-        
-    }
+    public final int        CELL = 50;
+    public int              punten = 0;
+    public int              row;
+    public int              column;
+    public Vakje            vakje;
+    
+    public SpelElement() { }
     
     public int getPunten() {
         return punten;

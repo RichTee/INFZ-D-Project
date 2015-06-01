@@ -7,8 +7,10 @@ package infz.d.project.gui;
 
 import java.awt.Color;
 import java.awt.Graphics;
+
 import java.util.ArrayList;
 import java.util.Random;
+
 import sun.java2d.loops.FillRect;
 
 /**
@@ -16,23 +18,24 @@ import sun.java2d.loops.FillRect;
  * @author Method
  */
 public class Vakje {
-    int xPositie;
-    int yPositie;
-    String element;
-    ArrayList<Vakje> buurVakje = new ArrayList<>();
-    ArrayList<SpelElement> spelElementList = new ArrayList<>();
-    Spelbord spelbord;
-    Muur muur;
-    Spookje spookje;
-    Pacman pacman;
-    Bolletje bolletje;
-    Superbolletje superbolletje;
+    private int                     xPositie;
+    private int                     yPositie;
+    private String                  element;
+    private ArrayList<Vakje>        buurVakje = new ArrayList<>();
+    private ArrayList<SpelElement>  spelElementList = new ArrayList<>();
+    private final Spelbord          spelbord;
+    private Muur                    muur;
+    private Spookje                 spookje;
+    private Pacman                  pacman;
+    private Bolletje                bolletje;
+    private Superbolletje           superbolletje;
     
     public Vakje(int xPositie, int yPositie, String element, Spelbord spelBord) {
         this.xPositie = xPositie;
         this.yPositie = yPositie;
         this.element = element;
         this.spelbord = spelBord;
+        
         vulSpelElementList();
     }
 
@@ -41,7 +44,6 @@ public class Vakje {
     }
 
     public void pacmanRichting(int xpos, int ypos) {
-        
         xpos = xpos + xPositie;
         ypos = ypos + yPositie;
         
@@ -59,7 +61,6 @@ public class Vakje {
     private void checkElement(Vakje vakje){
         if (vakje.getElement().equals("bolletje"))
         {
-            System.out.println("BOLLETJE");
             spelbord.setSpelInformatie(vakje.getSpelElement().getPunten(), 0, "bolletje");
             vakje.setElement(this.getElement(), pacman);
             this.setElement("pad", null);
@@ -80,7 +81,6 @@ public class Vakje {
             spelbord.tekenOpnieuw();
 
         } else if (vakje.getElement().equals("spookje") && pacman.getKracht() == true) {
-            System.out.println("SPOOKJE");
             spelbord.setSpelInformatie(vakje.getSpelElement().getPunten(), 0, "");
             vakje.setElement(this.getElement(), pacman);
             this.setElement("pad", null);
@@ -95,6 +95,7 @@ public class Vakje {
 
         }
     }
+    
     // return of vakje een muur
     public boolean isMuur() {
         if (element.equals("muur")) {
@@ -143,17 +144,20 @@ public class Vakje {
     
     
     public SpelElement getSpelElement(){
-        if(element.equals("bolletje")){
-        return bolletje; // Moet globaal, SpelElement, niet specifiek.
-        }
-        else if(element.equals("superbolletje")){
-        return superbolletje;
-        }
-        else if(element.equals("spookje")){
-        return spookje;
-        }
-        else return null;
+        if(element.equals("bolletje"))
+            return bolletje; // Moet globaal, SpelElement, niet specifiek.
+        else if(element.equals("superbolletje"))
+            return superbolletje;
+        else if(element.equals("spookje"))
+            return spookje;
+        else if(element.equals("pacman"))
+            return pacman;
+        else if (element.equals("muur"))
+            return muur;
+        else
+            return null;
     }
+    
     // Logischer in Spelbord voor minder Memory intake en makkelijkere toegang.
     private void vulSpelElementList() {
         muur = new Muur(this);
@@ -172,8 +176,6 @@ public class Vakje {
 
     // Draw Logic | Vakje moet zich kleuren op basis van inhoud.
     public void draw(Graphics g) {
-//       vulSpelElementList();   // We vullen een array met classes erin
-
         switch (element) {
             case "pad":
                 // g.setColor(Color.orange);

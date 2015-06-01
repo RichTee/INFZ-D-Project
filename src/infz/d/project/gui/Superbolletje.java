@@ -13,8 +13,6 @@ import java.awt.Graphics;
  * @author Sebastiaan
  */
 public class Superbolletje extends SpelElement {
-    private int row;
-    private int column;
     
     public Superbolletje(Vakje vakje){
     this.vakje = vakje;

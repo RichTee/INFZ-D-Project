@@ -7,10 +7,13 @@
 package infz.d.project.gui;
 
 import java.awt.Graphics;
+
 import java.io.File;
 import java.io.IOException;
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import javax.imageio.ImageIO;
 
 /**
@@ -18,8 +21,6 @@ import javax.imageio.ImageIO;
  * @author Method
  */
 public class Spookje extends Poppetje {
-    private int row;
-    private int column;
     
     public Spookje(Vakje vakje) {
         this.vakje = vakje;
@@ -30,11 +31,11 @@ public class Spookje extends Poppetje {
     
     @Override
     public void draw(Graphics g) {
-        row = vakje.getXPositie();
-        column = vakje.getYPositie();
+        this.row = vakje.getXPositie();
+        this.column = vakje.getYPositie();
 
         try {
-            g.drawImage(ImageIO.read(new File("afbeelding/Spookje.png")), column * CELL, row * CELL, CELL, CELL, null);
+            g.drawImage(ImageIO.read(new File("afbeelding/Spookje.png")), this.column * CELL, this.row * CELL, CELL, CELL, null);
         } catch (IOException ex) {
             Logger.getLogger(Pacman.class.getName()).log(Level.SEVERE, null, ex);
         }
