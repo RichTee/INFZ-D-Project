@@ -7,6 +7,7 @@
 package infz.d.project.gui;
 
 import java.awt.Graphics;
+import java.awt.image.BufferedImage;
 
 /**
  *
@@ -18,7 +19,7 @@ public abstract class SpelElement {
     public int              row;
     public int              column;
     public Vakje            vakje;
-    
+
     public SpelElement() { }
     
     public int getPunten() {

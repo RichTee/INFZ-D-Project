@@ -29,6 +29,7 @@ public class Vakje {
     private Pacman                  pacman;
     private Bolletje                bolletje;
     private Superbolletje           superbolletje;
+    public  Kers                    kers;
     
     public Vakje(int xPositie, int yPositie, String element, Spelbord spelBord) {
         this.xPositie = xPositie;
@@ -65,36 +66,42 @@ public class Vakje {
         if (vakje.getElement().equals("bolletje"))
         {
             spelbord.setSpelInformatie(vakje.getSpelElement().getPunten(), 0, "bolletje");
+            spelbord.maakKers();
             vakje.setElement(this.getElement(), pacman);
             this.setElement("pad", null);
             pacman.setVakje(vakje);
-            spelbord.tekenOpnieuw();
+            spelbord.tekenOpnieuw(this.getXPositie(), this.getYPositie());
 
         } else if (vakje.getElement().equals("superbolletje")) {
             spelbord.geefPacmanSuperkracht();
             vakje.setElement(this.getElement(), pacman);
             this.setElement("pad", null);
             pacman.setVakje(vakje);
-            spelbord.tekenOpnieuw();
-
+            spelbord.tekenOpnieuw(this.getXPositie(), this.getYPositie());
+        } else if (vakje.getElement().equals("kers")){
+            spelbord.setSpelInformatie(vakje.getSpelElement().getPunten(), 0, "kers");
+            vakje.setElement(this.getElement(), null);
+            this.setElement("pad", null);
+            pacman.setVakje(vakje);
+            spelbord.tekenOpnieuw(this.getXPositie(), this.getYPositie());
         } else if (vakje.getElement().equals("pad")) {
             vakje.setElement(this.getElement(), null);
             this.setElement("pad", null);
             pacman.setVakje(vakje);
-            spelbord.tekenOpnieuw();
+            spelbord.tekenOpnieuw(this.getXPositie(), this.getYPositie());
 
         } else if (vakje.getElement().equals("spookje") && pacman.getKracht() == true) {
             spelbord.setSpelInformatie(vakje.getSpelElement().getPunten(), 0, "");
             vakje.setElement(this.getElement(), pacman);
             this.setElement("pad", null);
             pacman.setVakje(vakje);
-            spelbord.tekenOpnieuw();
+            spelbord.tekenOpnieuw(this.getXPositie(), this.getYPositie());
 
         } else if (vakje.getElement().equals("spookje") && pacman.getKracht() == false) {
             System.out.println("VERLOREN");
             spelbord.setSpelInformatie(0, -1, "");
             spelbord.resetPoppetje();
-            spelbord.tekenOpnieuw();
+            spelbord.tekenOpnieuw(this.getXPositie(), this.getYPositie());
 
         }
     }
@@ -140,6 +147,9 @@ public class Vakje {
             } else if (element.equals("superbolletje")) {
                 this.element = element;
                 spelElementList.add(spelElement);
+            } else if (element.equals("kers")){
+                this.element = element;
+                spelElementList.add(spelElement);
             }
             // Andere SpelElementen later.
         }
@@ -151,6 +161,8 @@ public class Vakje {
             return bolletje; // Moet globaal, SpelElement, niet specifiek.
         else if(element.equals("superbolletje"))
             return superbolletje;
+        else if(element.equals("kers"))
+            return kers;
         else if(element.equals("spookje"))
             return spookje;
         else if(element.equals("pacman"))
@@ -168,13 +180,14 @@ public class Vakje {
         pacman = new Pacman(this);
         bolletje = new Bolletje(this);
         superbolletje = new Superbolletje(this);
-      
+        kers = new Kers(this);
+        
         spelElementList.add(muur);          // 1
         spelElementList.add(bolletje);      // 2
         spelElementList.add(superbolletje); // 3
         spelElementList.add(spookje);       // 4
         spelElementList.add(pacman);        // 5
-       
+        spelElementList.add(kers);          // 6
     }
 
     // Draw Logic | Vakje moet zich kleuren op basis van inhoud.
@@ -209,6 +222,10 @@ public class Vakje {
                     pacman.draw(g);
                 }
                 break;
+            case "kers":
+                if (spelElementList.contains(kers)){
+                    kers.draw(g);
+                }
             default:
                 break;
         }

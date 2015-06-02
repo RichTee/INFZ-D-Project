@@ -8,6 +8,7 @@ package infz.d.project.gui;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
@@ -80,7 +81,7 @@ public class Pacman extends Poppetje {
         
         this.row = vakje.getXPositie();
         this.column = vakje.getYPositie();
-
+        
         try {
             g.drawImage(ImageIO.read(new File(imgPath)), column * CELL, row * CELL, 50, 50, null);
         } catch (IOException ex) {

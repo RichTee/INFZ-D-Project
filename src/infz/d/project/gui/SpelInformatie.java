@@ -37,7 +37,6 @@ public class SpelInformatie {
     }
     
     public void setLevens(int leven){
-        System.out.println("Called");
         spel.setLevens(leven);
     }
     
@@ -57,9 +56,40 @@ public class SpelInformatie {
         }
     }
 
-    public void checkKers() {
-        if (this.huidigeAantalBolletjes == ((this.totaalAantalBolletjes / 2) + 1)) {
-            System.out.println("KERS");
+    public boolean checkKers() {
+        if (checkEvenAantalBolletjes()) {
+            if (controleerRechtOpKers(0)) {     //indien het totaal aantal bolletjes oneven is en het getal gedeeld wordt door 2 dan rond java naar beneden af. 
+                                                //vandaar dat we er 1 bij op tellen. anders verschijnt er voor de speler al een kers na 1 bolletje minder dan de helft
+                return true;
+
+            } else {
+                return false;
+            }
+        } else {
+            if (controleerRechtOpKers(1)) {
+                return true;
+
+            } else {
+                return false;
+            }
+        }
+
+    }
+
+    private boolean checkEvenAantalBolletjes() {
+        if (this.totaalAantalBolletjes % 2 == 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private boolean controleerRechtOpKers(int getal) {
+        if (this.huidigeAantalBolletjes == ((this.totaalAantalBolletjes / 2)) + getal) {
+            return true;
+        }
+        else {
+            return false;
         }
     }
 

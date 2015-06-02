@@ -15,7 +15,6 @@ public abstract class Poppetje extends SpelElement{
     public Poppetje() { }
     
     public enum Richting {
-
         NOORD,
         OOST,
         ZUID,

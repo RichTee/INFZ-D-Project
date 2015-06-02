@@ -22,7 +22,7 @@ public class Spel extends javax.swing.JFrame {
         
         this.spelbord2.setSpel(this);
         this.setTitle("Pacman");
-        this.setSize(600, 600);
+        this.setSize(850, 850);
         
         btnHerstarten.setEnabled(false);
         lblScore.setText("Score: " + punten);
@@ -149,7 +149,7 @@ public class Spel extends javax.swing.JFrame {
         } else {
             this.levens += levens;
 
-            lblLevens.setText("Levens: " + levens);
+            lblLevens.setText("Levens: " + this.levens);
         }
     }
 

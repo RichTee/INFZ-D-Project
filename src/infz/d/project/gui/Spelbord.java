@@ -10,15 +10,13 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-
 import java.io.File;
 import java.io.FileNotFoundException;
-
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.Scanner;
 import java.util.Timer;
 import java.util.TimerTask;
-
 import javax.swing.BorderFactory;
 import javax.swing.border.Border;
 
@@ -29,9 +27,12 @@ import javax.swing.border.Border;
 public class Spelbord extends javax.swing.JPanel {
     private SpelInformatie      spelInformatie;
     private Pacman              pacman;
+    private Kers                kers;
     private Spel                spel;
     private Timer               tijd;
     private boolean             timerIsBezig = false;
+    private boolean             repaintIsBezig = false;
+    private int                 counter = 0;
     private int                 xPos, yPos; // Positie
     private int                 arrayBreedte, arrayHoogte; // Cell dimensies
     private int                 seconden = 0;
@@ -226,6 +227,41 @@ public class Spelbord extends javax.swing.JPanel {
         
     }
     
+    public void maakKers() {
+        ArrayList<Vakje> legeVakjes = new ArrayList<Vakje>();
+
+        if (spelInformatie.checkKers()) {
+            for (int i = 0; i < arrayHoogte; i++) {
+                for (int j = 0; j < arrayBreedte; j++) {
+                    if (vakje[i][j].getElement().equals("pad")) {
+                        legeVakjes.add(vakje[i][j]);
+
+                    }
+                }
+            }
+ 
+            int lengteList = legeVakjes.size();
+            int randomGetal = getRandomIndex(lengteList);
+            int XPositie = legeVakjes.get(randomGetal).getXPositie();
+            int YPositie = legeVakjes.get(randomGetal).getYPositie();
+            
+            vakje[XPositie][YPositie].setElement("kers", kers);
+            kers = (Kers) vakje[XPositie][YPositie].getSpelElement();
+            kers.setVakje(vakje[XPositie][YPositie]);
+            
+            legeVakjes.clear();
+
+        }
+    }
+
+
+  private int getRandomIndex(int lengte)
+   {
+   Random rand = new Random();
+   int randomGetal = rand.nextInt(lengte);
+   return randomGetal;
+   }
+    
     // in pacman zelf zetten
     public void geefPacmanSuperkracht(){
         pacman.setKracht(true);
@@ -294,12 +330,11 @@ public class Spelbord extends javax.swing.JPanel {
             for (int j = 0; j < arrayBreedte; j++) {
                 if(vakje[i][j].getElement().equals("pacman")){
                     pacman = (Pacman) vakje[i][j].getSpelElement();
-                    pacman.getVakje().getXPositie();
                 }
             }
         }
     }
-    public void tekenOpnieuw(){
+    public void tekenOpnieuw(int xPositie, int yPositie){
         repaint();
     }
 
@@ -307,12 +342,13 @@ public class Spelbord extends javax.swing.JPanel {
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-
+     
         for (int i = 0; i < arrayHoogte; i++) {
             for (int j = 0; j < arrayBreedte; j++) {
                 vakje[i][j].draw(g);
             }
         }
+
     }
 
     // Makkelijk info halen uit een rij en kolom van vakjesInhoud.
