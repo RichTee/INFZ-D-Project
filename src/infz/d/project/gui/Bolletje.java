@@ -32,8 +32,11 @@ public class Bolletje extends SpelElement {
         row = vakje.getXPositie();
         column = vakje.getYPositie();
 
-        g.setColor(Color.YELLOW);
-        g.fillOval(column * CELL, row * CELL, CELL / 2, CELL / 2);
+        try {
+            g.drawImage(ImageIO.read(new File("afbeelding/bolletje.png")), column * CELL, row * CELL, 50, 50, null);
+        } catch (IOException ex) {
+            Logger.getLogger(Pacman.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
     }
 }

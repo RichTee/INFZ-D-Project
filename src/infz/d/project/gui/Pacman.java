@@ -22,9 +22,10 @@ public class Pacman extends Poppetje {
     private boolean heeftSuperKracht = false;
     private final int STAP = 1;
     private final int STIL = 0;
-    
+    private String imgPath = "";
     public Pacman(Vakje vak) {
         this.vakje = vak;
+        this.imgPath = "afbeelding/PacmanOOST.png"; 
     }
     
     public void setKracht(boolean kracht){
@@ -55,15 +56,19 @@ public class Pacman extends Poppetje {
         switch (richting) {
             case NOORD:
                 vakje.pacmanRichting(-STAP, STIL);
+                this.imgPath = "afbeelding/PacmanNOORD.png";
                 break;
             case OOST:
                 vakje.pacmanRichting(STIL, STAP);
+                 this.imgPath = "afbeelding/PacmanOOST.png";
                 break;
             case ZUID:
                 vakje.pacmanRichting(STAP, STIL);
+                 this.imgPath = "afbeelding/PacmanZUID.png";
                 break;
             case WEST:
                 vakje.pacmanRichting(STIL, -STAP);
+                 this.imgPath = "afbeelding/PacmanWEST.png";
                 break;
             default:
                 break;
@@ -77,7 +82,7 @@ public class Pacman extends Poppetje {
         this.column = vakje.getYPositie();
 
         try {
-            g.drawImage(ImageIO.read(new File("afbeelding/Pacman_1.png")), this.column * CELL, this.row * CELL, 50, 50, null);
+            g.drawImage(ImageIO.read(new File(imgPath)), column * CELL, row * CELL, 50, 50, null);
         } catch (IOException ex) {
             Logger.getLogger(Pacman.class.getName()).log(Level.SEVERE, null, ex);
         }

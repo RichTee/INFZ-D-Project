@@ -10,6 +10,7 @@ import java.awt.Graphics;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Random;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -27,7 +28,26 @@ public class Spookje extends Poppetje {
         this.punten = 200;
     }
     
-    public void bewegen(Richting richting) { /* rand bewegen */}
+    public void bewegen(Richting richting) {
+        // Interval vereist zodat ze niet sneller lopen dan mogelijk, bijv 3 vakjes per x seconden.
+        Random rand = new Random();
+        int tempNummer = rand.nextInt(4) + 1;
+        
+        switch(tempNummer){
+            case 1:
+                // Even niks callen omdat spookjes te snel bewegen..
+                break;
+            case 2:
+                break;
+            case 3:
+                break;
+            case 4:
+                break;
+            default:
+                System.out.println("Tempnummer is wrong");
+                break;
+        }
+    }
     
     @Override
     public void draw(Graphics g) {
@@ -35,7 +55,7 @@ public class Spookje extends Poppetje {
         this.column = vakje.getYPositie();
 
         try {
-            g.drawImage(ImageIO.read(new File("afbeelding/Spookje.png")), this.column * CELL, this.row * CELL, CELL, CELL, null);
+            g.drawImage(ImageIO.read(new File("afbeelding/Spookje1.png")), this.column * CELL, this.row * CELL, CELL, CELL, null);
         } catch (IOException ex) {
             Logger.getLogger(Pacman.class.getName()).log(Level.SEVERE, null, ex);
         }

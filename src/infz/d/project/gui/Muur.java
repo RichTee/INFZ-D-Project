@@ -8,8 +8,13 @@ package infz.d.project.gui;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.io.File;
+import java.io.IOException;
 
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 
 /**
  *
@@ -28,7 +33,10 @@ public class Muur extends SpelElement {
         row = vakje.getXPositie();
         column = vakje.getYPositie();
 
-        g.setColor(muurKleur);
-        g.fillRect(column * CELL, row * CELL, CELL, CELL);  
+        try {
+            g.drawImage(ImageIO.read(new File("afbeelding/muur.png")), column * CELL, row * CELL, 50, 50, null);
+        } catch (IOException ex) {
+            Logger.getLogger(Pacman.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }

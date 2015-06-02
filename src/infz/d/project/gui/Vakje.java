@@ -59,6 +59,9 @@ public class Vakje {
     }
 
     private void checkElement(Vakje vakje){
+        // We moeten onderscheid maken tussen spookje en andere spelElementen.
+        // Omdat spookje geen pad mag neer zetten, en 2 elementen in een vak kunnen zitten.
+        // ArrayList van max 5(4 spoken en 1 ander spelElement)
         if (vakje.getElement().equals("bolletje"))
         {
             spelbord.setSpelInformatie(vakje.getSpelElement().getPunten(), 0, "bolletje");
@@ -178,8 +181,8 @@ public class Vakje {
     public void draw(Graphics g) {
         switch (element) {
             case "pad":
-                // g.setColor(Color.orange);
-                // g.fillRect(yPositie * 50/*yPositie*/, xPositie * 50/*xPositie*/, 50, 50);
+                g.setColor(Color.decode("#000000"));
+                g.fillRect(yPositie * 50/*yPositie*/, xPositie * 50/*xPositie*/, 50, 50);
                 break;
             case "muur":
                 if (spelElementList.contains(muur)) {
