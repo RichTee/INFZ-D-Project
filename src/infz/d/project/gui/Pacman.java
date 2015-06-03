@@ -78,7 +78,6 @@ public class Pacman extends Poppetje {
 
     @Override
     public void draw(Graphics g) {
-        
         this.row = vakje.getXPositie();
         this.column = vakje.getYPositie();
         

@@ -255,12 +255,13 @@ public class Spelbord extends javax.swing.JPanel {
     }
 
 
-  private int getRandomIndex(int lengte)
-   {
-   Random rand = new Random();
-   int randomGetal = rand.nextInt(lengte);
-   return randomGetal;
-   }
+    private int getRandomIndex(int lengte)
+    {
+        Random rand = new Random();
+        int randomGetal = rand.nextInt(lengte);
+    
+        return randomGetal;
+    }
     
     // in pacman zelf zetten
     public void geefPacmanSuperkracht(){
@@ -335,6 +336,7 @@ public class Spelbord extends javax.swing.JPanel {
         }
     }
     public void tekenOpnieuw(int xPositie, int yPositie){
+        revalidate();
         repaint();
     }
 
@@ -342,13 +344,11 @@ public class Spelbord extends javax.swing.JPanel {
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-     
-        for (int i = 0; i < arrayHoogte; i++) {
-            for (int j = 0; j < arrayBreedte; j++) {
-                vakje[i][j].draw(g);
+            for (int i = 0; i < arrayHoogte; i++) {
+                for (int j = 0; j < arrayBreedte; j++) {
+                    vakje[i][j].draw(g);
+                }
             }
-        }
-
     }
 
     // Makkelijk info halen uit een rij en kolom van vakjesInhoud.
@@ -364,11 +364,12 @@ public class Spelbord extends javax.swing.JPanel {
         @Override
         public void keyReleased(KeyEvent ke) {
             getPacmanHuidigePositie();
-            
+            int count = 0;
             switch (ke.getKeyCode()) {
                 case KeyEvent.VK_R:
                     break;
                 case KeyEvent.VK_UP:
+                    System.out.println("Noord" + count++);
                     pacman.bewegen(Pacman.Richting.NOORD);
                     break;
                 case KeyEvent.VK_RIGHT:
