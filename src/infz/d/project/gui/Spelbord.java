@@ -336,7 +336,6 @@ public class Spelbord extends javax.swing.JPanel {
         }
     }
     public void tekenOpnieuw(int xPositie, int yPositie){
-        revalidate();
         repaint();
     }
 
@@ -344,9 +343,10 @@ public class Spelbord extends javax.swing.JPanel {
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-            for (int i = 0; i < arrayHoogte; i++) {
-                for (int j = 0; j < arrayBreedte; j++) {
-                    vakje[i][j].draw(g);
+            for (Vakje[] row : vakje) {
+                for (Vakje element : row) {
+                    //vakje[i][j].draw(g);
+                    element.draw(g);
                 }
             }
     }
@@ -364,12 +364,10 @@ public class Spelbord extends javax.swing.JPanel {
         @Override
         public void keyReleased(KeyEvent ke) {
             getPacmanHuidigePositie();
-            int count = 0;
             switch (ke.getKeyCode()) {
                 case KeyEvent.VK_R:
                     break;
                 case KeyEvent.VK_UP:
-                    System.out.println("Noord" + count++);
                     pacman.bewegen(Pacman.Richting.NOORD);
                     break;
                 case KeyEvent.VK_RIGHT:
