@@ -13,36 +13,59 @@ import java.util.TimerTask;
  * @author Sebastiaan
  */
 public class StopWatch {
-    Spelbord bord;
-
+    private Spel                spel;
+    private Spelbord            spelbord;
+    private Timer               tijd;
+    private boolean             timerIsBezig = false;
+    
     private int seconden = 0;
 
-    public StopWatch() { }
+    public StopWatch(Spelbord spelbord) { 
+        this.spelbord = spelbord;
+    }
     
     
-    public void maakSuperbolletjeTimer(){
-    Timer tijd = new Timer();
-
+    public void pacmanOnverslaanbaarTimer(Pacman pacman){
+        int delay = 1000;
+        
         TimerTask task = new TimerTask() {
-
             public void run() {
-
-                System.out.println("yeahh");
                 seconden++;
                 System.out.println(seconden);
 
                 if (seconden == 10) {
+                    timerIsBezig = false;
+                    pacman.setOnverslaanbaar(false);
+                    seconden = 0;
                     tijd.cancel();
                     tijd.purge();
-
+                    System.out.println("Klaar");
                 }
             }
-
         };
-        tijd.scheduleAtFixedRate(task, 0, 1000);
 
+        if (timerIsBezig) {
+            tijd.cancel();
+            tijd.purge();
+            seconden = 0;
+            tijd = new Timer();
+            tijd.scheduleAtFixedRate(task, 0, delay);
+
+        } else {
+            timerIsBezig = true;
+            pacman.setOnverslaanbaar(true);
+            tijd = new Timer();
+            tijd.scheduleAtFixedRate(task, 0, delay);
+        }
     }
         
     
-
+    public void stopTimer() {
+        if (timerIsBezig) {
+            tijd.cancel();
+            tijd.purge();
+            timerIsBezig = false;
+            seconden = 0;
+        }
+    }
 }

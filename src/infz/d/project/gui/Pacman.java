@@ -21,19 +21,18 @@ import javax.imageio.ImageIO;
  */
 public class Pacman extends Poppetje {
     private boolean heeftSuperKracht = false;
-    private final int STAP = 1;
-    private final int STIL = 0;
     private String imgPath = "";
     public Pacman(Vakje vak) {
         this.vakje = vak;
         this.imgPath = "afbeelding/PacmanOOST.png"; 
     }
     
-    public void setKracht(boolean kracht){
+    public void setOnverslaanbaar(boolean kracht){
         this.heeftSuperKracht = kracht;
     }
     
     public boolean getKracht(){
+        System.out.println("Kracht: " + heeftSuperKracht);
         return heeftSuperKracht;
     }
 
@@ -56,19 +55,19 @@ public class Pacman extends Poppetje {
     public void bewegen(Richting richting) {
         switch (richting) {
             case NOORD:
-                vakje.pacmanRichting(-STAP, STIL);
+                vakje.pacmanRichting("NOORD");
                 this.imgPath = "afbeelding/PacmanNOORD.png";
                 break;
             case OOST:
-                vakje.pacmanRichting(STIL, STAP);
+                vakje.pacmanRichting("OOST");
                  this.imgPath = "afbeelding/PacmanOOST.png";
                 break;
             case ZUID:
-                vakje.pacmanRichting(STAP, STIL);
+                vakje.pacmanRichting("ZUID");
                  this.imgPath = "afbeelding/PacmanZUID.png";
                 break;
             case WEST:
-                vakje.pacmanRichting(STIL, -STAP);
+                vakje.pacmanRichting("WEST");
                  this.imgPath = "afbeelding/PacmanWEST.png";
                 break;
             default:

@@ -48,18 +48,26 @@ public class Vakje extends javax.swing.JPanel {
         buurVakje.add(vakje);
     }
 
-    public void pacmanRichting(int xpos, int ypos) {
-        xpos = xpos + xPositie;
-        ypos = ypos + yPositie;
-        
-        for (Vakje vakje : buurVakje) {
-            if (vakje.getXPositie() == xpos) {
-                if (vakje.getYPositie() == ypos) {
-                    if (!vakje.isMuur()) {
-                        checkElement(vakje);
-                    }
-                }
-            }
+    public void pacmanRichting(String richting) {
+        /*
+        * NOORD = 0
+        * OOST  = 1
+        * ZUID  = 2
+        * WEST  = 3
+        */
+        switch(richting) {
+            case "NOORD":
+                checkElement(buurVakje.get(0));
+                break;
+            case "OOST":
+                checkElement(buurVakje.get(1));
+                break;
+            case "ZUID":
+                checkElement(buurVakje.get(2));
+                break;
+            case "WEST":
+                checkElement(buurVakje.get(3));
+                break;
         }
     }
 
@@ -68,11 +76,13 @@ public class Vakje extends javax.swing.JPanel {
         // Omdat spookje geen pad mag neer zetten, en 2 elementen in een vak kunnen zitten.
         // ArrayList van max 5(4 spoken en 1 ander spelElement)
         switch(vakje.getElement()){
+            case "muur":
+                break;
             case "pad":
                 vakje.setElement(this.getElement(), null);
                 this.setElement("pad", null);
                 pacman.setVakje(vakje);
-                spelbord.tekenOpnieuw(this.getXPositie(), this.getYPositie());
+                spelbord.tekenOpnieuw();
                 //tekenOpnieuw();
                 //vakje.tekenOpnieuw();
                 break;
@@ -82,16 +92,17 @@ public class Vakje extends javax.swing.JPanel {
                 vakje.setElement(this.getElement(), pacman);
                 this.setElement("pad", null);
                 pacman.setVakje(vakje);
-                spelbord.tekenOpnieuw(this.getXPositie(), this.getYPositie());
+                spelbord.tekenOpnieuw();
                 //tekenOpnieuw();
                 //vakje.tekenOpnieuw();
                 break;
             case "superbolletje":
-                spelbord.geefPacmanSuperkracht();
+                spelbord.setSpelInformatie(vakje.getSpelElement().getPunten(), 0, "bolletje");
                 vakje.setElement(this.getElement(), pacman);
                 this.setElement("pad", null);
                 pacman.setVakje(vakje);
-                spelbord.tekenOpnieuw(this.getXPositie(), this.getYPositie());
+                spelbord.geefPacmanSuperkracht(pacman);
+                spelbord.tekenOpnieuw();
                 //tekenOpnieuw();
                 //vakje.tekenOpnieuw();
                 break;
@@ -100,7 +111,7 @@ public class Vakje extends javax.swing.JPanel {
                 vakje.setElement(this.getElement(), null);
                 this.setElement("pad", null);
                 pacman.setVakje(vakje);
-                spelbord.tekenOpnieuw(this.getXPositie(), this.getYPositie());
+                spelbord.tekenOpnieuw();
                 //tekenOpnieuw();
                 //vakje.tekenOpnieuw();
                 break;
@@ -110,13 +121,13 @@ public class Vakje extends javax.swing.JPanel {
                     vakje.setElement(this.getElement(), pacman);
                     this.setElement("pad", null);
                     pacman.setVakje(vakje);
-                    spelbord.tekenOpnieuw(this.getXPositie(), this.getYPositie());
+                    spelbord.tekenOpnieuw();
 
                 } else if (!pacman.getKracht()) {
                     System.out.println("VERLOREN");
                     spelbord.setSpelInformatie(0, -1, "");
                     spelbord.resetPoppetje();
-                    spelbord.tekenOpnieuw(this.getXPositie(), this.getYPositie());
+                    spelbord.tekenOpnieuw();
 
                 }
                 //spelbord.tekenOpnieuw(this.getXPositie(), this.getYPositie());
@@ -124,17 +135,7 @@ public class Vakje extends javax.swing.JPanel {
                 //vakje.tekenOpnieuw();
                 break;
             default:
-                System.out.println("Default switch");
                 break;
-        }
-    }
-    
-    // return of vakje een muur
-    public boolean isMuur() {
-        if (element.equals("muur")) {
-            return true;
-        } else {
-            return false;
         }
     }
 

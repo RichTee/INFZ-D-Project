@@ -29,8 +29,7 @@ public class Spelbord extends javax.swing.JPanel {
     private Pacman              pacman;
     private Kers                kers;
     private Spel                spel;
-    private Timer               tijd;
-    private boolean             timerIsBezig = false;
+    private StopWatch           stopwatch;
     private boolean             repaintIsBezig = false;
     private int                 counter = 0;
     private int                 xPos, yPos; // Positie
@@ -48,10 +47,7 @@ public class Spelbord extends javax.swing.JPanel {
         initComponents();
         
         genereerSpelbordPanelGegevens();
-        
-        KeyListener listener = new KeyboardListener();
-        this.addKeyListener(listener);
-        this.setFocusable(true);
+        this.stopwatch = new StopWatch(this);
     }
 
     // Panel gegevens
@@ -59,7 +55,8 @@ public class Spelbord extends javax.swing.JPanel {
         getSpelbordTxtFile();
         genereerGuiMap();
         isBuur();
-        setPreferredSize(new Dimension(CELL * arrayBreedte, CELL * arrayHoogte));
+        
+        this.setPreferredSize(new Dimension(CELL * arrayBreedte, CELL * arrayHoogte));
         this.setBorder(lineBorder);
     }
 
@@ -68,6 +65,9 @@ public class Spelbord extends javax.swing.JPanel {
         reset();
         
         genereerSpelbordPanelGegevens();
+        
+        KeyListener listener = new KeyboardListener(pacman);
+        this.addKeyListener(listener);
         this.requestFocusInWindow();
     }
     
@@ -75,11 +75,14 @@ public class Spelbord extends javax.swing.JPanel {
         reset();
         
         genereerSpelbordPanelGegevens();
+        
+        KeyListener listener = new KeyboardListener(pacman);
+        this.addKeyListener(listener);
         this.requestFocusInWindow();
     }
  
     public void reset() {
-        stopTimer();
+        stopwatch.stopTimer();
   
         spelInformatie.setTotaalAantalBolletjes(0);
         spelInformatie.reset();
@@ -90,15 +93,6 @@ public class Spelbord extends javax.swing.JPanel {
             vakje[i] = null;
         
         repaint();
-    }
-    
-    private void stopTimer() {
-        if (timerIsBezig) {
-            tijd.cancel();
-            tijd.purge();
-            timerIsBezig = false;
-            seconden = 0;
-        }
     }
 
     // Moet anders kunnen...
@@ -162,6 +156,7 @@ public class Spelbord extends javax.swing.JPanel {
                     case "5":
                         // Pacman
                         vakje[row][column] = new Vakje(row, column, "pacman", this);
+                        pacman = (Pacman) vakje[row][column].getSpelElement();
                         //pacman = new Pacman(vakje[row][column]);
                         break;
                     default:
@@ -264,48 +259,8 @@ public class Spelbord extends javax.swing.JPanel {
     }
     
     // in pacman zelf zetten
-    public void geefPacmanSuperkracht(){
-        pacman.setKracht(true);
-        maakSuperbolletjeTimer();
-    }
-
-    private void maakSuperbolletjeTimer() {
-        int delay = 1000;
-        TimerTask task = new TimerTask() {
-            
-            public void run() {
-                System.out.println("yeahh");
-                seconden++;
-                System.out.println(seconden);
-
-                if (seconden == 10) {
-                    timerIsBezig = false;
-                    zetSuperKrachtUit();
-                    seconden = 0;
-                    tijd.cancel();
-                    tijd.purge();
-                    System.out.println("bezig");
-                }
-            }
-        };
-
-        if (timerIsBezig) {
-            tijd.cancel();
-            tijd.purge();
-            seconden = 0;
-            tijd = new Timer();
-            tijd.scheduleAtFixedRate(task, 0, delay);
-
-        } else {
-            timerIsBezig = true;
-            tijd = new Timer();
-            tijd.scheduleAtFixedRate(task, 0, delay);
-        }
-    }
-
-    
-    private void zetSuperKrachtUit(){
-        pacman.setKracht(false);
+    public void geefPacmanSuperkracht(Pacman pacman){
+        stopwatch.pacmanOnverslaanbaarTimer(pacman);
     }
     
     // Alle bewegende entiteiten moeten op hun eigen plek verschijnen.
@@ -325,17 +280,8 @@ public class Spelbord extends javax.swing.JPanel {
         pacman.setVakje(vakje[yPos][xPos]);
         vakje[yPos][xPos].setElement("pacman", pacman);
     }
-  
-    private void getPacmanHuidigePositie() {
-        for (int i = 0; i < arrayHoogte; i++) {
-            for (int j = 0; j < arrayBreedte; j++) {
-                if(vakje[i][j].getElement().equals("pacman")){
-                    pacman = (Pacman) vakje[i][j].getSpelElement();
-                }
-            }
-        }
-    }
-    public void tekenOpnieuw(int xPositie, int yPositie){
+
+    public void tekenOpnieuw(){
         repaint();
     }
 
@@ -354,37 +300,6 @@ public class Spelbord extends javax.swing.JPanel {
     // Makkelijk info halen uit een rij en kolom van vakjesInhoud.
     private char charAt(int row, int column) {
         return vakjesInhoud.get(row).charAt(column);
-    }
-
-    class KeyboardListener implements KeyListener {
-
-        @Override
-        public void keyTyped(KeyEvent ke) { }
-
-        @Override
-        public void keyReleased(KeyEvent ke) {
-            getPacmanHuidigePositie();
-            switch (ke.getKeyCode()) {
-                case KeyEvent.VK_R:
-                    break;
-                case KeyEvent.VK_UP:
-                    pacman.bewegen(Pacman.Richting.NOORD);
-                    break;
-                case KeyEvent.VK_RIGHT:
-                    pacman.bewegen(Pacman.Richting.OOST);
-                    break;
-                case KeyEvent.VK_DOWN:
-                    pacman.bewegen(Pacman.Richting.ZUID);
-                    break;
-                case KeyEvent.VK_LEFT:
-                    pacman.bewegen(Pacman.Richting.WEST);
-                    break;
-            }
-        }
-
-        @Override
-        public void keyPressed(KeyEvent ke) { }
-
     }
 
     /**
