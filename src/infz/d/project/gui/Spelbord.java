@@ -8,15 +8,15 @@ package infz.d.project.gui;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+
 import java.io.File;
 import java.io.FileNotFoundException;
+
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
-import java.util.Timer;
-import java.util.TimerTask;
+
 import javax.swing.BorderFactory;
 import javax.swing.border.Border;
 
@@ -30,11 +30,8 @@ public class Spelbord extends javax.swing.JPanel {
     private Kers                kers;
     private Spel                spel;
     private StopWatch           stopwatch;
-    private boolean             repaintIsBezig = false;
-    private int                 counter = 0;
     private int                 xPos, yPos; // Positie
     private int                 arrayBreedte, arrayHoogte; // Cell dimensies
-    private int                 seconden = 0;
     private final static int    CELL = 50;
     private Vakje[][]           vakje;
     private ArrayList<String>   vakjesInhoud = new ArrayList<String>();
