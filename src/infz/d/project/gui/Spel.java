@@ -13,7 +13,7 @@ import javax.swing.JOptionPane;
  * @author Method
  */
 public class Spel extends javax.swing.JFrame {
-
+    
     private int punten = 0;
     private int levens = 3;
     /**
@@ -21,8 +21,9 @@ public class Spel extends javax.swing.JFrame {
      */
     public Spel() {
         initComponents();
-        
+      
         this.spelbord2.setSpel(this);
+      
         this.setTitle("Pacman");
         this.setSize(850, 850);
         
@@ -117,6 +118,7 @@ public class Spel extends javax.swing.JFrame {
 
     private void btnStartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStartActionPerformed
         System.out.println("Start");
+
         this.spelbord2.start();
         
         btnStart.setEnabled(false);
@@ -126,6 +128,8 @@ public class Spel extends javax.swing.JFrame {
     private void btnHerstartenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHerstartenActionPerformed
         System.out.println("Herstarten");
         if(!btnStart.isEnabled()) { 
+           spelbord2.level = 0;
+           spelbord2.setLevel(1);
            this.spelbord2.herstart();
            btnStart.setEnabled(false);
         }
@@ -153,12 +157,17 @@ public class Spel extends javax.swing.JFrame {
                     null, options, options[0]);
             resetVerloren(response);
         } else if (invoer.equals("gewonnen")) {
-        JOptionPane.showMessageDialog(null, "U heeft gewonnen!");    
+        JOptionPane.showMessageDialog(null, "U heeft gewonnen!");
+        spelbord2.setLevel(1);
+        this.spelbord2.herstart();
+        
         }
     }
     
     private void resetVerloren(int response) {
         if (response == 0) {
+            spelbord2.level = 0;
+            spelbord2.setLevel(1);
             spelbord2.herstart();
             
         } else {

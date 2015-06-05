@@ -25,6 +25,7 @@ import javax.swing.border.Border;
  * @author Method
  */
 public class Spelbord extends javax.swing.JPanel {
+    private LevelLoader         levelLoader;
     private SpelInformatie      spelInformatie;
     private Pacman              pacman;
     private Kers                kers;
@@ -36,15 +37,21 @@ public class Spelbord extends javax.swing.JPanel {
     private Vakje[][]           vakje;
     private ArrayList<String>   vakjesInhoud = new ArrayList<String>();
     private Border              lineBorder = BorderFactory.createLineBorder(Color.black);
+    public int                 level = 0;
     
     /**
      * Creates new form Spelbord
      */
     public Spelbord() {
         initComponents();
-        
+        setLevel(1);
+        this.levelLoader = new LevelLoader();
         genereerSpelbordPanelGegevens();
         this.stopwatch = new StopWatch(this);
+    }
+    
+    public void setLevel(int level){
+    this.level = this.level + level;
     }
 
     // Panel gegevens
@@ -100,21 +107,21 @@ public class Spelbord extends javax.swing.JPanel {
 
     // Get posities van entiteiten die een spel vormen uit de txt file.
     private void getSpelbordTxtFile() {
-        try {
-            Scanner read = new Scanner(new File("txt/maze.txt"));
-
-            while (read.hasNextLine()) {
-                String line = read.nextLine();
-                vakjesInhoud.add(line);
-            }
-            read.close();
-
+//        try {
+//            Scanner read = new Scanner(new File("txt/maze.txt"));
+//
+//            while (read.hasNextLine()) {
+//                String line = read.nextLine();
+//                vakjesInhoud.add(line);
+//            }
+//            read.close();
+            vakjesInhoud = levelLoader.laadLevel(level);
             arrayHoogte = vakjesInhoud.size();
             arrayBreedte = vakjesInhoud.get(0).length();
 
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+//        } catch (FileNotFoundException e) {
+//            e.printStackTrace();
+//        }
     }
     
     // Genereer de map voor de GUI nadat de TXT is gelezen
