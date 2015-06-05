@@ -143,20 +143,34 @@ public class Spel extends javax.swing.JFrame {
         lblScore.setText("Score: " + punten);
 
     }
-
-    public void setLevens(int levens) {
-        if (this.levens == 1) {
+    
+    public void heeftGewonnenOfVerloren(String invoer) {
+        if (invoer.equals("verloren")) {
             System.out.println("GameOver");
             String[] options = new String[]{"Herstarten", "Stoppen"};
             int response = JOptionPane.showOptionDialog(null, "Wilt u herstarten of stoppen?", "GAME OVER",
                     JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,
                     null, options, options[0]);
-            if (response == 0) {
-                spelbord2.herstart();
+            resetVerloren(response);
+        } else if (invoer.equals("gewonnen")) {
+        JOptionPane.showMessageDialog(null, "U heeft gewonnen!");    
+        }
+    }
+    
+    private void resetVerloren(int response) {
+        if (response == 0) {
+            spelbord2.herstart();
+            
+        } else {
+            this.dispose();
+        }
+    }
+    
+    public void setLevens(int levens) {
+        if (this.levens == 1) {
+            heeftGewonnenOfVerloren("verloren");
+            
 
-            } else {
-                this.dispose();
-            }
         } else {
             this.levens += levens;
 

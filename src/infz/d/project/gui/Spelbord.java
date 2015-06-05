@@ -102,15 +102,10 @@ public class Spelbord extends javax.swing.JPanel {
     private void getSpelbordTxtFile() {
         try {
             Scanner read = new Scanner(new File("txt/maze.txt"));
-            int lineCount = 0;
+
             while (read.hasNextLine()) {
                 String line = read.nextLine();
                 vakjesInhoud.add(line);
-                if (line.contains("5")) {
-                    yPos = lineCount;
-                    xPos = line.indexOf('5');
-                }
-                lineCount++;
             }
             read.close();
 
@@ -210,7 +205,7 @@ public class Spelbord extends javax.swing.JPanel {
     
     public void setSpelInformatie(int score, int levens, String bolletje) {
         if(!bolletje.equals(""))
-            spelInformatie.setScore(score);
+            spelInformatie.setScore(score, bolletje);
         else if(levens == 0)
             spelInformatie.setScoreZonderBolletje(score);
         else

@@ -72,6 +72,7 @@ public class Vakje extends javax.swing.JPanel {
     }
 
     private void checkElement(Vakje vakje){
+        int punten = 0;
         // We moeten onderscheid maken tussen spookje en andere spelElementen.
         // Omdat spookje geen pad mag neer zetten, en 2 elementen in een vak kunnen zitten.
         // ArrayList van max 5(4 spoken en 1 ander spelElement)
@@ -87,41 +88,45 @@ public class Vakje extends javax.swing.JPanel {
                 //vakje.tekenOpnieuw();
                 break;
             case "bolletje":
-                spelbord.setSpelInformatie(vakje.getSpelElement().getPunten(), 0, "bolletje");
+                punten = vakje.getSpelElement().getPunten();
                 spelbord.maakKers();
                 vakje.setElement(this.getElement(), pacman);
                 this.setElement("pad", null);
                 pacman.setVakje(vakje);
                 spelbord.tekenOpnieuw();
+                spelbord.setSpelInformatie(punten, 0, "bolletje");
                 //tekenOpnieuw();
                 //vakje.tekenOpnieuw();
                 break;
             case "superbolletje":
-                spelbord.setSpelInformatie(vakje.getSpelElement().getPunten(), 0, "bolletje");
+                punten = vakje.getSpelElement().getPunten();
                 vakje.setElement(this.getElement(), pacman);
                 this.setElement("pad", null);
                 pacman.setVakje(vakje);
                 spelbord.geefPacmanSuperkracht(pacman);
                 spelbord.tekenOpnieuw();
+                spelbord.setSpelInformatie(punten, 0, "superbolletje");
                 //tekenOpnieuw();
                 //vakje.tekenOpnieuw();
                 break;
             case "kers":
-                spelbord.setSpelInformatie(vakje.getSpelElement().getPunten(), 0, "kers");
+                punten = vakje.getSpelElement().getPunten();
                 vakje.setElement(this.getElement(), null);
                 this.setElement("pad", null);
                 pacman.setVakje(vakje);
                 spelbord.tekenOpnieuw();
+                spelbord.setSpelInformatie(punten, 0, "kers");
                 //tekenOpnieuw();
                 //vakje.tekenOpnieuw();
                 break;
             case "spookje":
                 if (pacman.getKracht()) {
-                    spelbord.setSpelInformatie(vakje.getSpelElement().getPunten(), 0, "");
+                    punten = vakje.getSpelElement().getPunten();
                     vakje.setElement(this.getElement(), pacman);
                     this.setElement("pad", null);
                     pacman.setVakje(vakje);
                     spelbord.tekenOpnieuw();
+                    spelbord.setSpelInformatie(punten, 0, "");
 
                 } else if (!pacman.getKracht()) {
                     System.out.println("VERLOREN");

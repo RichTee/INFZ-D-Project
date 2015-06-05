@@ -25,11 +25,20 @@ public class SpelInformatie {
         this.huidigeAantalBolletjes = this.totaalAantalBolletjes;
     }
     
-    public void setScore(int score){
-        spel.setScore(score);
-        this.huidigeAantalBolletjes--;
-        checkKers();
-        checkOfGewonnen();
+    public void setScore(int score, String element){
+        switch (element) {
+            case "bolletje":
+                this.huidigeAantalBolletjes--;
+                checkKers();
+                checkOfGewonnen();
+                break;
+            case "superbolletje":
+            case "kers":
+                break;
+            default:
+                break;      
+        }
+        spel.setScore(score);   
     }
 
     public void setScoreZonderBolletje(int score){
@@ -51,7 +60,7 @@ public class SpelInformatie {
     
     public void checkOfGewonnen() {
         if (this.huidigeAantalBolletjes == 0) {
-            System.out.println("GEWONNEN");
+            spel.heeftGewonnenOfVerloren("gewonnen");
 
         }
     }
