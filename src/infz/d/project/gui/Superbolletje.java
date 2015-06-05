@@ -21,10 +21,12 @@ import javax.imageio.ImageIO;
  * @author Sebastiaan
  */
 public class Superbolletje extends SpelElement {
+    File afbeelding = new File("afbeelding/superbolletje.png");
     
     public Superbolletje(Vakje vakje){
         this.vakje = vakje;
         this.punten = 10;
+        converteerFileNaarImage(afbeelding);
     }
     
     @Override
@@ -32,12 +34,7 @@ public class Superbolletje extends SpelElement {
         row = vakje.getXPositie();
         column = vakje.getYPositie();
 
-        try {
-            g.drawImage(ImageIO.read(new File("afbeelding/superbolletje.png")), column * CELL, row * CELL, 50, 50, null);
-        } catch (IOException ex) {
-            Logger.getLogger(Pacman.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
+        g.drawImage(this.image, column * CELL, row * CELL, 50, 50, null);
     }
     
 }

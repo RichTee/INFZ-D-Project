@@ -8,6 +8,7 @@ package infz.d.project.gui;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
 
@@ -23,9 +24,11 @@ import javax.imageio.ImageIO;
 public class Muur extends SpelElement {
     //ArrayList<String> lines = new ArrayList<String>();
     private Color muurKleur = Color.decode("#003399");
-    
+    private File afbeelding = new File("afbeelding/muur.png");
+
     public Muur(Vakje vak) {
         this.vakje = vak;
+        converteerFileNaarImage(afbeelding);
     }
     
     @Override
@@ -33,10 +36,6 @@ public class Muur extends SpelElement {
         row = vakje.getXPositie();
         column = vakje.getYPositie();
 
-        try {
-            g.drawImage(ImageIO.read(new File("afbeelding/muur.png")), column * CELL, row * CELL, 50, 50, null);
-        } catch (IOException ex) {
-            Logger.getLogger(Pacman.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        g.drawImage(this.image, column * CELL, row * CELL, 50, 50, null);
     }
 }

@@ -20,10 +20,12 @@ import javax.imageio.ImageIO;
 public class Kers extends SpelElement {
     private int         row;
     private int         column;
-
+    private File afbeelding = new File("afbeelding/kers.png");
+    
     public Kers(Vakje vakje) {
         this.vakje = vakje;
         this.punten = 100;
+        converteerFileNaarImage(afbeelding);
     }
     
     public void setVakje(Vakje vakje) {
@@ -38,12 +40,7 @@ public class Kers extends SpelElement {
     public void draw(Graphics g) {
         row = vakje.getXPositie();
         column = vakje.getYPositie();
-
-        try {
-            g.drawImage(ImageIO.read(new File("afbeelding/kers.png")), column * CELL, row * CELL, 50, 50, null);
-        } catch (IOException ex) {
-            Logger.getLogger(Pacman.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
+        
+        g.drawImage(this.image, column * CELL, row * CELL, 50, 50, null);
     }
 }

@@ -6,6 +6,7 @@
 package infz.d.project.gui;
 
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
@@ -22,9 +23,25 @@ import javax.imageio.ImageIO;
 public class Pacman extends Poppetje {
     private boolean heeftSuperKracht = false;
     private String imgPath = "";
+    private final File afbeeldingNoord = new File("afbeelding/PacmanNoord.png");
+    private final File afbeeldingOost = new File("afbeelding/PacmanOost.png");
+    private final File afbeeldingZuid = new File("afbeelding/PacmanZuid.png");
+    private final File afbeeldingWest = new File("afbeelding/PacmanWest.png");
+    private Image[] afbeeldingPad;
+    
     public Pacman(Vakje vak) {
         this.vakje = vak;
-        this.imgPath = "afbeelding/PacmanOOST.png"; 
+        this.imgPath = "afbeelding/PacmanOOST.png";
+        
+        afbeeldingPad = new Image[4];
+        converteerFileNaarImage(afbeeldingNoord);
+        afbeeldingPad[0] = this.image;
+        converteerFileNaarImage(afbeeldingOost);
+        afbeeldingPad[1] = this.image;
+        converteerFileNaarImage(afbeeldingZuid);
+        afbeeldingPad[2] = this.image;
+        converteerFileNaarImage(afbeeldingWest);
+        afbeeldingPad[3] = this.image;
     }
     
     public void setOnverslaanbaar(boolean kracht){
@@ -56,19 +73,19 @@ public class Pacman extends Poppetje {
         switch (richting) {
             case NOORD:
                 vakje.pacmanRichting("NOORD");
-                this.imgPath = "afbeelding/PacmanNOORD.png";
+                this.setImage(afbeeldingPad[0]);
                 break;
             case OOST:
                 vakje.pacmanRichting("OOST");
-                 this.imgPath = "afbeelding/PacmanOOST.png";
+                 this.setImage(afbeeldingPad[1]);
                 break;
             case ZUID:
                 vakje.pacmanRichting("ZUID");
-                 this.imgPath = "afbeelding/PacmanZUID.png";
+                 this.setImage(afbeeldingPad[2]);
                 break;
             case WEST:
                 vakje.pacmanRichting("WEST");
-                 this.imgPath = "afbeelding/PacmanWEST.png";
+                 this.setImage(afbeeldingPad[3]);
                 break;
             default:
                 break;
@@ -80,11 +97,7 @@ public class Pacman extends Poppetje {
         this.row = vakje.getXPositie();
         this.column = vakje.getYPositie();
         
-        try {
-            g.drawImage(ImageIO.read(new File(imgPath)), column * CELL, row * CELL, 50, 50, null);
-        } catch (IOException ex) {
-            Logger.getLogger(Pacman.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        g.drawImage(this.image, column * CELL, row * CELL, 50, 50, null);
     }
 
     // Moet in speelbord

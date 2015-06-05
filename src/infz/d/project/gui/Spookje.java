@@ -22,10 +22,12 @@ import javax.imageio.ImageIO;
  * @author Method
  */
 public class Spookje extends Poppetje {
+    private File afbeelding = new File("afbeelding/Spookje1.png");
     
     public Spookje(Vakje vakje) {
         this.vakje = vakje;
         this.punten = 200;
+        converteerFileNaarImage(afbeelding);
     }
     
     public void bewegen(Richting richting) {
@@ -54,10 +56,6 @@ public class Spookje extends Poppetje {
         this.row = vakje.getXPositie();
         this.column = vakje.getYPositie();
 
-        try {
-            g.drawImage(ImageIO.read(new File("afbeelding/Spookje1.png")), this.column * CELL, this.row * CELL, CELL, CELL, null);
-        } catch (IOException ex) {
-            Logger.getLogger(Pacman.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        g.drawImage(this.image, column * CELL, row * CELL, 50, 50, null);
     }
 }
