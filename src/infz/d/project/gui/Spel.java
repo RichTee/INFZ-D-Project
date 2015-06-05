@@ -6,6 +6,8 @@
 
 package infz.d.project.gui;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Method
@@ -145,7 +147,16 @@ public class Spel extends javax.swing.JFrame {
     public void setLevens(int levens) {
         if (this.levens == 1) {
             System.out.println("GameOver");
-            spelbord2.herstart();
+            String[] options = new String[]{"Herstarten", "Stoppen"};
+            int response = JOptionPane.showOptionDialog(null, "Wilt u herstarten of stoppen?", "GAME OVER",
+                    JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,
+                    null, options, options[0]);
+            if (response == 0) {
+                spelbord2.herstart();
+
+            } else {
+                this.dispose();
+            }
         } else {
             this.levens += levens;
 
