@@ -37,7 +37,8 @@ public class Spelbord extends javax.swing.JPanel {
     private Vakje[][]           vakje;
     private ArrayList<String>   vakjesInhoud = new ArrayList<String>();
     private Border              lineBorder = BorderFactory.createLineBorder(Color.black);
-    public int                 level = 0;
+    public int                  level = 0;
+    boolean                     startPositie = false;
     
     /**
      * Creates new form Spelbord
@@ -72,7 +73,18 @@ public class Spelbord extends javax.swing.JPanel {
         
         KeyListener listener = new KeyboardListener(pacman);
         this.addKeyListener(listener);
-        this.requestFocusInWindow();
+        this.requestFocusInWindow(); 
+    }
+  
+    public void pauzeer() {
+        if (!spelInformatie.getPauze()) {
+            this.setRequestFocusEnabled(false);
+            spelInformatie.setPauze(true);
+        } else {
+            spel.setTekstPauze();
+            this.requestFocusInWindow();
+            spelInformatie.setPauze(false);
+        }
     }
     
     public void herstart() {
@@ -164,7 +176,7 @@ public class Spelbord extends javax.swing.JPanel {
             }
         }
     }
-    
+  
     // Elk vakje moet zijn buren weten
     public void isBuur() {
         for (int i = 0; i < arrayHoogte; i++) {

@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package infz.d.project.gui;
 
 import javax.swing.JOptionPane;
@@ -13,25 +12,26 @@ import javax.swing.JOptionPane;
  * @author Method
  */
 public class Spel extends javax.swing.JFrame {
-    
+
     private int punten = 0;
     private int levens = 3;
+
     /**
      * Creates new form Spel
      */
     public Spel() {
         initComponents();
-      
+        btnPauzeer.setEnabled(false);
         this.spelbord2.setSpel(this);
-      
+
         this.setTitle("Pacman");
         this.setSize(850, 850);
-        
+
         btnHerstarten.setEnabled(false);
         lblScore.setText("Score: " + punten);
         lblLevens.setText("Levens: " + levens);
+        lblLevel.setText("Level: " + spelbord2.level);
     }
-
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -47,6 +47,8 @@ public class Spel extends javax.swing.JFrame {
         btnHerstarten = new javax.swing.JButton();
         lblScore = new javax.swing.JLabel();
         lblLevens = new javax.swing.JLabel();
+        lblLevel = new javax.swing.JLabel();
+        btnPauzeer = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -79,36 +81,56 @@ public class Spel extends javax.swing.JFrame {
 
         lblLevens.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
 
+        lblLevel.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+
+        btnPauzeer.setText("Pauzeer");
+        btnPauzeer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPauzeerActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(39, 39, 39)
-                .addComponent(btnStart)
-                .addGap(27, 27, 27)
-                .addComponent(btnHerstarten)
-                .addGap(18, 18, 18)
-                .addComponent(lblScore, javax.swing.GroupLayout.DEFAULT_SIZE, 108, Short.MAX_VALUE)
-                .addGap(156, 156, 156)
-                .addComponent(lblLevens, javax.swing.GroupLayout.DEFAULT_SIZE, 105, Short.MAX_VALUE)
-                .addGap(110, 110, 110))
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(spelbord2, javax.swing.GroupLayout.DEFAULT_SIZE, 693, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(39, 39, 39)
+                        .addComponent(btnStart)
+                        .addGap(27, 27, 27)
+                        .addComponent(btnHerstarten)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnPauzeer)
+                        .addGap(36, 36, 36)
+                        .addComponent(lblScore, javax.swing.GroupLayout.DEFAULT_SIZE, 108, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
+                        .addComponent(lblLevel, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(lblLevens, javax.swing.GroupLayout.DEFAULT_SIZE, 106, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(spelbord2, javax.swing.GroupLayout.DEFAULT_SIZE, 703, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(9, 9, 9)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblScore, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblLevens, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btnStart, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnHerstarten, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addGap(18, 18, 18)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(9, 9, 9)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblLevens, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(btnStart, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnHerstarten, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnPauzeer))
+                            .addComponent(lblScore, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(lblLevel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(spelbord2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(39, 39, 39))
         );
@@ -120,34 +142,47 @@ public class Spel extends javax.swing.JFrame {
         System.out.println("Start");
 
         this.spelbord2.start();
-        
+
         btnStart.setEnabled(false);
         btnHerstarten.setEnabled(true);
+        btnPauzeer.setEnabled(true);
     }//GEN-LAST:event_btnStartActionPerformed
 
     private void btnHerstartenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHerstartenActionPerformed
         System.out.println("Herstarten");
-        if(!btnStart.isEnabled()) { 
-           spelbord2.level = 0;
-           spelbord2.setLevel(1);
-           this.spelbord2.herstart();
-           btnStart.setEnabled(false);
+        if (!btnStart.isEnabled()) {
+            spelbord2.level = 0;
+            spelbord2.setLevel(1);
+            spelbord2.startPositie = false;
+            this.spelbord2.herstart();
+            btnStart.setEnabled(false);
+            lblLevel.setText("Level: " + spelbord2.level);
         }
     }//GEN-LAST:event_btnHerstartenActionPerformed
 
+    private void btnPauzeerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPauzeerActionPerformed
+        this.btnPauzeer.setText("Speel verder");
+        spelbord2.pauzeer();
+
+    }//GEN-LAST:event_btnPauzeerActionPerformed
+
+    public void setTekstPauze() {
+        this.btnPauzeer.setText("Pauze");
+    }
+
     public void setScore(int punten) {
         this.punten += punten;
-        
-        lblScore.setText("Score: "  + this.punten);
+
+        lblScore.setText("Score: " + this.punten);
     }
-    
+
     public void resetScore() {
         this.punten = 0;
-        
+
         lblScore.setText("Score: " + punten);
 
     }
-    
+
     public void heeftGewonnenOfVerloren(String invoer) {
         if (invoer.equals("verloren")) {
             System.out.println("GameOver");
@@ -157,28 +192,29 @@ public class Spel extends javax.swing.JFrame {
                     null, options, options[0]);
             resetVerloren(response);
         } else if (invoer.equals("gewonnen")) {
-        JOptionPane.showMessageDialog(null, "U heeft gewonnen!");
-        spelbord2.setLevel(1);
-        this.spelbord2.herstart();
-        
+            JOptionPane.showMessageDialog(null, "U heeft gewonnen!");
+            spelbord2.setLevel(1);
+            spelbord2.startPositie = false;
+            this.spelbord2.herstart();
+            lblLevel.setText("Level: " + spelbord2.level);
+
         }
     }
-    
+
     private void resetVerloren(int response) {
         if (response == 0) {
             spelbord2.level = 0;
             spelbord2.setLevel(1);
             spelbord2.herstart();
-            
+
         } else {
             this.dispose();
         }
     }
-    
+
     public void setLevens(int levens) {
         if (this.levens == 1) {
             heeftGewonnenOfVerloren("verloren");
-            
 
         } else {
             this.levens += levens;
@@ -189,10 +225,10 @@ public class Spel extends javax.swing.JFrame {
 
     public void resetLevens() {
         this.levens = 3;
-        
+
         lblLevens.setText("Levens: " + levens);
     }
-    
+
     /**
      * @param args the command line arguments
      */
@@ -230,7 +266,9 @@ public class Spel extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnHerstarten;
+    private javax.swing.JButton btnPauzeer;
     private javax.swing.JButton btnStart;
+    private javax.swing.JLabel lblLevel;
     private javax.swing.JLabel lblLevens;
     private javax.swing.JLabel lblScore;
     private infz.d.project.gui.Spelbord spelbord2;

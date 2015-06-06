@@ -16,6 +16,8 @@ public class StopWatch {
     private Spel                spel;
     private Spelbord            spelbord;
     private Timer               tijd;
+    private Timer               tijdSpookjes;
+    
     private boolean             timerIsBezig = false;
     
     private int seconden = 0;
@@ -67,5 +69,22 @@ public class StopWatch {
             timerIsBezig = false;
             seconden = 0;
         }
+    }
+    
+    public void lopenSpookjes(Spookje spookje)
+    {
+    int delay = 1000;
+        
+        TimerTask task = new TimerTask() {
+            public void run() {
+               
+                System.out.println("spookje");
+
+                
+            }
+        };
+
+     tijdSpookjes = new Timer();
+     tijdSpookjes.scheduleAtFixedRate(task, 0, delay);
     }
 }
