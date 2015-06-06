@@ -188,10 +188,10 @@ public class Spel extends javax.swing.JFrame {
                     null, options, options[0]);
             resetVerloren(response);
         } else if (invoer.equals("gewonnen")) {
-        JOptionPane.showMessageDialog(null, "U heeft gewonnen!");
-        spelbord2.levelIncrement(1);
-        this.spelbord2.nextLevel();
-        
+            JOptionPane.showMessageDialog(null, "U heeft gewonnen!");
+            spelbord2.levelIncrement(1);
+            this.spelbord2.nextLevel();
+            lblLevel.setText("Level: " + spelbord2.level);
         }
     }
     
