@@ -15,9 +15,8 @@ import java.util.TimerTask;
 public class StopWatch {
     private Spel                spel;
     private Spelbord            spelbord;
-    private Timer               tijd;
+    private Timer               tijdPacman;
     private Timer               tijdSpookjes;
-    
     private boolean             timerIsBezig = false;
     
     private int seconden = 0;
@@ -39,41 +38,31 @@ public class StopWatch {
                     timerIsBezig = false;
                     pacman.setOnverslaanbaar(false);
                     seconden = 0;
-                    tijd.cancel();
-                    tijd.purge();
+                    tijdPacman.cancel();
+                    tijdPacman.purge();
                     System.out.println("Klaar");
                 }
             }
         };
 
         if (timerIsBezig) {
-            tijd.cancel();
-            tijd.purge();
+            tijdPacman.cancel();
+            tijdPacman.purge();
             seconden = 0;
-            tijd = new Timer();
-            tijd.scheduleAtFixedRate(task, 0, delay);
+            tijdPacman = new Timer();
+            tijdPacman.scheduleAtFixedRate(task, 0, delay);
 
         } else {
             timerIsBezig = true;
             pacman.setOnverslaanbaar(true);
-            tijd = new Timer();
-            tijd.scheduleAtFixedRate(task, 0, delay);
-        }
-    }
-        
-    
-    public void stopTimer() {
-        if (timerIsBezig) {
-            tijd.cancel();
-            tijd.purge();
-            timerIsBezig = false;
-            seconden = 0;
+            tijdPacman = new Timer();
+            tijdPacman.scheduleAtFixedRate(task, 0, delay);
         }
     }
     
     public void lopenSpookjes(Spookje spookje)
     {
-    int delay = 1000;
+        int delay = 1000;
         
         TimerTask task = new TimerTask() {
             public void run() {
@@ -84,7 +73,16 @@ public class StopWatch {
             }
         };
 
-     tijdSpookjes = new Timer();
-     tijdSpookjes.scheduleAtFixedRate(task, 0, delay);
+        tijdSpookjes = new Timer();
+        tijdSpookjes.scheduleAtFixedRate(task, 0, delay);
+    }
+    
+    public void stopTimer() {
+        if (timerIsBezig) {
+            tijdPacman.cancel();
+            tijdPacman.purge();
+            timerIsBezig = false;
+            seconden = 0;
+        }
     }
 }

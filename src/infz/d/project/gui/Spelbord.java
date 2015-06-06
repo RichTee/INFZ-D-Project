@@ -38,21 +38,26 @@ public class Spelbord extends javax.swing.JPanel {
     private ArrayList<String>   vakjesInhoud = new ArrayList<String>();
     private Border              lineBorder = BorderFactory.createLineBorder(Color.black);
     public int                  level = 0;
-    boolean                     startPositie = false;
+    private KeyListener listener;
     
     /**
      * Creates new form Spelbord
      */
     public Spelbord() {
         initComponents();
-        setLevel(1);
+        levelIncrement(1);
         this.levelLoader = new LevelLoader();
         genereerSpelbordPanelGegevens();
         this.stopwatch = new StopWatch(this);
     }
     
+    public void levelIncrement(int level){
+        this.level = this.level + level;
+        System.out.println("Level: " + level);
+    }
+    
     public void setLevel(int level){
-    this.level = this.level + level;
+        this.level = level;
     }
 
     // Panel gegevens
@@ -70,13 +75,37 @@ public class Spelbord extends javax.swing.JPanel {
         reset();
         
         genereerSpelbordPanelGegevens();
-        
-        KeyListener listener = new KeyboardListener(pacman);
-        this.addKeyListener(listener);
-        this.requestFocusInWindow(); 
+        panelListener();
     }
+    
+    public void herstart() {
+        reset();
+
+        genereerSpelbordPanelGegevens();
+        panelListener();
+    }
+ 
+    public void nextLevel() {
+        stopwatch.stopTimer();
   
+        spelInformatie.setTotaalAantalBolletjes(0);
+        spelInformatie.nextLevelReset();
+
+        this.vakjesInhoud.clear();
+        
+        for( int i = 0; i < vakje.length; i++ )
+            vakje[i] = null;
+        
+        vakje = null;
+        
+        repaint();
+        
+        genereerSpelbordPanelGegevens();
+        panelListener();
+    }
+    
     public void pauzeer() {
+        // Moet nog timer stoppen.
         if (!spelInformatie.getPauze()) {
             this.setRequestFocusEnabled(false);
             spelInformatie.setPauze(true);
@@ -87,16 +116,12 @@ public class Spelbord extends javax.swing.JPanel {
         }
     }
     
-    public void herstart() {
-        reset();
-        
-        genereerSpelbordPanelGegevens();
-        
-        KeyListener listener = new KeyboardListener(pacman);
+    private void panelListener() {
+        this.removeKeyListener(listener);
+        this.listener = new KeyboardListener(pacman);
         this.addKeyListener(listener);
         this.requestFocusInWindow();
     }
- 
     public void reset() {
         stopwatch.stopTimer();
   
@@ -107,6 +132,8 @@ public class Spelbord extends javax.swing.JPanel {
         
         for( int i = 0; i < vakje.length; i++ )
             vakje[i] = null;
+        
+        vakje = null;
         
         repaint();
     }
@@ -168,6 +195,8 @@ public class Spelbord extends javax.swing.JPanel {
                         // Pacman
                         vakje[row][column] = new Vakje(row, column, "pacman", this);
                         pacman = (Pacman) vakje[row][column].getSpelElement();
+                        xPos = column;
+                        yPos = row;
                         //pacman = new Pacman(vakje[row][column]);
                         break;
                     default:
@@ -176,7 +205,7 @@ public class Spelbord extends javax.swing.JPanel {
             }
         }
     }
-  
+    
     // Elk vakje moet zijn buren weten
     public void isBuur() {
         for (int i = 0; i < arrayHoogte; i++) {
@@ -281,7 +310,6 @@ public class Spelbord extends javax.swing.JPanel {
                 if (vakje[i][j].getElement().equals("pacman")) {
                     pacman = (Pacman) vakje[i][j].getSpelElement();
                     vakje[i][j].setElement("pad", null);
-                    System.out.println("gevonden");
                 } else if (vakje[i][j].getElement().equals("spookje")){
                     // Methode voor spookje, Blinky, Pinky, Inky, Clyde.
                     // blinky = vakje[i][j].spookje;

@@ -12,28 +12,31 @@ package infz.d.project.gui;
 public class SpelInformatie {
 
     private Spel        spel;
-    public int         huidigeAantalBolletjes = 0;
-    public int         totaalAantalBolletjes = 0;
-    private boolean      isGepauzeerd = false;
-
+    private int         huidigeAantalBolletjes = 0;
+    private int         totaalAantalBolletjes = 0;
+    private boolean     isGepauzeerd = false;
+    
     public SpelInformatie(Spel spel) {
         this.spel = spel;
-    }
-    
-    public boolean getPauze()
-    {
-    return this.isGepauzeerd;
-    }
-    
-    public void setPauze(boolean pauze)
-    {
-    this.isGepauzeerd = pauze;
     }
 
     public void reset() {
         spel.resetLevens();
         spel.resetScore();
-        this.huidigeAantalBolletjes = this.totaalAantalBolletjes;
+        this.huidigeAantalBolletjes = 0;
+    }
+    
+    public boolean getPauze() {
+        return this.isGepauzeerd;
+    }
+    
+    public void setPauze(boolean pauze) {
+        this.isGepauzeerd = pauze;
+    }
+    
+    public void nextLevelReset() {
+        this.huidigeAantalBolletjes = 0;
+        this.totaalAantalBolletjes = 0;
     }
     
     public void setScore(int score, String element){
@@ -69,10 +72,10 @@ public class SpelInformatie {
         this.totaalAantalBolletjes = aantal;
     }
     
-    public void checkOfGewonnen() {
+    private void checkOfGewonnen() {
         if (this.huidigeAantalBolletjes == 0) {
             spel.heeftGewonnenOfVerloren("gewonnen");
-            
+
         }
     }
 
