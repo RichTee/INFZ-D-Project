@@ -26,6 +26,7 @@ public class Superbolletje extends SpelElement {
     public Superbolletje(Vakje vakje){
         this.vakje = vakje;
         this.punten = 10;
+        this.elementNaam = "superbolletje";
         converteerFileNaarImage(afbeelding);
     }
     

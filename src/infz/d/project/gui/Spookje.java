@@ -27,6 +27,7 @@ public class Spookje extends Poppetje {
     public Spookje(Vakje vakje) {
         this.vakje = vakje;
         this.punten = 200;
+        this.elementNaam = "spookje";
         converteerFileNaarImage(afbeelding);
     }
     

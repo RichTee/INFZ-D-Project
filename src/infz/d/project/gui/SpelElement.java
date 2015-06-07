@@ -22,6 +22,7 @@ public abstract class SpelElement {
     public int              punten = 0;
     public int              row;
     public int              column;
+    public String           elementNaam;
     public Vakje            vakje;
     public Image            image;
     
@@ -44,4 +45,9 @@ public abstract class SpelElement {
     }
     
     public void draw(Graphics g) {}
+    
+    @Override
+    public String toString() {
+        return this.elementNaam;
+    }
 }

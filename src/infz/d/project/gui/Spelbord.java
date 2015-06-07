@@ -10,12 +10,8 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.KeyListener;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.Scanner;
 
 import javax.swing.BorderFactory;
 import javax.swing.border.Border;
@@ -49,11 +45,11 @@ public class Spelbord extends javax.swing.JPanel {
         this.levelLoader = new LevelLoader();
         genereerSpelbordPanelGegevens();
         this.stopwatch = new StopWatch(this);
+        this.setBackground(Color.BLACK);
     }
     
     public void levelIncrement(int level){
         this.level = this.level + level;
-        System.out.println("Level: " + level);
     }
     
     public void setLevel(int level){
@@ -122,6 +118,7 @@ public class Spelbord extends javax.swing.JPanel {
         this.addKeyListener(listener);
         this.requestFocusInWindow();
     }
+    
     public void reset() {
         stopwatch.stopTimer();
   
@@ -146,21 +143,9 @@ public class Spelbord extends javax.swing.JPanel {
 
     // Get posities van entiteiten die een spel vormen uit de txt file.
     private void getSpelbordTxtFile() {
-//        try {
-//            Scanner read = new Scanner(new File("txt/maze.txt"));
-//
-//            while (read.hasNextLine()) {
-//                String line = read.nextLine();
-//                vakjesInhoud.add(line);
-//            }
-//            read.close();
             vakjesInhoud = levelLoader.laadLevel(level);
             arrayHoogte = vakjesInhoud.size();
             arrayBreedte = vakjesInhoud.get(0).length();
-
-//        } catch (FileNotFoundException e) {
-//            e.printStackTrace();
-//        }
     }
     
     // Genereer de map voor de GUI nadat de TXT is gelezen
@@ -194,7 +179,7 @@ public class Spelbord extends javax.swing.JPanel {
                     case "5":
                         // Pacman
                         vakje[row][column] = new Vakje(row, column, "pacman", this);
-                        pacman = (Pacman) vakje[row][column].getSpelElement();
+                        pacman = (Pacman) vakje[row][column].getSpelElement("pacman");
                         xPos = column;
                         yPos = row;
                         //pacman = new Pacman(vakje[row][column]);
@@ -281,7 +266,7 @@ public class Spelbord extends javax.swing.JPanel {
             int YPositie = legeVakjes.get(randomGetal).getYPositie();
             
             vakje[XPositie][YPositie].setElement("kers", kers);
-            kers = (Kers) vakje[XPositie][YPositie].getSpelElement();
+            kers = (Kers) vakje[XPositie][YPositie].getSpelElement("kers");
             kers.setVakje(vakje[XPositie][YPositie]);
             
             legeVakjes.clear();
@@ -308,7 +293,7 @@ public class Spelbord extends javax.swing.JPanel {
         for (int i = 0; i < arrayHoogte; i++) {
             for (int j = 0; j < arrayBreedte; j++) {
                 if (vakje[i][j].getElement().equals("pacman")) {
-                    pacman = (Pacman) vakje[i][j].getSpelElement();
+                    pacman = (Pacman) vakje[i][j].getSpelElement("pacman");
                     vakje[i][j].setElement("pad", null);
                 } else if (vakje[i][j].getElement().equals("spookje")){
                     // Methode voor spookje, Blinky, Pinky, Inky, Clyde.

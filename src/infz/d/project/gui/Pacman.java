@@ -32,6 +32,7 @@ public class Pacman extends Poppetje {
     public Pacman(Vakje vak) {
         this.vakje = vak;
         this.imgPath = "afbeelding/PacmanOOST.png";
+        this.elementNaam = "pacman";
         
         afbeeldingPad = new Image[4];
         converteerFileNaarImage(afbeeldingNoord);

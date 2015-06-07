@@ -28,6 +28,7 @@ public class Muur extends SpelElement {
 
     public Muur(Vakje vak) {
         this.vakje = vak;
+        this.elementNaam = "muur";
         converteerFileNaarImage(afbeelding);
     }
     

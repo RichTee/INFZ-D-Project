@@ -25,6 +25,7 @@ public class Kers extends SpelElement {
     public Kers(Vakje vakje) {
         this.vakje = vakje;
         this.punten = 100;
+        this.elementNaam = "kers";
         converteerFileNaarImage(afbeelding);
     }
     
