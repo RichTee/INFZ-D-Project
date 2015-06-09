@@ -25,7 +25,8 @@ public class Spel extends javax.swing.JFrame {
         this.spelbord2.setSpel(this);
       
         this.setTitle("Pacman");
-        this.setSize(850, 850);
+        this.setSize(1025, 590); // Hardcoded
+        this.setResizable(false);
         
         btnPauzeer.setEnabled(false);
         btnHerstarten.setEnabled(false);

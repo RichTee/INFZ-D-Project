@@ -21,42 +21,30 @@ import javax.imageio.ImageIO;
  *
  * @author Method
  */
-public class Spookje extends Poppetje {
-    private File afbeelding = new File("afbeelding/Spookje1.png");
+public abstract class Spookje extends Poppetje {
+    String naam;
+    public Spookje() { }
     
-    public Spookje(Vakje vakje) {
-        this.vakje = vakje;
-        this.punten = 200;
-        this.elementNaam = "spookje";
-        converteerFileNaarImage(afbeelding);
+    public void setVakje(Vakje vakje){
+       this.vakje = vakje;
+    }
+     
+    public int getXPositie() {
+        return row;
     }
     
-    public void bewegen(Richting richting) {
-        // Interval vereist zodat ze niet sneller lopen dan mogelijk, bijv 3 vakjes per x seconden.
+    public int getYPositie() {
+        return column;
+    }
+    // Indien we willen zoeken, dan gaan we in random richtingen.
+    public int randomRichting() {
         Random rand = new Random();
         int tempNummer = rand.nextInt(4) + 1;
         
-        switch(tempNummer){
-            case 1:
-                // Even niks callen omdat spookjes te snel bewegen..
-                break;
-            case 2:
-                break;
-            case 3:
-                break;
-            case 4:
-                break;
-            default:
-                System.out.println("Tempnummer is wrong");
-                break;
-        }
+        return tempNummer;
     }
     
-    @Override
-    public void draw(Graphics g) {
-        this.row = vakje.getXPositie();
-        this.column = vakje.getYPositie();
+    public void bewegen(){}
+    
 
-        g.drawImage(this.image, column * CELL, row * CELL, 50, 50, null);
-    }
 }

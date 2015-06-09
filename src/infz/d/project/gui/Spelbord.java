@@ -21,19 +21,23 @@ import javax.swing.border.Border;
  * @author Method
  */
 public class Spelbord extends javax.swing.JPanel {
-    private LevelLoader         levelLoader;
-    private SpelInformatie      spelInformatie;
-    private Pacman              pacman;
-    private Kers                kers;
-    private Spel                spel;
-    private StopWatch           stopwatch;
-    private int                 xPos, yPos; // Positie
-    private int                 arrayBreedte, arrayHoogte; // Cell dimensies
-    private final static int    CELL = 50;
-    private Vakje[][]           vakje;
-    private ArrayList<String>   vakjesInhoud = new ArrayList<String>();
-    private Border              lineBorder = BorderFactory.createLineBorder(Color.black);
-    public int                  level = 0;
+    private LevelLoader             levelLoader;
+    private SpelInformatie          spelInformatie;
+    private Pacman                  pacman;
+    private Kers                    kers;
+    private Spel                    spel;
+    private WillekeurigSpookje      inky;
+    private WillekeurigSpookje      blinky;
+    private AchtervolgendSpookje    pinky;
+    private AchtervolgendSpookje    clyde;
+    private StopWatch               stopwatch;
+    private int                     xPos, yPos; // Positie
+    private int                     arrayBreedte, arrayHoogte; // Cell dimensies
+    private final static int        CELL = 50;
+    private Vakje[][]               vakje;
+    private ArrayList<String>       vakjesInhoud = new ArrayList<String>();
+    private Border                  lineBorder = BorderFactory.createLineBorder(Color.black);
+    public int                      level = 0;
     private KeyListener listener;
     
     /**
@@ -72,11 +76,15 @@ public class Spelbord extends javax.swing.JPanel {
         
         genereerSpelbordPanelGegevens();
         panelListener();
+        
+        stopwatch.lopenSpookjes(inky);
+        //stopwatch.lopenSpookjes(blinky);
+        //stopwatch.lopenSpookjes(pinky);
+        //stopwatch.lopenSpookjes(clyde);
     }
     
     public void herstart() {
         reset();
-
         genereerSpelbordPanelGegevens();
         panelListener();
     }
@@ -84,6 +92,11 @@ public class Spelbord extends javax.swing.JPanel {
     public void nextLevel() {
         stopwatch.stopTimer();
   
+        inky = null;
+        blinky = null;
+        pinky = null;
+        clyde = null;
+        
         spelInformatie.setTotaalAantalBolletjes(0);
         spelInformatie.nextLevelReset();
 
@@ -122,6 +135,11 @@ public class Spelbord extends javax.swing.JPanel {
     public void reset() {
         stopwatch.stopTimer();
   
+        inky = null;
+        blinky = null;
+        pinky = null;
+        clyde = null;
+        
         spelInformatie.setTotaalAantalBolletjes(0);
         spelInformatie.reset();
 
@@ -174,12 +192,29 @@ public class Spelbord extends javax.swing.JPanel {
                         break;
                     case "4":
                         // Spookje
-                        vakje[row][column] = new Vakje(row, column, "spookje", this);
+                        if(inky == null){
+                            System.out.println("Inky spelbord");
+                            vakje[row][column] = new Vakje(row, column, "inky", this);
+                            inky = (WillekeurigSpookje) vakje[row][column].getSpookje("inky");
+                            System.out.println("inky: " + vakje[row][column].getSpookje("inky").toString());
+                        } else if (blinky == null ) {
+                            System.out.println("blinky");
+                            vakje[row][column] = new Vakje(row, column, "blinky", this);
+                            blinky = (WillekeurigSpookje) vakje[row][column].getSpookje("blinky");
+                        } else if (pinky == null ) {
+                            System.out.println("pinky");
+                            vakje[row][column] = new Vakje(row, column, "pinky", this);
+                            pinky = (AchtervolgendSpookje) vakje[row][column].getSpookje("pinky");
+                        } else if (clyde == null ) {
+                            System.out.println("clyde");
+                            vakje[row][column] = new Vakje(row, column, "clyde", this);
+                            clyde = (AchtervolgendSpookje) vakje[row][column].getSpookje("clyde");
+                        }
                         break;
                     case "5":
                         // Pacman
                         vakje[row][column] = new Vakje(row, column, "pacman", this);
-                        pacman = (Pacman) vakje[row][column].getSpelElement("pacman");
+                        pacman = (Pacman) vakje[row][column].getPacman();
                         xPos = column;
                         yPos = row;
                         //pacman = new Pacman(vakje[row][column]);
@@ -204,9 +239,9 @@ public class Spelbord extends javax.swing.JPanel {
     private void isBuurOutOfBounds(int xPos, int yPos) {
         try {
             // Noord
+            //System.out.println(xPos + "  " + yPos);
             vakje[xPos-1][yPos].getElement();
             vakje[xPos][yPos].voegtBuurToe(vakje[xPos-1][yPos]);
-            //System.out.println(xPos + "  " + yPos);
         } catch (IndexOutOfBoundsException e) {
             //System.out.println("xPos-1 : " + e );
         }
@@ -265,8 +300,8 @@ public class Spelbord extends javax.swing.JPanel {
             int XPositie = legeVakjes.get(randomGetal).getXPositie();
             int YPositie = legeVakjes.get(randomGetal).getYPositie();
             
-            vakje[XPositie][YPositie].setElement("kers", kers);
-            kers = (Kers) vakje[XPositie][YPositie].getSpelElement("kers");
+            vakje[XPositie][YPositie].setElement("kers", kers = new Kers(vakje[XPositie][YPositie]));
+            kers = vakje[XPositie][YPositie].getKers();
             kers.setVakje(vakje[XPositie][YPositie]);
             
             legeVakjes.clear();
@@ -293,7 +328,7 @@ public class Spelbord extends javax.swing.JPanel {
         for (int i = 0; i < arrayHoogte; i++) {
             for (int j = 0; j < arrayBreedte; j++) {
                 if (vakje[i][j].getElement().equals("pacman")) {
-                    pacman = (Pacman) vakje[i][j].getSpelElement("pacman");
+                    pacman = (Pacman) vakje[i][j].getPacman();
                     vakje[i][j].setElement("pad", null);
                 } else if (vakje[i][j].getElement().equals("spookje")){
                     // Methode voor spookje, Blinky, Pinky, Inky, Clyde.

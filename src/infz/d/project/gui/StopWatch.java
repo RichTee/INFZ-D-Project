@@ -17,7 +17,7 @@ public class StopWatch {
     private Spelbord            spelbord;
     private Timer               tijdPacman;
     private Timer               tijdSpookjes;
-    private boolean             timerIsBezig = false;
+    private boolean             pacmanTimerIsBezig = false;
     
     private int seconden = 0;
 
@@ -35,7 +35,7 @@ public class StopWatch {
                 System.out.println(seconden);
 
                 if (seconden == 10) {
-                    timerIsBezig = false;
+                    pacmanTimerIsBezig = false;
                     pacman.setOnverslaanbaar(false);
                     seconden = 0;
                     tijdPacman.cancel();
@@ -45,7 +45,7 @@ public class StopWatch {
             }
         };
 
-        if (timerIsBezig) {
+        if (pacmanTimerIsBezig) {
             tijdPacman.cancel();
             tijdPacman.purge();
             seconden = 0;
@@ -53,7 +53,7 @@ public class StopWatch {
             tijdPacman.scheduleAtFixedRate(task, 0, delay);
 
         } else {
-            timerIsBezig = true;
+            pacmanTimerIsBezig = true;
             pacman.setOnverslaanbaar(true);
             tijdPacman = new Timer();
             tijdPacman.scheduleAtFixedRate(task, 0, delay);
@@ -66,10 +66,8 @@ public class StopWatch {
         
         TimerTask task = new TimerTask() {
             public void run() {
-               
-                System.out.println("spookje");
-
-                
+                spookje.bewegen();
+                System.out.println("Spookje locatie X: " + spookje.getXPositie() + " Y: " + spookje.getYPositie());
             }
         };
 
@@ -78,10 +76,10 @@ public class StopWatch {
     }
     
     public void stopTimer() {
-        if (timerIsBezig) {
+        if (pacmanTimerIsBezig) {
             tijdPacman.cancel();
             tijdPacman.purge();
-            timerIsBezig = false;
+            pacmanTimerIsBezig = false;
             seconden = 0;
         }
     }

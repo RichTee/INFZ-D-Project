@@ -5,10 +5,57 @@
  */
 package infz.d.project.gui;
 
+import java.awt.Graphics;
+import java.io.File;
+import java.util.Random;
+
 /**
  *
  * @author Method
  */
-public class AchtervolgendSpookje {
+public class AchtervolgendSpookje extends Spookje{
+    private File afbeelding = new File("afbeelding/Spookje1.png");
     
+    public AchtervolgendSpookje(Vakje vakje, String naam) {
+        this.vakje = vakje;
+        this.naam = naam;
+        this.punten = 200;
+        this.elementNaam = "spookje";
+        converteerFileNaarImage(afbeelding);
+    }
+    
+    @Override
+    public void bewegen() {
+        // Interval vereist zodat ze niet sneller lopen dan mogelijk, bijv 3 vakjes per x seconden.
+        
+        switch(randomRichting()){
+            case 1:
+                System.out.println("NOORD");
+                vakje.spookjeRichting("NOORD", this);
+                break;
+            case 2:
+                System.out.println("OOST");
+                vakje.spookjeRichting("OOST", this);
+                break;
+            case 3:
+                System.out.println("ZUID");
+                vakje.spookjeRichting("ZUID", this);
+                break;
+            case 4:
+                System.out.println("WEST");
+                vakje.spookjeRichting("WEST", this);
+                break;
+            default:
+                System.out.println("Tempnummer is wrong");
+                break;
+        }
+    }
+    
+    @Override
+    public void draw(Graphics g) {
+        this.row = vakje.getXPositie();
+        this.column = vakje.getYPositie();
+
+        g.drawImage(this.image, column * CELL, row * CELL, 50, 50, null);
+    }
 }
