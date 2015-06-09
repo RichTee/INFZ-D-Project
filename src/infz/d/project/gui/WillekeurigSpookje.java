@@ -22,13 +22,17 @@ public class WillekeurigSpookje extends Spookje{
         this.naam = naam; 
         this.punten = 200;
         this.elementNaam = "spookje";
+<<<<<<< HEAD
          if (naam.equals("inky")) {
+=======
+        if (naam.equals("inky")) {
+>>>>>>> origin/master
             converteerFileNaarImage(imgInky);
         } else if (naam.equals("blinky")) {
             converteerFileNaarImage(imgBlinky);
         }
     }
-    
+
     @Override
     public void bewegen() {
         // Interval vereist zodat ze niet sneller lopen dan mogelijk, bijv 3 vakjes per x seconden.
