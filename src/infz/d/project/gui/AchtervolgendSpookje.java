@@ -22,10 +22,7 @@ public class AchtervolgendSpookje extends Spookje{
         this.naam = naam;
         this.punten = 200;
         this.elementNaam = "spookje";
-<<<<<<< HEAD
-=======
 
->>>>>>> origin/master
         if (naam.equals("pinky")) {
             converteerFileNaarImage(imgPinky);
         } else if (naam.equals("clyde")) {
