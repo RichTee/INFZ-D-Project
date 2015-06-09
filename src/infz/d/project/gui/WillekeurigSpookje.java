@@ -14,16 +14,21 @@ import java.util.Random;
  * @author Method
  */
 public class WillekeurigSpookje extends Spookje{
-    private File afbeelding = new File("afbeelding/Spookje1.png");
+    private File imgInky = new File("afbeelding/inky.png");
+    private File imgBlinky = new File("afbeelding/blinky.png");
     
     public WillekeurigSpookje(Vakje vakje, String naam) {
         this.vakje = vakje;
         this.naam = naam;
         this.punten = 200;
         this.elementNaam = "spookje";
-        converteerFileNaarImage(afbeelding);
+        if (naam.equals("inky")) {
+            converteerFileNaarImage(imgInky);
+        } else if (naam.equals("blinky")) {
+            converteerFileNaarImage(imgBlinky);
+        }
     }
-    
+
     @Override
     public void bewegen() {
         // Interval vereist zodat ze niet sneller lopen dan mogelijk, bijv 3 vakjes per x seconden.
