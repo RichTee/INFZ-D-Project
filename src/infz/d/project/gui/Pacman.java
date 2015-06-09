@@ -7,31 +7,22 @@ package infz.d.project.gui;
 
 import java.awt.Graphics;
 import java.awt.Image;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.imageio.ImageIO;
 
 /**
  *
  * @author Method
  */
 public class Pacman extends Poppetje {
-    private boolean heeftSuperKracht = false;
-    private String imgPath = "";
-    private final File afbeeldingNoord = new File("afbeelding/PacmanNoord.png");
-    private final File afbeeldingOost = new File("afbeelding/PacmanOost.png");
-    private final File afbeeldingZuid = new File("afbeelding/PacmanZuid.png");
-    private final File afbeeldingWest = new File("afbeelding/PacmanWest.png");
-    private Image[] afbeeldingPad;
+    private boolean             heeftSuperKracht = false;
+    private final File          afbeeldingNoord = new File("afbeelding/PacmanNoord.png");
+    private final File          afbeeldingOost = new File("afbeelding/PacmanOost.png");
+    private final File          afbeeldingZuid = new File("afbeelding/PacmanZuid.png");
+    private final File          afbeeldingWest = new File("afbeelding/PacmanWest.png");
+    private Image[]             afbeeldingPad;
     
     public Pacman(Vakje vak) {
         this.vakje = vak;
-        this.imgPath = "afbeelding/PacmanOOST.png";
         this.elementNaam = "pacman";
         
         afbeeldingPad = new Image[4];
@@ -50,7 +41,6 @@ public class Pacman extends Poppetje {
     }
     
     public boolean getKracht(){
-        System.out.println("Kracht: " + heeftSuperKracht);
         return heeftSuperKracht;
     }
 
@@ -61,15 +51,7 @@ public class Pacman extends Poppetje {
     public Vakje getVakje(){
         return vakje;
     }
-
-    public int pacmanKolom() {
-        return this.column;
-    }
-
-    public int pacmanRow() {
-        return this.row;
-    }
-
+    
     public void bewegen(Richting richting) {
         switch (richting) {
             case NOORD:

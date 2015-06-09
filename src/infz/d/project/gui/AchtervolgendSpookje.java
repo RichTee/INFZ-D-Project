@@ -14,14 +14,19 @@ import java.util.Random;
  * @author Method
  */
 public class AchtervolgendSpookje extends Spookje{
-    private File afbeelding = new File("afbeelding/Spookje1.png");
+    private File imgPinky = new File("afbeelding/pinky.png");
+    private File imgClyde = new File("afbeelding/clyde.png");
     
     public AchtervolgendSpookje(Vakje vakje, String naam) {
         this.vakje = vakje;
         this.naam = naam;
         this.punten = 200;
         this.elementNaam = "spookje";
-        converteerFileNaarImage(afbeelding);
+        if (naam.equals("pinky")) {
+            converteerFileNaarImage(imgPinky);
+        } else if (naam.equals("clyde")) {
+            converteerFileNaarImage(imgClyde);
+        }
     }
     
     @Override

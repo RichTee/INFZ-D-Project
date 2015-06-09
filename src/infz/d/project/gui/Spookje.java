@@ -6,35 +6,23 @@
 
 package infz.d.project.gui;
 
-import java.awt.Graphics;
-
-import java.io.File;
-import java.io.IOException;
 import java.util.Random;
-
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import javax.imageio.ImageIO;
 
 /**
  *
  * @author Method
  */
 public abstract class Spookje extends Poppetje {
-    String naam;
+    public String naam;
+    
     public Spookje() { }
     
     public void setVakje(Vakje vakje){
        this.vakje = vakje;
     }
-     
-    public int getXPositie() {
-        return row;
-    }
     
-    public int getYPositie() {
-        return column;
+    public Vakje getVakje(){
+        return this.vakje;
     }
     // Indien we willen zoeken, dan gaan we in random richtingen.
     public int randomRichting() {

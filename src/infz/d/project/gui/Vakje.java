@@ -6,12 +6,10 @@
 
 package infz.d.project.gui;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
 /**
  *
@@ -43,7 +41,6 @@ public class Vakje extends javax.swing.JPanel {
     
     public Vakje(int xPositie, int yPositie, String element, Spelbord spelBord) {
         initComponents();
-        
         
         this.xPositie = xPositie;
         this.yPositie = yPositie;
@@ -105,16 +102,6 @@ public class Vakje extends javax.swing.JPanel {
             // Andere SpelElementen later.
         }
     }
-
-    public SpelElement getSpelElement(String spelElement){
-        for(SpelElement element : spelElementList){
-            if(element.toString().equals(spelElement)){
-                return element;
-            }
-        }
-        
-        return null;
-    }
     
     public Pacman getPacman() {
         return pacman;
@@ -142,50 +129,33 @@ public class Vakje extends javax.swing.JPanel {
                 return null;
         }
     }
-    public ArrayList getSpelElementList(){
-        return spelElementList;
+    
+    public void setSpookje(Spookje spookje) {
+        switch(spookje.naam /*getNaam*/) {
+            case "inky":
+                this.inky = (WillekeurigSpookje) spookje;
+                break;
+            case "blinky":
+                this.blinky = (WillekeurigSpookje) spookje;
+                break;
+            case "pinky":
+                this.pinky = (AchtervolgendSpookje) spookje;
+                break;
+            case "clyde":
+                this.clyde = (AchtervolgendSpookje) spookje;
+                break;
+            default:
+                break;
+        }
     }
-
+    
     public void voegtBuurToe(Vakje vakje) {
         buurVakje.add(vakje);
-    }
-    
-    public void voegSpelElementToe(SpelElement spelElement){
-        spelElementList.add(spelElement);
-    }
-    
-    private void sortSpelElementList() {
-        ArrayList<SpelElement> temp = new ArrayList<>();
-        
-        for(SpelElement element : spelElementList){
-            if(element instanceof Spookje)
-                temp.add(element);
-            else if(element instanceof Pacman)
-                temp.add(element);
-            else
-                temp.add(element);
-        }
-        
-        spelElementList = temp;
-    }
-    
-    public void verwijderSpelElement(SpelElement spelElement){
-        for(SpelElement element : spelElementList){
-            if(element instanceof Bolletje)
-                spelElementList.remove(element);
-            else if (element instanceof Superbolletje) 
-                spelElementList.remove(element);
-            else if (element instanceof Kers) 
-                spelElementList.remove(element);
-            else if (element instanceof Spookje) 
-                spelElementList.remove(element);
-            else if (element instanceof Pacman) 
-                spelElementList.remove(element);
-        }
     }
 
     private int puntenOptellenVanBuurVakje(Vakje vakje) {
         int punten = 0;
+        
         Spookje inky = vakje.getSpookje("inky");
         Spookje blinky = vakje.getSpookje("blinky");
         Spookje pinky = vakje.getSpookje("pinky");
@@ -264,50 +234,8 @@ public class Vakje extends javax.swing.JPanel {
     private void checkPacmanCollisie(Vakje vakje){
         int punten = 0;
         boolean verlorenSwitchConditie = false;
-        ArrayList<SpelElement> vakjeSpelElementList = new ArrayList<>();
-        vakjeSpelElementList = vakje.getSpelElementList();
 
         // ToDo: Prioriteit: Spookje > Bolletje > Superbolletje > Kers
-        /*for(SpelElement element : vakjeSpelElementList){
-            if(element instanceof Spookje) {
-                if (pacman.getKracht()) {
-                    punten = puntenOptellenVanBuurVakje(vakje);
-                    vakje.setElement(this.getElement(), pacman);
-                    this.setElement("pad", null);
-                    pacman.setVakje(vakje);
-                    spelbord.tekenOpnieuw();
-                    spelbord.setSpelInformatie(punten, 0, "");
-                    break;
-
-                } else if (!pacman.getKracht()) {
-                    System.out.println("VERLOREN");
-                    spelbord.setSpelInformatie(0, -1, "");
-                    spelbord.resetPoppetje();
-                    spelbord.tekenOpnieuw();
-                    break;
-                }
-            }
-            if(element instanceof Bolletje) {
-                punten = puntenOptellenVanBuurVakje(vakje);
-                spelbord.maakKers();
-                vakje.setElement(this.getElement(), pacman);
-                this.setElement("pad", null);
-                pacman.setVakje(vakje);
-                spelbord.tekenOpnieuw();
-                spelbord.setSpelInformatie(punten, 0, "bolletje");
-                break;
-            }
-            if(element instanceof Superbolletje) {
-                punten = puntenOptellenVanBuurVakje(vakje);
-                vakje.setElement(this.getElement(), pacman);
-                this.setElement("pad", null);
-                pacman.setVakje(vakje);
-                spelbord.geefPacmanSuperkracht(pacman);
-                spelbord.tekenOpnieuw();
-                spelbord.setSpelInformatie(punten, 0, "superbolletje");
-            }
-            System.out.println("Reached");
-        }*/
         if (vakje.getSpookje("inky") != null || vakje.getSpookje("blinky") != null
                 || vakje.getSpookje("pinky") != null || vakje.getSpookje("clyde") != null) {
             
@@ -389,44 +317,47 @@ public class Vakje extends javax.swing.JPanel {
             case "muur":
                 break;
             case "pad":
-                vakje.setElement(this.getElement(), null);
-                this.setElement("pad", null);
                 spookje.setVakje(vakje);
+                vakje.setSpookje(spookje);
+                if(spookje.naam.equals("inky"))
+                    this.inky = null;
                 spelbord.tekenOpnieuw();
                 break;
             case "bolletje":
-                spelbord.maakKers();
-                vakje.setElement(this.getElement(), spookje);
-                System.out.println("Element: " + this.getElement());
-                this.setElement("pad", null);
                 spookje.setVakje(vakje);
+                vakje.setSpookje(spookje);
+                if(spookje.naam.equals("inky"))
+                    this.inky = null;
                 spelbord.tekenOpnieuw();
                 break;
             case "superbolletje":
-                vakje.setElement(this.getElement(), spookje);
-                this.setElement("pad", null);
                 spookje.setVakje(vakje);
+                vakje.setSpookje(spookje);
+                if(spookje.naam.equals("inky"))
+                    this.inky = null;
                 spelbord.tekenOpnieuw();
                 break;
             case "kers":
-                vakje.setElement(this.getElement(), null);
-                this.setElement("pad", null);
                 spookje.setVakje(vakje);
+                vakje.setSpookje(spookje);
+                if(spookje.naam.equals("inky"))
+                    this.inky = null;
                 spelbord.tekenOpnieuw();
                 break;
             case "pacman":
                 if (pacman.getKracht()) {
-                    vakje.setElement(this.getElement(), pacman);
-                    this.setElement("pad", null);
                     spookje.setVakje(vakje);
+                    vakje.setSpookje(spookje);
+                    if(spookje.naam.equals("inky"))
+                        this.inky = null;
                     spelbord.tekenOpnieuw();
-
+                    
                 } else if (!pacman.getKracht()) {
                     System.out.println("VERLOREN");
                     spelbord.setSpelInformatie(0, -1, "");
                     spelbord.resetPoppetje();
                     spelbord.tekenOpnieuw();
-
+                    
                 }
                 break;
             default:
@@ -488,17 +419,19 @@ public class Vakje extends javax.swing.JPanel {
                 kers.draw(g);
                 break;
             default:
-                if(pacman != null)
-                    pacman.draw(g);
-                else if(inky != null)
-                    inky.draw(g);
-                else if(blinky != null)
-                    blinky.draw(g);
-                else if(pinky != null)
-                    pinky.draw(g);
-                else if (clyde != null)
-                    clyde.draw(g);
                 break;
+        }
+
+        if (pacman != null) {
+            pacman.draw(g);
+        } else if (inky != null) {
+            inky.draw(g);
+        } else if (blinky != null) {
+            blinky.draw(g);
+        } else if (pinky != null) {
+            pinky.draw(g);
+        } else if (clyde != null) {
+            clyde.draw(g);
         }
     }
 
