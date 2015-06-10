@@ -18,7 +18,7 @@ import javax.imageio.ImageIO;
  * @author Method
  */
 public abstract class SpelElement {
-    public final int        CELL = 50;
+    public final int        CELL = 35;
     public int              punten = 0;
     public int              row;
     public int              column;

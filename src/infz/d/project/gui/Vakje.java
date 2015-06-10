@@ -41,7 +41,7 @@ public class Vakje extends javax.swing.JPanel {
     
     public Vakje(int xPositie, int yPositie, String element, Spelbord spelBord) {
         initComponents();
-        
+
         this.xPositie = xPositie;
         this.yPositie = yPositie;
         this.element = element;
@@ -282,6 +282,7 @@ public class Vakje extends javax.swing.JPanel {
                     pacman.setVakje(vakje); // ToDo: Spookje error
                     spelbord.tekenOpnieuw();
                     spelbord.setSpelInformatie(punten, 0, "bolletje");
+ 
                     //tekenOpnieuw();
                     //vakje.tekenOpnieuw();
                     break;

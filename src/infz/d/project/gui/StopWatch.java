@@ -31,11 +31,15 @@ public class StopWatch {
         
         TimerTask task = new TimerTask() {
             public void run() {
+
                 seconden++;
                 System.out.println(seconden);
 
                 if (seconden == 10) {
+                    spelbord.stopMuziek();
+                    spelbord.startMuziek("C:\\Users\\Sebastiaan\\Documents\\GitHub\\INFZ-D-Project\\geluid\\siren_sound.wav", true);
                     pacmanTimerIsBezig = false;
+                  
                     pacman.setOnverslaanbaar(false);
                     seconden = 0;
                     tijdPacman.cancel();
@@ -46,6 +50,8 @@ public class StopWatch {
         };
 
         if (pacmanTimerIsBezig) {
+            spelbord.stopMuziek();
+            spelbord.startMuziek("C:\\Users\\Sebastiaan\\Documents\\GitHub\\INFZ-D-Project\\geluid\\pacman_intermission.wav", true);
             tijdPacman.cancel();
             tijdPacman.purge();
             seconden = 0;
@@ -53,6 +59,8 @@ public class StopWatch {
             tijdPacman.scheduleAtFixedRate(task, 0, delay);
 
         } else {
+            spelbord.stopMuziek();
+            spelbord.startMuziek("C:\\Users\\Sebastiaan\\Documents\\GitHub\\INFZ-D-Project\\geluid\\pacman_intermission.wav", true);
             pacmanTimerIsBezig = true;
             pacman.setOnverslaanbaar(true);
             tijdPacman = new Timer();
@@ -62,7 +70,7 @@ public class StopWatch {
     
     public void lopenSpookjes(Spookje spookje)
     {
-        int delay = 1000;
+        int delay = 500;
         
         TimerTask task = new TimerTask() {
             public void run() {
@@ -75,12 +83,25 @@ public class StopWatch {
         tijdSpookjes.scheduleAtFixedRate(task, 0, delay);
     }
     
+    public void stopLopenSpookjes(){
+    tijdSpookjes.cancel();
+    tijdSpookjes.purge();
+    }
+    
     public void stopTimer() {
         if (pacmanTimerIsBezig) {
             tijdPacman.cancel();
             tijdPacman.purge();
             pacmanTimerIsBezig = false;
             seconden = 0;
+        } 
+    }
+    
+    public void pauzeerTimer(){
+      if (pacmanTimerIsBezig) {
+            tijdPacman.cancel();
+            tijdPacman.purge();
+            pacmanTimerIsBezig = false;
         }
     }
 }

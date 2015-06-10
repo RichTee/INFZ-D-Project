@@ -23,6 +23,7 @@ import javax.swing.border.Border;
 public class Spelbord extends javax.swing.JPanel {
     private LevelLoader             levelLoader;
     private SpelInformatie          spelInformatie;
+    private AudioPlayer             player; 
     private Pacman                  pacman;
     private Kers                    kers;
     private Spel                    spel;
@@ -33,7 +34,7 @@ public class Spelbord extends javax.swing.JPanel {
     private StopWatch               stopwatch;
     private int                     xPos, yPos; // Positie
     private int                     arrayBreedte, arrayHoogte; // Cell dimensies
-    private final static int        CELL = 50;
+    private final static int        CELL = 35;
     private Vakje[][]               vakje;
     private ArrayList<String>       vakjesInhoud = new ArrayList<String>();
     private Border                  lineBorder = BorderFactory.createLineBorder(Color.black);
@@ -50,7 +51,21 @@ public class Spelbord extends javax.swing.JPanel {
         genereerSpelbordPanelGegevens();
         this.stopwatch = new StopWatch(this);
         this.setBackground(Color.BLACK);
+        player = new AudioPlayer();
     }
+    
+    public void startMuziek(String path, boolean loop)
+    {
+    player.playMusic(path, loop);
+    }
+    
+       public void stopMuziek(){
+    player.stopMusic();
+    }
+       
+//       public void playMusicTog(){
+//       player.playMusicTogether();
+//       }
     
     public void levelIncrement(int level){
         this.level = this.level + level;
@@ -73,7 +88,7 @@ public class Spelbord extends javax.swing.JPanel {
     // Snelle start voor Spel om de veld te activeren met het spel.
     public void start() {
         reset();
-        
+        this.startMuziek("C:\\Users\\Sebastiaan\\Documents\\GitHub\\INFZ-D-Project\\geluid\\siren_sound.wav", true);
         genereerSpelbordPanelGegevens();
         panelListener();
         
@@ -84,9 +99,12 @@ public class Spelbord extends javax.swing.JPanel {
     }
     
     public void herstart() {
+        spel.setTekstPauze();
         reset();
+        this.startMuziek("C:\\Users\\Sebastiaan\\Documents\\GitHub\\INFZ-D-Project\\geluid\\siren_sound.wav", true);
         genereerSpelbordPanelGegevens();
         panelListener();
+        stopwatch.lopenSpookjes(inky);
     }
  
     public void nextLevel() {
@@ -116,12 +134,20 @@ public class Spelbord extends javax.swing.JPanel {
     public void pauzeer() {
         // Moet nog timer stoppen.
         if (!spelInformatie.getPauze()) {
+            stopMuziek();
+            stopwatch.pauzeerTimer();
+            stopwatch.stopLopenSpookjes();
             this.setRequestFocusEnabled(false);
             spelInformatie.setPauze(true);
         } else {
+            this.startMuziek("C:\\Users\\Sebastiaan\\Documents\\GitHub\\INFZ-D-Project\\geluid\\siren_sound.wav", true);
+            if(pacman.getKracht()){
+            stopwatch.pacmanOnverslaanbaarTimer(pacman);
+            }
             spel.setTekstPauze();
             this.requestFocusInWindow();
             spelInformatie.setPauze(false);
+            stopwatch.lopenSpookjes(inky);
         }
     }
     
@@ -134,7 +160,7 @@ public class Spelbord extends javax.swing.JPanel {
     
     public void reset() {
         stopwatch.stopTimer();
-  
+        this.stopMuziek();
         inky = null;
         blinky = null;
         pinky = null;
@@ -284,7 +310,6 @@ public class Spelbord extends javax.swing.JPanel {
     
     public void maakKers() {
         ArrayList<Vakje> legeVakjes = new ArrayList<Vakje>();
-
         if (spelInformatie.checkKers()) {
             for (int i = 0; i < arrayHoogte; i++) {
                 for (int j = 0; j < arrayBreedte; j++) {
@@ -320,6 +345,7 @@ public class Spelbord extends javax.swing.JPanel {
     
     // in pacman zelf zetten
     public void geefPacmanSuperkracht(Pacman pacman){
+        stopMuziek();
         stopwatch.pacmanOnverslaanbaarTimer(pacman);
     }
     

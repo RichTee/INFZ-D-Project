@@ -21,7 +21,9 @@ public class SpelInformatie {
     }
 
     public void reset() {
-        spel.resetLevens();
+        if(spel.getAantalLevens()==1){
+           spel.resetLevens();
+        }
         spel.resetScore();
         this.huidigeAantalBolletjes = 0;
     }
@@ -45,6 +47,7 @@ public class SpelInformatie {
                 this.huidigeAantalBolletjes--;
                 checkKers();
                 checkOfGewonnen();
+                System.out.println("bolletjes: " + this.huidigeAantalBolletjes);
                 break;
             case "superbolletje":
             case "kers":

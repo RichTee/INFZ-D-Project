@@ -42,6 +42,6 @@ public class Kers extends SpelElement {
         row = vakje.getXPositie();
         column = vakje.getYPositie();
         
-        g.drawImage(this.image, column * CELL, row * CELL, 50, 50, null);
+        g.drawImage(this.image, column * CELL, row * CELL, 35, 35, null);
     }
 }

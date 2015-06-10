@@ -12,7 +12,6 @@ import javax.swing.JOptionPane;
  * @author Method
  */
 public class Spel extends javax.swing.JFrame {
-
     private int punten = 0;
     private int levens = 3;
 
@@ -21,11 +20,11 @@ public class Spel extends javax.swing.JFrame {
      */
     public Spel() {
         initComponents();
-      
+        this.spelbord2.startMuziek("C:\\Users\\Sebastiaan\\Documents\\GitHub\\INFZ-D-Project\\geluid\\pacman_beginning.wav", true);
         this.spelbord2.setSpel(this);
-      
+        
         this.setTitle("Pacman");
-        this.setSize(1025, 590); // Hardcoded
+        this.setSize(1150, 950); // Hardcoded
         this.setResizable(false);
         
         btnPauzeer.setEnabled(false);
@@ -33,6 +32,15 @@ public class Spel extends javax.swing.JFrame {
         lblScore.setText("Score: " + punten);
         lblLevens.setText("Levens: " + levens);
         lblLevel.setText("Level: " + spelbord2.level);
+    }
+    
+    public int getAantalLevens(){
+    return this.levens;
+    }
+    
+    public void setAantalLevens(int levens){
+    this.levens = levens;
+    this.lblLevens.setText("Levens: " + this.levens);
     }
 
     /**
@@ -138,6 +146,7 @@ public class Spel extends javax.swing.JFrame {
 
     private void btnStartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStartActionPerformed
         System.out.println("Start");
+        this.spelbord2.stopMuziek();
 
         this.spelbord2.start();
         
@@ -148,12 +157,15 @@ public class Spel extends javax.swing.JFrame {
 
     private void btnHerstartenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHerstartenActionPerformed
         System.out.println("Herstarten");
-        if(!btnStart.isEnabled()) { 
+        if(!btnStart.isEnabled()) {
+           this.spelbord2.stopMuziek();
+           this.spelbord2.startMuziek("C:\\Users\\Sebastiaan\\Documents\\GitHub\\INFZ-D-Project\\geluid\\siren_sound.wav", true);
            spelbord2.setLevel(0);
            spelbord2.levelIncrement(1);
            this.spelbord2.herstart();
            btnStart.setEnabled(false);
            lblLevel.setText("Level: " + spelbord2.level);
+           this.setAantalLevens(3);
         }
     }//GEN-LAST:event_btnHerstartenActionPerformed
 
