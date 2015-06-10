@@ -4,8 +4,9 @@
  * and open the template in the editor.
  */
 
-package infz.d.project.gui;
+package infz.d.project.SpelElementen;
 
+import infz.d.project.GUI.Vakje;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.image.BufferedImage;

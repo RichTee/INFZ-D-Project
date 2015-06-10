@@ -3,14 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package infz.d.project.gui;
+package infz.d.project.Ondersteunend;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -30,7 +28,7 @@ public LevelLoader(){}
     public ArrayList<String> laadLevel(int level) {
         Scanner read;
         try {
-            read = new Scanner(new File("txt/level" + level + ".txt"));
+            read = new Scanner(new File("src/Level/level" + level + ".txt"));
 
             while (read.hasNextLine()) {
                 String line = read.nextLine();
@@ -41,20 +39,15 @@ public LevelLoader(){}
         } catch (FileNotFoundException ex) {
 
             try {
-                read = new Scanner(new File("txt/level1.txt"));
+                read = new Scanner(new File("src/Level/level1.txt"));
                 while (read.hasNextLine()) {
                     String line = read.nextLine();
                     vakjesInhoud.add(line);
                 }
                 read.close();
 
-            } catch (FileNotFoundException ex1) {
-                
-            }
-
-
+            } catch (FileNotFoundException ex1) {   }
         }
-
         return vakjesInhoud;
     }
 }

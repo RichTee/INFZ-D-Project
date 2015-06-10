@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package infz.d.project.gui;
+package infz.d.project.GUI;
 
 import javax.swing.JOptionPane;
 
@@ -53,7 +53,7 @@ public class Spel extends javax.swing.JFrame {
     private void initComponents() {
 
         btnStart = new javax.swing.JButton();
-        spelbord2 = new infz.d.project.gui.Spelbord();
+        spelbord2 = new infz.d.project.GUI.Spelbord();
         btnHerstarten = new javax.swing.JButton();
         lblScore = new javax.swing.JLabel();
         lblLevel = new javax.swing.JLabel();
@@ -279,6 +279,6 @@ public class Spel extends javax.swing.JFrame {
     private javax.swing.JLabel lblLevel;
     private javax.swing.JLabel lblLevens;
     private javax.swing.JLabel lblScore;
-    private infz.d.project.gui.Spelbord spelbord2;
+    private infz.d.project.GUI.Spelbord spelbord2;
     // End of variables declaration//GEN-END:variables
 }

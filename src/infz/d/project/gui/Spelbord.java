@@ -3,8 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package infz.d.project.gui;
+package infz.d.project.GUI;
 
+import infz.d.project.Ondersteunend.StopWatch;
+import infz.d.project.Ondersteunend.KeyboardListener;
+import infz.d.project.Ondersteunend.SpelInformatie;
+import infz.d.project.Ondersteunend.LevelLoader;
+import infz.d.project.SpelElementen.Kers;
+import infz.d.project.SpelElementen.Pacman;
+import infz.d.project.SpelElementen.AchtervolgendSpookje;
+import infz.d.project.SpelElementen.WillekeurigSpookje;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -15,6 +23,8 @@ import java.util.Random;
 
 import javax.swing.BorderFactory;
 import javax.swing.border.Border;
+
+import infz.d.project.Geluiden.AudioPlayer;
 
 /**
  *
@@ -356,9 +366,16 @@ public class Spelbord extends javax.swing.JPanel {
                 if (vakje[i][j].getElement().equals("pacman")) {
                     pacman = (Pacman) vakje[i][j].getPacman();
                     vakje[i][j].setElement("pad", null);
-                } else if (vakje[i][j].getElement().equals("spookje")){
+                } 
+                if (vakje[i][j].getSpookje("inky") != null||
+                        vakje[i][j].getSpookje("blinky") != null ||
+                        vakje[i][j].getSpookje("pinky")  != null ||
+                        vakje[i][j].getSpookje("clyde") != null){
                     // Methode voor spookje, Blinky, Pinky, Inky, Clyde.
                     // blinky = vakje[i][j].spookje;
+                    //inky = (WillekeurigSpookje) vakje[i][j].getSpookje("inky");
+                    //vakje[i][j].setElement("pad", null);
+                    // StartPositie meegeven aan spookjes!(onthouden)
                 }
             }
         }

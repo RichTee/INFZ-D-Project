@@ -78,7 +78,7 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnStartActionPerformed"/>
       </Events>
     </Component>
-    <Container class="infz.d.project.gui.Spelbord" name="spelbord2">
+    <Container class="infz.d.project.GUI.Spelbord" name="spelbord2">
 
       <Layout>
         <DimensionLayout dim="0">

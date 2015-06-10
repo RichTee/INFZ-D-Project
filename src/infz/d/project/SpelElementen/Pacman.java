@@ -3,22 +3,24 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package infz.d.project.gui;
+package infz.d.project.SpelElementen;
 
 import java.awt.Graphics;
 import java.awt.Image;
 import java.io.File;
 
+import infz.d.project.Enums.Richting;
+import infz.d.project.GUI.Vakje;
 /**
  *
  * @author Method
  */
 public class Pacman extends Poppetje {
     private boolean             heeftSuperKracht = false;
-    private final File          afbeeldingNoord = new File("afbeelding/PacmanNoord.png");
-    private final File          afbeeldingOost = new File("afbeelding/PacmanOost.png");
-    private final File          afbeeldingZuid = new File("afbeelding/PacmanZuid.png");
-    private final File          afbeeldingWest = new File("afbeelding/PacmanWest.png");
+    private final File          afbeeldingNoord = new File("src/afbeelding/PacmanNoord.png");
+    private final File          afbeeldingOost = new File("src/afbeelding/PacmanOost.png");
+    private final File          afbeeldingZuid = new File("src/afbeelding/PacmanZuid.png");
+    private final File          afbeeldingWest = new File("src/afbeelding/PacmanWest.png");
     private Image[]             afbeeldingPad;
     
     public Pacman(Vakje vak) {

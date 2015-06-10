@@ -4,15 +4,17 @@
  * and open the template in the editor.
  */
 
-package infz.d.project.gui;
+package infz.d.project.SpelElementen;
 
+import infz.d.project.GUI.Vakje;
 import java.util.Random;
 
+import infz.d.project.Interfaces.VluchtenBewegenAlgoritme;
 /**
  *
  * @author Method
  */
-public abstract class Spookje extends Poppetje {
+public abstract class Spookje extends Poppetje implements VluchtenBewegenAlgoritme {
     public String naam;
     
     public Spookje() { }

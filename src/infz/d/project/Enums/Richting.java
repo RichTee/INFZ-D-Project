@@ -4,12 +4,16 @@
  * and open the template in the editor.
  */
 
-package infz.d.project.gui;
+package infz.d.project.Enums;
 
 /**
  *
  * @author Method
  */
-public interface VluchtenBewegenAlgoritme {
-    
-}
+public enum Richting {
+
+    NOORD,
+    OOST,
+    ZUID,
+    WEST,
+};

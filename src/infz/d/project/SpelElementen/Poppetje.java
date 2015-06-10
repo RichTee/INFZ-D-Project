@@ -4,8 +4,9 @@
  * and open the template in the editor.
  */
 
-package infz.d.project.gui;
+package infz.d.project.SpelElementen;
 
+import infz.d.project.Enums.Richting;
 /**
  *
  * @author Method
@@ -13,13 +14,6 @@ package infz.d.project.gui;
 public abstract class Poppetje extends SpelElement{
     
     public Poppetje() { }
-    
-    public enum Richting {
-        NOORD,
-        OOST,
-        ZUID,
-        WEST,
-    };
     
     public void bewegen(Richting richting) { }
 }

@@ -4,8 +4,17 @@
  * and open the template in the editor.
  */
 
-package infz.d.project.gui;
+package infz.d.project.GUI;
 
+import infz.d.project.SpelElementen.Kers;
+import infz.d.project.SpelElementen.Spookje;
+import infz.d.project.SpelElementen.Pacman;
+import infz.d.project.SpelElementen.SpelElement;
+import infz.d.project.SpelElementen.Superbolletje;
+import infz.d.project.SpelElementen.Muur;
+import infz.d.project.SpelElementen.AchtervolgendSpookje;
+import infz.d.project.SpelElementen.WillekeurigSpookje;
+import infz.d.project.SpelElementen.Bolletje;
 import java.awt.Dimension;
 import java.awt.Graphics;
 

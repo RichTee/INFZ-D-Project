@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package infz.d.project.gui;
+package infz.d.project.SpelElementen;
 
+import infz.d.project.GUI.Vakje;
 import java.awt.Graphics;
 
 import java.io.File;
@@ -14,7 +15,7 @@ import java.io.File;
  * @author Sebastiaan
  */
 public class Superbolletje extends SpelElement {
-    File afbeelding = new File("afbeelding/superbolletje.png");
+    File afbeelding = new File("src/afbeelding/superbolletje.png");
     
     public Superbolletje(Vakje vakje){
         this.vakje = vakje;

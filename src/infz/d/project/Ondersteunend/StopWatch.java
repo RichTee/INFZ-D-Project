@@ -3,8 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package infz.d.project.gui;
+package infz.d.project.Ondersteunend;
 
+import infz.d.project.GUI.Spelbord;
+import infz.d.project.SpelElementen.Spookje;
+import infz.d.project.SpelElementen.Pacman;
+import infz.d.project.GUI.Spel;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -84,8 +88,8 @@ public class StopWatch {
     }
     
     public void stopLopenSpookjes(){
-    tijdSpookjes.cancel();
-    tijdSpookjes.purge();
+        tijdSpookjes.cancel();
+        tijdSpookjes.purge();
     }
     
     public void stopTimer() {

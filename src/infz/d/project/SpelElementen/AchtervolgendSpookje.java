@@ -3,36 +3,39 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package infz.d.project.gui;
+package infz.d.project.SpelElementen;
 
+import infz.d.project.GUI.Vakje;
 import java.awt.Graphics;
 import java.io.File;
-import java.util.Random;
+
+import infz.d.project.Interfaces.AchtervolgenBewegenAlgoritme;
 
 /**
  *
  * @author Method
  */
-public class WillekeurigSpookje extends Spookje{
-    private File imgInky = new File("afbeelding/inky.png");
-    private File imgBlinky = new File("afbeelding/blinky.png");
+public class AchtervolgendSpookje extends Spookje implements AchtervolgenBewegenAlgoritme{
+    private File imgPinky = new File("src/afbeelding/pinky.png");
+    private File imgClyde = new File("src/afbeelding/clyde.png");
     
-    public WillekeurigSpookje(Vakje vakje, String naam) {
+    public AchtervolgendSpookje(Vakje vakje, String naam) {
         this.vakje = vakje;
-        this.naam = naam; 
+        this.naam = naam;
         this.punten = 200;
         this.elementNaam = "spookje";
 
-        if (naam.equals("inky")) {
-            converteerFileNaarImage(imgInky);
-        } else if (naam.equals("blinky")) {
-            converteerFileNaarImage(imgBlinky);
+        if (naam.equals("pinky")) {
+            converteerFileNaarImage(imgPinky);
+        } else if (naam.equals("clyde")) {
+            converteerFileNaarImage(imgClyde);
         }
     }
-
+    
     @Override
     public void bewegen() {
         // Interval vereist zodat ze niet sneller lopen dan mogelijk, bijv 3 vakjes per x seconden.
+        
         switch(randomRichting()){
             case 1:
                 System.out.println("NOORD");

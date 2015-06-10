@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+package infz.d.project.SpelElementen;
 
-package infz.d.project.gui;
-
+import infz.d.project.GUI.Vakje;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.io.File;
@@ -16,25 +16,33 @@ import javax.imageio.ImageIO;
 
 /**
  *
- * @author Method
+ * @author Sebastiaan
  */
-public class Bolletje extends SpelElement {
-    private int row;
-    private int column;
-    private File afbeelding = new File("afbeelding/bolletje.png");
+public class Kers extends SpelElement {
+    private int         row;
+    private int         column;
+    private File afbeelding = new File("src/afbeelding/kers.png");
     
-    public Bolletje(Vakje vakje) {
+    public Kers(Vakje vakje) {
         this.vakje = vakje;
-        this.punten = 10;
-        this.elementNaam = "bolletje";
+        this.punten = 100;
+        this.elementNaam = "kers";
         converteerFileNaarImage(afbeelding);
     }
     
+    public void setVakje(Vakje vakje) {
+        this.vakje = vakje;
+    }
+    
+    public Vakje getVakje(){
+        return vakje;
+    }
+
     @Override
     public void draw(Graphics g) {
         row = vakje.getXPositie();
         column = vakje.getYPositie();
-
-       g.drawImage(this.image, column * CELL, row * CELL, 35, 35, null);
+        
+        g.drawImage(this.image, column * CELL, row * CELL, 35, 35, null);
     }
 }
