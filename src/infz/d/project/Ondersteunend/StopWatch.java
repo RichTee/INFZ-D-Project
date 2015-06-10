@@ -5,6 +5,7 @@
  */
 package infz.d.project.Ondersteunend;
 
+import static infz.d.project.Enums.Geluid.*;
 import infz.d.project.GUI.Spelbord;
 import infz.d.project.SpelElementen.Spookje;
 import infz.d.project.SpelElementen.Pacman;
@@ -41,7 +42,7 @@ public class StopWatch {
 
                 if (seconden == 10) {
                     spelbord.stopMuziek();
-                    spelbord.startMuziek("C:\\Users\\Sebastiaan\\Documents\\GitHub\\INFZ-D-Project\\geluid\\siren_sound.wav", true);
+                    spelbord.startMuziek(BACKGROUND_GELUID, true);
                     pacmanTimerIsBezig = false;
                   
                     pacman.setOnverslaanbaar(false);
@@ -55,7 +56,7 @@ public class StopWatch {
 
         if (pacmanTimerIsBezig) {
             spelbord.stopMuziek();
-            spelbord.startMuziek("C:\\Users\\Sebastiaan\\Documents\\GitHub\\INFZ-D-Project\\geluid\\pacman_intermission.wav", true);
+            spelbord.startMuziek(SUPERBOLLETJE_GELUID, true);
             tijdPacman.cancel();
             tijdPacman.purge();
             seconden = 0;
@@ -64,7 +65,7 @@ public class StopWatch {
 
         } else {
             spelbord.stopMuziek();
-            spelbord.startMuziek("C:\\Users\\Sebastiaan\\Documents\\GitHub\\INFZ-D-Project\\geluid\\pacman_intermission.wav", true);
+            spelbord.startMuziek(SUPERBOLLETJE_GELUID, true);
             pacmanTimerIsBezig = true;
             pacman.setOnverslaanbaar(true);
             tijdPacman = new Timer();

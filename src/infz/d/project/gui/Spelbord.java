@@ -25,6 +25,9 @@ import javax.swing.BorderFactory;
 import javax.swing.border.Border;
 
 import infz.d.project.Geluiden.AudioPlayer;
+import infz.d.project.Enums.Geluid;
+import static infz.d.project.Enums.Geluid.*;
+
 
 /**
  *
@@ -64,9 +67,9 @@ public class Spelbord extends javax.swing.JPanel {
         player = new AudioPlayer();
     }
     
-    public void startMuziek(String path, boolean loop)
+    public void startMuziek(Geluid geluid, boolean loop)
     {
-    player.playMusic(path, loop);
+    player.playMusic(geluid, loop);
     }
     
        public void stopMuziek(){
@@ -98,7 +101,7 @@ public class Spelbord extends javax.swing.JPanel {
     // Snelle start voor Spel om de veld te activeren met het spel.
     public void start() {
         reset();
-        this.startMuziek("C:\\Users\\Sebastiaan\\Documents\\GitHub\\INFZ-D-Project\\geluid\\siren_sound.wav", true);
+        this.startMuziek(BACKGROUND_GELUID, true);
         genereerSpelbordPanelGegevens();
         panelListener();
         
@@ -111,7 +114,7 @@ public class Spelbord extends javax.swing.JPanel {
     public void herstart() {
         spel.setTekstPauze();
         reset();
-        this.startMuziek("C:\\Users\\Sebastiaan\\Documents\\GitHub\\INFZ-D-Project\\geluid\\siren_sound.wav", true);
+        this.startMuziek(BACKGROUND_GELUID, true);
         genereerSpelbordPanelGegevens();
         panelListener();
         stopwatch.lopenSpookjes(inky);
@@ -150,7 +153,7 @@ public class Spelbord extends javax.swing.JPanel {
             this.setRequestFocusEnabled(false);
             spelInformatie.setPauze(true);
         } else {
-            this.startMuziek("C:\\Users\\Sebastiaan\\Documents\\GitHub\\INFZ-D-Project\\geluid\\siren_sound.wav", true);
+            this.startMuziek(BACKGROUND_GELUID, true);
             if(pacman.getKracht()){
             stopwatch.pacmanOnverslaanbaarTimer(pacman);
             }

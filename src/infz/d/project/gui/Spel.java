@@ -5,6 +5,7 @@
  */
 package infz.d.project.GUI;
 
+import static infz.d.project.Enums.Geluid.*;
 import javax.swing.JOptionPane;
 
 /**
@@ -20,7 +21,7 @@ public class Spel extends javax.swing.JFrame {
      */
     public Spel() {
         initComponents();
-        this.spelbord2.startMuziek("C:\\Users\\Sebastiaan\\Documents\\GitHub\\INFZ-D-Project\\geluid\\pacman_beginning.wav", true);
+        this.spelbord2.startMuziek(START_GELUID, true);
         this.spelbord2.setSpel(this);
         
         this.setTitle("Pacman");
@@ -159,7 +160,7 @@ public class Spel extends javax.swing.JFrame {
         System.out.println("Herstarten");
         if(!btnStart.isEnabled()) {
            this.spelbord2.stopMuziek();
-           this.spelbord2.startMuziek("C:\\Users\\Sebastiaan\\Documents\\GitHub\\INFZ-D-Project\\geluid\\siren_sound.wav", true);
+           this.spelbord2.startMuziek(BACKGROUND_GELUID, true);
            spelbord2.setLevel(0);
            spelbord2.levelIncrement(1);
            this.spelbord2.herstart();

@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package infz.d.project.Geluiden;
+import infz.d.project.Enums.Geluid;
 import java.io.*;
 
 import javax.sound.sampled.AudioInputStream;
@@ -16,10 +17,33 @@ import javax.sound.sampled.Clip;
 public class AudioPlayer {
 
     Clip clip;
+    String path = "";
+   
     
-    public void playMusic(String path, boolean loop) {
+    public void playMusic(Geluid geluid, boolean loop) {
         AudioInputStream inputStream;
+        
         try {
+            
+            switch(geluid)
+            {
+            
+                case START_GELUID:
+                    path = "src/Geluid/pacman_beginning.wav";
+                    break;
+                
+                case BACKGROUND_GELUID:
+                    path = "src/Geluid/siren_sound.wav";
+                    break;
+                
+                case SUPERBOLLETJE_GELUID:
+                    path = "geluid/pacman_intermission.wav";
+                    break;
+   
+            }
+                   
+                   
+            
             clip = null;
             File file = new File(path);
             clip = AudioSystem.getClip();
