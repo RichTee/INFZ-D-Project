@@ -49,7 +49,6 @@ public class SpelInformatie {
                 this.huidigeAantalBolletjes--;
                 checkKers();
                 checkOfGewonnen();
-                System.out.println("bolletjes: " + this.huidigeAantalBolletjes);
                 break;
             case "superbolletje":
             case "kers":

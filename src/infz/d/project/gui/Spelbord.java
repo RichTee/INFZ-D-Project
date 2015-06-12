@@ -5,14 +5,6 @@
  */
 package infz.d.project.GUI;
 
-import infz.d.project.Ondersteunend.StopWatch;
-import infz.d.project.Ondersteunend.KeyboardListener;
-import infz.d.project.Ondersteunend.SpelInformatie;
-import infz.d.project.Ondersteunend.LevelLoader;
-import infz.d.project.SpelElementen.Kers;
-import infz.d.project.SpelElementen.Pacman;
-import infz.d.project.SpelElementen.AchtervolgendSpookje;
-import infz.d.project.SpelElementen.WillekeurigSpookje;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -26,8 +18,12 @@ import javax.swing.border.Border;
 
 import infz.d.project.Geluiden.AudioPlayer;
 import infz.d.project.Enums.Geluid;
-import static infz.d.project.Enums.Geluid.*;
-
+import static infz.d.project.Enums.Geluid.*; // ?
+import infz.d.project.Ondersteunend.*;
+import infz.d.project.SpelElementen.Kers;
+import infz.d.project.SpelElementen.Pacman;
+import infz.d.project.SpelElementen.AchtervolgendSpookje;
+import infz.d.project.SpelElementen.WillekeurigSpookje;
 
 /**
  *
@@ -69,16 +65,12 @@ public class Spelbord extends javax.swing.JPanel {
     
     public void startMuziek(Geluid geluid, boolean loop)
     {
-    player.playMusic(geluid, loop);
+        player.speelGeluid(geluid, loop);
     }
     
-       public void stopMuziek(){
-    player.stopMusic();
+    public void stopMuziek(){
+        player.stopGeluid();
     }
-       
-//       public void playMusicTog(){
-//       player.playMusicTogether();
-//       }
     
     public void levelIncrement(int level){
         this.level = this.level + level;
@@ -106,7 +98,7 @@ public class Spelbord extends javax.swing.JPanel {
         panelListener();
         
         stopwatch.lopenSpookjes(inky);
-        //stopwatch.lopenSpookjes(blinky);
+        stopwatch.lopenSpookjes(blinky);
         //stopwatch.lopenSpookjes(pinky);
         //stopwatch.lopenSpookjes(clyde);
     }
@@ -155,7 +147,7 @@ public class Spelbord extends javax.swing.JPanel {
         } else {
             this.startMuziek(BACKGROUND_GELUID, true);
             if(pacman.getKracht()){
-            stopwatch.pacmanOnverslaanbaarTimer(pacman);
+                stopwatch.pacmanOnverslaanbaarTimer(pacman);
             }
             spel.setTekstPauze();
             this.requestFocusInWindow();
@@ -174,6 +166,7 @@ public class Spelbord extends javax.swing.JPanel {
     public void reset() {
         stopwatch.stopTimer();
         this.stopMuziek();
+        
         inky = null;
         blinky = null;
         pinky = null;
@@ -198,6 +191,10 @@ public class Spelbord extends javax.swing.JPanel {
         spelInformatie = new SpelInformatie(spel);
     }
 
+    public Vakje getSpecifiekVakje(int row, int column) {
+       return vakje[row][column]; 
+    }
+    
     // Get posities van entiteiten die een spel vormen uit de txt file.
     private void getSpelbordTxtFile() {
             vakjesInhoud = levelLoader.laadLevel(level);
@@ -237,7 +234,7 @@ public class Spelbord extends javax.swing.JPanel {
                             inky = (WillekeurigSpookje) vakje[row][column].getSpookje("inky");
                             System.out.println("inky: " + vakje[row][column].getSpookje("inky").toString());
                         } else if (blinky == null ) {
-                            System.out.println("blinky");
+                            System.out.println("blinky spelbord");
                             vakje[row][column] = new Vakje(row, column, "blinky", this);
                             blinky = (WillekeurigSpookje) vakje[row][column].getSpookje("blinky");
                         } else if (pinky == null ) {
@@ -316,12 +313,10 @@ public class Spelbord extends javax.swing.JPanel {
         else if(levens == 0)
             spelInformatie.setScoreZonderBolletje(score);
         else
-            spelInformatie.setLevens(levens);
-        
-        
+            spelInformatie.setLevens(levens);       
     }
     
-    public void maakKers() {
+    public void maakKersInLegeVakje() {
         ArrayList<Vakje> legeVakjes = new ArrayList<Vakje>();
         if (spelInformatie.checkKers()) {
             for (int i = 0; i < arrayHoogte; i++) {
@@ -339,14 +334,13 @@ public class Spelbord extends javax.swing.JPanel {
             int YPositie = legeVakjes.get(randomGetal).getYPositie();
             
             vakje[XPositie][YPositie].setElement("kers", kers = new Kers(vakje[XPositie][YPositie]));
-            kers = vakje[XPositie][YPositie].getKers();
+            kers = (Kers) vakje[XPositie][YPositie].getSpelElement();
             kers.setVakje(vakje[XPositie][YPositie]);
             
             legeVakjes.clear();
 
         }
     }
-
 
     private int getRandomIndex(int lengte)
     {

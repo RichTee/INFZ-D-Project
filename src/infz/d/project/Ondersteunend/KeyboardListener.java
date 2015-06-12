@@ -41,19 +41,19 @@ public class KeyboardListener implements KeyListener {
         TimerTask task = new TimerTask() {
             public void run() {
                 switch (ke.getKeyCode()) {
-                case KeyEvent.VK_UP:
-                    pacman.bewegen(Richting.NOORD);
-                    break;
-                case KeyEvent.VK_RIGHT:
-                    pacman.bewegen(Richting.OOST);
-                    break;
-                case KeyEvent.VK_DOWN:
-                    pacman.bewegen(Richting.ZUID);
-                    break;
-                case KeyEvent.VK_LEFT:
-                    pacman.bewegen(Richting.WEST);
-                    break;
-            }
+                    case KeyEvent.VK_UP:
+                        pacman.bewegen(Richting.NOORD);
+                        break;
+                    case KeyEvent.VK_RIGHT:
+                        pacman.bewegen(Richting.OOST);
+                        break;
+                    case KeyEvent.VK_DOWN:
+                        pacman.bewegen(Richting.ZUID);
+                        break;
+                    case KeyEvent.VK_LEFT:
+                        pacman.bewegen(Richting.WEST);
+                        break;
+                }
             }
         };
 

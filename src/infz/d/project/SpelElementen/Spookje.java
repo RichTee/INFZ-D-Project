@@ -16,6 +16,7 @@ import infz.d.project.Interfaces.VluchtenBewegenAlgoritme;
  */
 public abstract class Spookje extends Poppetje implements VluchtenBewegenAlgoritme {
     public String naam;
+    public Vakje startPositie;
     
     public Spookje() { }
     

@@ -10,10 +10,7 @@ package infz.d.project.Enums;
  * @author Sebastiaan
  */
 public enum Geluid {
-  
     START_GELUID,
     BACKGROUND_GELUID,
     SUPERBOLLETJE_GELUID,
-    
-    
 };

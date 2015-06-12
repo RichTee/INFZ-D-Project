@@ -15,7 +15,7 @@ import infz.d.project.SpelElementen.Muur;
 import infz.d.project.SpelElementen.AchtervolgendSpookje;
 import infz.d.project.SpelElementen.WillekeurigSpookje;
 import infz.d.project.SpelElementen.Bolletje;
-import java.awt.Dimension;
+
 import java.awt.Graphics;
 
 import java.util.ArrayList;
@@ -24,7 +24,7 @@ import java.util.ArrayList;
  *
  * @author Method
  */
-public class Vakje extends javax.swing.JPanel {
+public class Vakje {
 
     /**
      * Creates new form Vakje
@@ -44,19 +44,12 @@ public class Vakje extends javax.swing.JPanel {
     private AchtervolgendSpookje    pinky;
     private AchtervolgendSpookje    clyde;
     private Pacman                  pacman;
-    private Bolletje                bolletje;
-    private Superbolletje           superbolletje;
-    public  Kers                    kers;
     
     public Vakje(int xPositie, int yPositie, String element, Spelbord spelBord) {
-        initComponents();
-
         this.xPositie = xPositie;
         this.yPositie = yPositie;
         this.element = element;
         this.spelbord = spelBord;
-        
-        setPreferredSize(new Dimension(50, 50));
 
         vulSpelElementList();
     }
@@ -114,10 +107,6 @@ public class Vakje extends javax.swing.JPanel {
     
     public Pacman getPacman() {
         return pacman;
-    }
-    
-    public Kers getKers(){
-        return (Kers) this.spelElement;
     }
 
     public SpelElement getSpelElement() {
@@ -194,6 +183,26 @@ public class Vakje extends javax.swing.JPanel {
         return punten;
     }
     
+    private void teleporteerBewegend(){
+        if(this.getXPositie() != 10)
+            return;
+        
+        // Alleen pacman
+        if(this.getYPositie() == 1){
+            spelbord.getSpecifiekVakje(10, 17).setElement("pacman", pacman);
+            this.element = "pad";
+            pacman.setVakje(spelbord.getSpecifiekVakje(10, 17));
+            spelbord.tekenOpnieuw();
+        }
+        
+        if(this.getYPositie() == 18){
+            spelbord.getSpecifiekVakje(10, 2).setElement("pacman", pacman);
+            this.element = "pad";
+            pacman.setVakje(spelbord.getSpecifiekVakje(10, 2));
+            spelbord.tekenOpnieuw();
+        }
+    }
+    
     public void pacmanRichting(String richting) {
         /*
         * NOORD = 0
@@ -243,13 +252,30 @@ public class Vakje extends javax.swing.JPanel {
     private void checkPacmanCollisie(Vakje vakje){
         int punten = 0;
         boolean verlorenSwitchConditie = false;
-
+        WillekeurigSpookje inky = (WillekeurigSpookje) vakje.getSpookje("inky");
+        WillekeurigSpookje blinky = (WillekeurigSpookje) vakje.getSpookje("blinky");
+        AchtervolgendSpookje pinky = (AchtervolgendSpookje) vakje.getSpookje("pinky");
+        AchtervolgendSpookje clyde = (AchtervolgendSpookje) vakje.getSpookje("clyde");
+        
         // ToDo: Prioriteit: Spookje > Bolletje > Superbolletje > Kers
-        if (vakje.getSpookje("inky") != null || vakje.getSpookje("blinky") != null
-                || vakje.getSpookje("pinky") != null || vakje.getSpookje("clyde") != null) {
+        if (inky != null || blinky != null || pinky != null || clyde != null) {
             
             if (pacman.getKracht() && !vakje.getElement().equals("pad")) {
                 punten = puntenOptellenVanBuurVakje(vakje);
+                
+                if (inky != null) {
+                    vakje.inky = null;
+                }
+                if (blinky != null) {
+                    vakje.blinky = null;
+                }
+                if (pinky != null) {
+                    vakje.pinky = null;
+                }
+                if (clyde != null) {
+                    vakje.clyde = null;
+                }
+
                 vakje.setElement(this.getElement(), pacman);
                 this.setElement("pad", null);
                 pacman.setVakje(vakje);
@@ -258,6 +284,15 @@ public class Vakje extends javax.swing.JPanel {
 
             } else if (pacman.getKracht()){
                 punten = puntenOptellenVanBuurVakje(vakje);
+                if(inky != null)
+                    vakje.inky = null;
+                if(blinky != null)
+                    vakje.blinky = null;
+                if(pinky != null)
+                    vakje.pinky = null;
+                if(clyde != null)
+                    vakje.clyde = null;
+                
                 vakje.setElement(this.getElement(), pacman);
                 this.setElement("pad", null);
                 pacman.setVakje(vakje);
@@ -285,7 +320,7 @@ public class Vakje extends javax.swing.JPanel {
                     break;
                 case "bolletje":
                     punten = puntenOptellenVanBuurVakje(vakje);
-                    spelbord.maakKers();
+                    spelbord.maakKersInLegeVakje();
                     vakje.setElement(this.getElement(), pacman);
                     this.setElement("pad", null);
                     pacman.setVakje(vakje); // ToDo: Spookje error
@@ -320,6 +355,7 @@ public class Vakje extends javax.swing.JPanel {
                     break;
             }
         }
+        teleporteerBewegend();
     }
 
     private void checkSpookjeCollisie(Vakje vakje, Spookje spookje){ 
@@ -331,6 +367,8 @@ public class Vakje extends javax.swing.JPanel {
                 vakje.setSpookje(spookje);
                 if(spookje.naam.equals("inky"))
                     this.inky = null;
+                if(spookje.naam.equals("blinky"))
+                    this.blinky = null;
                 spelbord.tekenOpnieuw();
                 break;
             case "bolletje":
@@ -338,6 +376,8 @@ public class Vakje extends javax.swing.JPanel {
                 vakje.setSpookje(spookje);
                 if(spookje.naam.equals("inky"))
                     this.inky = null;
+                if(spookje.naam.equals("blinky"))
+                    this.blinky = null;
                 spelbord.tekenOpnieuw();
                 break;
             case "superbolletje":
@@ -345,6 +385,8 @@ public class Vakje extends javax.swing.JPanel {
                 vakje.setSpookje(spookje);
                 if(spookje.naam.equals("inky"))
                     this.inky = null;
+                if(spookje.naam.equals("blinky"))
+                    this.blinky = null;
                 spelbord.tekenOpnieuw();
                 break;
             case "kers":
@@ -352,6 +394,8 @@ public class Vakje extends javax.swing.JPanel {
                 vakje.setSpookje(spookje);
                 if(spookje.naam.equals("inky"))
                     this.inky = null;
+                if(spookje.naam.equals("blinky"))
+                    this.blinky = null;
                 spelbord.tekenOpnieuw();
                 break;
             case "pacman":
@@ -360,6 +404,8 @@ public class Vakje extends javax.swing.JPanel {
                     vakje.setSpookje(spookje);
                     if(spookje.naam.equals("inky"))
                         this.inky = null;
+                    if(spookje.naam.equals("blinky"))
+                        this.blinky = null;
                     spelbord.tekenOpnieuw();
                     
                 } else if (!pacman.getKracht()) {
@@ -403,14 +449,10 @@ public class Vakje extends javax.swing.JPanel {
             case "pacman":
                 pacman = new Pacman(this);
                 break;
-            case "kers":
-                spelElement = new Kers(this);
-                break;
             default:
                 // Pad, niks toevoegen. Indien vakje leeg is, dan moet die niks bevatten
                 break;
         }
-        kers = new Kers(this);
        // sortSpelElementList();
     }
 
@@ -423,10 +465,8 @@ public class Vakje extends javax.swing.JPanel {
                 break;
             case "bolletje":
             case "superbolletje":
+            case "kers":
                 spelElement.draw(g);
-                break;
-            case "kers": // todo: kers
-                kers.draw(g);
                 break;
             default:
                 break;
@@ -443,30 +483,5 @@ public class Vakje extends javax.swing.JPanel {
         } else if (clyde != null) {
             clyde.draw(g);
         }
-    }
-
-    /**
-     * This method is called from within the constructor to initialize the form.
-     * WARNING: Do NOT modify this code. The content of this method is always
-     * regenerated by the Form Editor.
-     */
-    @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
-        );
-    }// </editor-fold>//GEN-END:initComponents
-
-
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    // End of variables declaration//GEN-END:variables
+    }             
 }

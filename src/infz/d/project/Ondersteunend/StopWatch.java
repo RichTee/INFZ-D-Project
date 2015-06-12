@@ -80,7 +80,6 @@ public class StopWatch {
         TimerTask task = new TimerTask() {
             public void run() {
                 spookje.bewegen();
-                System.out.println("Spookje locatie X: " + spookje.getVakje().getXPositie() + " Y: " + spookje.getVakje().getYPositie());
             }
         };
 

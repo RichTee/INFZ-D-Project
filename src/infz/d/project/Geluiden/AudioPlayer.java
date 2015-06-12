@@ -17,35 +17,27 @@ import javax.sound.sampled.Clip;
 public class AudioPlayer {
 
     Clip clip;
-    String path = "";
-   
+    String muziekPad = "";
     
-    public void playMusic(Geluid geluid, boolean loop) {
+    public void speelGeluid(Geluid geluid, boolean loop) {
         AudioInputStream inputStream;
         
         try {
-            
             switch(geluid)
             {
-            
                 case START_GELUID:
-                    path = "src/Geluid/pacman_beginning.wav";
-                    break;
-                
+                    muziekPad = "src/Geluid/pacman_beginning.wav";
+                    break;   
                 case BACKGROUND_GELUID:
-                    path = "src/Geluid/siren_sound.wav";
+                    muziekPad = "src/Geluid/siren_sound.wav";
                     break;
-                
                 case SUPERBOLLETJE_GELUID:
-                    path = "geluid/pacman_intermission.wav";
+                    muziekPad = "geluid/pacman_intermission.wav";
                     break;
-   
             }
                    
-                   
-            
             clip = null;
-            File file = new File(path);
+            File file = new File(muziekPad);
             clip = AudioSystem.getClip();
             inputStream = AudioSystem.getAudioInputStream(file);
 
@@ -53,12 +45,13 @@ public class AudioPlayer {
             if (loop) {
                 clip.loop(-1);
             }
+            
         } catch (Exception e) {
             System.err.println(e.getMessage());
         }
     }
 
-    public void stopMusic() {
+    public void stopGeluid() {
         clip.stop();      
     }
 }

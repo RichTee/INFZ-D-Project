@@ -36,12 +36,12 @@ public class Spel extends javax.swing.JFrame {
     }
     
     public int getAantalLevens(){
-    return this.levens;
+        return this.levens;
     }
     
     public void setAantalLevens(int levens){
-    this.levens = levens;
-    this.lblLevens.setText("Levens: " + this.levens);
+        this.levens = levens;
+        this.lblLevens.setText("Levens: " + this.levens);
     }
 
     /**

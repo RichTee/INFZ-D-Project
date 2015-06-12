@@ -16,11 +16,12 @@ import infz.d.project.Interfaces.WillekeurigBewegenAlgoritme;
  * @author Method
  */
 public class WillekeurigSpookje extends Spookje implements WillekeurigBewegenAlgoritme{
-    private File imgInky = new File("src/afbeelding/inky.png");
-    private File imgBlinky = new File("src/afbeelding/blinky.png");
+    private final File imgInky = new File("src/afbeelding/inky.png");
+    private final File imgBlinky = new File("src/afbeelding/blinky.png");
     
     public WillekeurigSpookje(Vakje vakje, String naam) {
         this.vakje = vakje;
+        this.startPositie = vakje;
         this.naam = naam; 
         this.punten = 200;
         this.elementNaam = "spookje";

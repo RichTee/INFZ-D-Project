@@ -16,11 +16,12 @@ import infz.d.project.Interfaces.AchtervolgenBewegenAlgoritme;
  * @author Method
  */
 public class AchtervolgendSpookje extends Spookje implements AchtervolgenBewegenAlgoritme{
-    private File imgPinky = new File("src/afbeelding/pinky.png");
-    private File imgClyde = new File("src/afbeelding/clyde.png");
+    private final File imgPinky = new File("src/afbeelding/pinky.png");
+    private final File imgClyde = new File("src/afbeelding/clyde.png");
     
     public AchtervolgendSpookje(Vakje vakje, String naam) {
         this.vakje = vakje;
+        this.startPositie = vakje;
         this.naam = naam;
         this.punten = 200;
         this.elementNaam = "spookje";
@@ -34,8 +35,6 @@ public class AchtervolgendSpookje extends Spookje implements AchtervolgenBewegen
     
     @Override
     public void bewegen() {
-        // Interval vereist zodat ze niet sneller lopen dan mogelijk, bijv 3 vakjes per x seconden.
-        
         switch(randomRichting()){
             case 1:
                 System.out.println("NOORD");
