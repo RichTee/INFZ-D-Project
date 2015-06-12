@@ -15,16 +15,15 @@ import java.util.Scanner;
  * @author Sebastiaan
  */
 public class LevelLoader {
-private ArrayList<String>   vakjesInhoud = new ArrayList<String>();
+    private ArrayList<String> vakjesInhoud = new ArrayList<String>();
 
-
-public LevelLoader(){}
+    public LevelLoader() {
+    }
 
 //public void setLevel(int level)
 //    {
 //        this.level = level;
 //    }
-
     public ArrayList<String> laadLevel(int level) {
         Scanner read;
         try {
@@ -46,7 +45,8 @@ public LevelLoader(){}
                 }
                 read.close();
 
-            } catch (FileNotFoundException ex1) {   }
+            } catch (FileNotFoundException ex1) {
+            }
         }
         return vakjesInhoud;
     }

@@ -6,11 +6,12 @@
 package infz.d.project.SpelElementen;
 
 import infz.d.project.GUI.Vakje;
+import infz.d.project.Interfaces.WillekeurigBewegenAlgoritme;
 import java.awt.Graphics;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Random;
 
-import infz.d.project.Interfaces.WillekeurigBewegenAlgoritme;
 /**
  *
  * @author Method
@@ -65,5 +66,19 @@ public class WillekeurigSpookje extends Spookje implements WillekeurigBewegenAlg
         this.column = vakje.getYPositie();
 
         g.drawImage(this.image, column * CELL, row * CELL, 35, 35, null);
+    }
+
+    @Override
+    public String willekeurigBewegen(Vakje cell, Vakje laatsteCell, int rand) {
+        // If vakje.getBuurVakjes
+        // TOP > LEFT > DOWN > RIGHT
+        // if cell + RAND = laatsteCell = TOP > LEFT > DOWN > RIGHT
+        String richting = "";
+        ArrayList<Vakje> buurList = vakje.getBuurLijst();
+        
+        if(cell == laatsteCell) {
+            return richting;
+        }
+        return "NOORD";
     }
 }

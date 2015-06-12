@@ -58,7 +58,7 @@ public class Spelbord extends javax.swing.JPanel {
         levelIncrement(1);
         this.levelLoader = new LevelLoader();
         genereerSpelbordPanelGegevens();
-        this.stopwatch = new StopWatch(this);
+        this.stopwatch = new StopWatch();
         this.setBackground(Color.BLACK);
         player = new AudioPlayer();
     }
@@ -97,8 +97,8 @@ public class Spelbord extends javax.swing.JPanel {
         genereerSpelbordPanelGegevens();
         panelListener();
         
-        stopwatch.lopenSpookjes(inky);
-        stopwatch.lopenSpookjes(blinky);
+        stopwatch.lopenInky(inky);
+        stopwatch.lopenBlinky(blinky);
         //stopwatch.lopenSpookjes(pinky);
         //stopwatch.lopenSpookjes(clyde);
     }
@@ -109,7 +109,8 @@ public class Spelbord extends javax.swing.JPanel {
         this.startMuziek(BACKGROUND_GELUID, true);
         genereerSpelbordPanelGegevens();
         panelListener();
-        stopwatch.lopenSpookjes(inky);
+        stopwatch.lopenInky(inky);
+        stopwatch.lopenBlinky(blinky);
     }
  
     public void nextLevel() {
@@ -142,17 +143,21 @@ public class Spelbord extends javax.swing.JPanel {
             stopMuziek();
             stopwatch.pauzeerTimer();
             stopwatch.stopLopenSpookjes();
+            
             this.setRequestFocusEnabled(false);
             spelInformatie.setPauze(true);
         } else {
             this.startMuziek(BACKGROUND_GELUID, true);
+            
             if(pacman.getKracht()){
                 stopwatch.pacmanOnverslaanbaarTimer(pacman);
             }
+            
             spel.setTekstPauze();
             this.requestFocusInWindow();
             spelInformatie.setPauze(false);
-            stopwatch.lopenSpookjes(inky);
+            stopwatch.lopenInky(inky);
+            stopwatch.lopenBlinky(blinky);
         }
     }
     

@@ -3,14 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package infz.d.project.Interfaces;
 
-import infz.d.project.GUI.Vakje;
+package infz.d.project.Ondersteunend;
 
 /**
  *
  * @author Method
  */
-public interface WillekeurigBewegenAlgoritme {
-    public abstract String willekeurigBewegen(Vakje cell, Vakje laatsteCell, int rand);
+public class ImageLoader {
+    // Alle Images
+    public ImageLoader(){ }
 }

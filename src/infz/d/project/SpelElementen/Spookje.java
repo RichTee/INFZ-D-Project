@@ -17,10 +17,12 @@ import infz.d.project.Interfaces.VluchtenBewegenAlgoritme;
 public abstract class Spookje extends Poppetje implements VluchtenBewegenAlgoritme {
     public String naam;
     public Vakje startPositie;
+    public Vakje laatsteVakje;
     
     public Spookje() { }
     
     public void setVakje(Vakje vakje){
+       this.laatsteVakje = this.vakje;
        this.vakje = vakje;
     }
     

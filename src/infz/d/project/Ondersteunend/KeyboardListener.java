@@ -17,7 +17,6 @@ import java.util.TimerTask;
  * @author Method
  */
 public class KeyboardListener implements KeyListener {
-
     public Pacman               pacman;
     private Timer               timer;
     
@@ -32,6 +31,7 @@ public class KeyboardListener implements KeyListener {
     public void keyReleased(KeyEvent ke) {
         int delay = 500;
         // Reset alleen timer wanneer we de nieuwe richting op kunnen (CHECKEN IN PACMAN->VAKJE)
+        // ActionListener gebruiken + bool
         if(timer != null) {
             timer.cancel();
             timer.purge();

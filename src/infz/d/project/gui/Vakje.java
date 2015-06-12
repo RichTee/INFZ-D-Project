@@ -6,7 +6,6 @@
 
 package infz.d.project.GUI;
 
-import infz.d.project.SpelElementen.Kers;
 import infz.d.project.SpelElementen.Spookje;
 import infz.d.project.SpelElementen.Pacman;
 import infz.d.project.SpelElementen.SpelElement;
@@ -37,8 +36,6 @@ public class Vakje {
     private final Spelbord          spelbord;
     private SpelElement             spelElement;
     private Muur                    muur;
-    public WillekeurigSpookje       willekeurigSpookje;
-    private AchtervolgendSpookje    achtervolgendSpookje;
     private WillekeurigSpookje      inky;
     private WillekeurigSpookje      blinky;
     private AchtervolgendSpookje    pinky;
@@ -147,10 +144,16 @@ public class Vakje {
         }
     }
     
+    // Voeg een nieuwe buur toe, alleen gebruiken bij het maken van een map.
     public void voegtBuurToe(Vakje vakje) {
         buurVakje.add(vakje);
     }
 
+    // Return de lijst met buren
+    public ArrayList getBuurLijst(){
+        return buurVakje;
+    }
+    
     private int puntenOptellenVanBuurVakje(Vakje vakje) {
         int punten = 0;
         
@@ -183,23 +186,43 @@ public class Vakje {
         return punten;
     }
     
-    private void teleporteerBewegend(){
+    private void teleporteerBewegend(SpelElement spelElement){
         if(this.getXPositie() != 10)
             return;
         
         // Alleen pacman
-        if(this.getYPositie() == 1){
-            spelbord.getSpecifiekVakje(10, 17).setElement("pacman", pacman);
-            this.element = "pad";
-            pacman.setVakje(spelbord.getSpecifiekVakje(10, 17));
-            spelbord.tekenOpnieuw();
+        if (spelElement instanceof Pacman) {
+            if (this.getYPositie() == 1) {
+                spelbord.getSpecifiekVakje(10, 17).setElement("pacman", pacman);
+                this.element = "pad";
+                pacman.setVakje(spelbord.getSpecifiekVakje(10, 17));
+                spelbord.tekenOpnieuw();
+            }
+
+            if (this.getYPositie() == 18) {
+                spelbord.getSpecifiekVakje(10, 2).setElement("pacman", pacman);
+                this.element = "pad";
+                pacman.setVakje(spelbord.getSpecifiekVakje(10, 2));
+                spelbord.tekenOpnieuw();
+            }
         }
         
-        if(this.getYPositie() == 18){
-            spelbord.getSpecifiekVakje(10, 2).setElement("pacman", pacman);
-            this.element = "pad";
-            pacman.setVakje(spelbord.getSpecifiekVakje(10, 2));
-            spelbord.tekenOpnieuw();
+        // Alleen Spookjes
+        if (spelElement instanceof Spookje) {
+            Spookje spookje = (Spookje) spelElement;
+            if (this.getYPositie() == 1) {
+                spelbord.getSpecifiekVakje(10, 17).setSpookje(spookje);
+                this.element = "pad";
+                spookje.setVakje(spelbord.getSpecifiekVakje(10, 17));
+                spelbord.tekenOpnieuw();
+            }
+
+            if (this.getYPositie() == 18) {
+                spelbord.getSpecifiekVakje(10, 17).setSpookje(spookje);
+                this.element = "pad";
+                spookje.setVakje(spelbord.getSpecifiekVakje(10, 17));
+                spelbord.tekenOpnieuw();
+            }
         }
     }
     
@@ -355,7 +378,7 @@ public class Vakje {
                     break;
             }
         }
-        teleporteerBewegend();
+        teleporteerBewegend(pacman);
     }
 
     private void checkSpookjeCollisie(Vakje vakje, Spookje spookje){ 
@@ -419,6 +442,7 @@ public class Vakje {
             default:
                 break;
         }
+        teleporteerBewegend(spookje);
     }
     
     // Logischer in Spelbord voor minder Memory intake en makkelijkere toegang.

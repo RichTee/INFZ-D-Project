@@ -6,10 +6,11 @@
 package infz.d.project.Ondersteunend;
 
 import static infz.d.project.Enums.Geluid.*;
-import infz.d.project.GUI.Spelbord;
-import infz.d.project.SpelElementen.Spookje;
-import infz.d.project.SpelElementen.Pacman;
 import infz.d.project.GUI.Spel;
+import infz.d.project.GUI.Spelbord;
+import infz.d.project.SpelElementen.Pacman;
+import infz.d.project.SpelElementen.SpelElement;
+import infz.d.project.SpelElementen.Spookje;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -18,17 +19,16 @@ import java.util.TimerTask;
  * @author Sebastiaan
  */
 public class StopWatch {
-    private Spel                spel;
     private Spelbord            spelbord;
     private Timer               tijdPacman;
-    private Timer               tijdSpookjes;
+    private Timer               tijdInky;
+    private Timer               tijdBlinky;
+    private Timer               tijdPinky;
+    private Timer               tijdClyde;
     private boolean             pacmanTimerIsBezig = false;
-    
     private int seconden = 0;
 
-    public StopWatch(Spelbord spelbord) { 
-        this.spelbord = spelbord;
-    }
+    public StopWatch() { }
     
     
     public void pacmanOnverslaanbaarTimer(Pacman pacman){
@@ -73,23 +73,78 @@ public class StopWatch {
         }
     }
     
-    public void lopenSpookjes(Spookje spookje)
+    public void lopenInky(Spookje spookje)
     {
         int delay = 500;
-        
+
         TimerTask task = new TimerTask() {
             public void run() {
                 spookje.bewegen();
             }
         };
+        tijdInky = new Timer();
+        tijdInky.scheduleAtFixedRate(task, 0, delay);
+        
+    }
+    
+    public void lopenBlinky(Spookje spookje)
+    {
+        int delay = 500;
 
-        tijdSpookjes = new Timer();
-        tijdSpookjes.scheduleAtFixedRate(task, 0, delay);
+        TimerTask task = new TimerTask() {
+            public void run() {
+                spookje.bewegen();
+            }
+        };
+        tijdBlinky = new Timer();
+        tijdBlinky.scheduleAtFixedRate(task, 0, delay);
+        
+    }
+    
+    public void lopenPinky(Spookje spookje)
+    {
+        int delay = 500;
+
+        TimerTask task = new TimerTask() {
+            public void run() {
+                spookje.bewegen();
+            }
+        };
+        tijdPinky = new Timer();
+        tijdPinky.scheduleAtFixedRate(task, 0, delay);
+        
+    }
+    
+    public void lopenClyde(Spookje spookje)
+    {
+        int delay = 500;
+
+        TimerTask task = new TimerTask() {
+            public void run() {
+                spookje.bewegen();
+            }
+        };
+        tijdClyde = new Timer();
+        tijdClyde.scheduleAtFixedRate(task, 0, delay);
+        
     }
     
     public void stopLopenSpookjes(){
-        tijdSpookjes.cancel();
-        tijdSpookjes.purge();
+        // Inky
+        tijdInky.cancel();
+        tijdInky.purge();
+        
+        // Blinky
+        tijdBlinky.cancel();
+        tijdBlinky.purge();
+        
+        // Pinky
+        //tijdPinky.cancel();
+        //tijdPinky.purge();
+        
+        // Clyde
+        //tijdClyde.cancel();
+        //tijdClyde.purge();
     }
     
     public void stopTimer() {
