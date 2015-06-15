@@ -11,5 +11,5 @@ package infz.d.project.Interfaces;
  * @author Method
  */
 public interface AchtervolgenBewegenAlgoritme {
-    
+    public abstract boolean bfs();
 }

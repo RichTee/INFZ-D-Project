@@ -19,10 +19,12 @@ import javax.swing.border.Border;
 import infz.d.project.Geluiden.AudioPlayer;
 import infz.d.project.Enums.Geluid;
 import static infz.d.project.Enums.Geluid.*; // ?
+import infz.d.project.Enums.Richting;
 import infz.d.project.Ondersteunend.*;
 import infz.d.project.SpelElementen.Kers;
 import infz.d.project.SpelElementen.Pacman;
 import infz.d.project.SpelElementen.AchtervolgendSpookje;
+import infz.d.project.SpelElementen.Spookje;
 import infz.d.project.SpelElementen.WillekeurigSpookje;
 
 /**
@@ -41,6 +43,7 @@ public class Spelbord extends javax.swing.JPanel {
     private AchtervolgendSpookje    pinky;
     private AchtervolgendSpookje    clyde;
     private StopWatch               stopwatch;
+    private ImageLoader             imageLoader = new ImageLoader();
     private int                     xPos, yPos; // Positie
     private int                     arrayBreedte, arrayHoogte; // Cell dimensies
     private final static int        CELL = 35;
@@ -58,9 +61,9 @@ public class Spelbord extends javax.swing.JPanel {
         levelIncrement(1);
         this.levelLoader = new LevelLoader();
         genereerSpelbordPanelGegevens();
-        this.stopwatch = new StopWatch();
         this.setBackground(Color.BLACK);
         player = new AudioPlayer();
+        stopwatch = new StopWatch(this);
     }
     
     public void startMuziek(Geluid geluid, boolean loop)
@@ -216,45 +219,45 @@ public class Spelbord extends javax.swing.JPanel {
             for (int column = 0; column < arrayBreedte; column++) {
                 switch (String.valueOf(charAt(row, column))) {
                     case "0":
-                        vakje[row][column] = new Vakje(row, column, "pad", this);
+                        vakje[row][column] = new Vakje(row, column, "pad", this, imageLoader);
                         break;
                     case "1":
                         // muur
-                        vakje[row][column] = new Vakje(row, column, "muur", this);
+                        vakje[row][column] = new Vakje(row, column, "muur", this, imageLoader);
                         break;
                     case "2":
                         // Bolletje
-                        vakje[row][column] = new Vakje(row, column, "bolletje", this);
+                        vakje[row][column] = new Vakje(row, column, "bolletje", this, imageLoader);
                         spelInformatie.setTotaalAantalBolletjesIncrement(1);
                         break;
                     case "3":
                         // Superbolletje
-                        vakje[row][column] = new Vakje(row, column, "superbolletje", this);
+                        vakje[row][column] = new Vakje(row, column, "superbolletje", this, imageLoader);
                         break;
                     case "4":
                         // Spookje
                         if(inky == null){
                             System.out.println("Inky spelbord");
-                            vakje[row][column] = new Vakje(row, column, "inky", this);
+                            vakje[row][column] = new Vakje(row, column, "inky", this, imageLoader);
                             inky = (WillekeurigSpookje) vakje[row][column].getSpookje("inky");
                             System.out.println("inky: " + vakje[row][column].getSpookje("inky").toString());
                         } else if (blinky == null ) {
                             System.out.println("blinky spelbord");
-                            vakje[row][column] = new Vakje(row, column, "blinky", this);
+                            vakje[row][column] = new Vakje(row, column, "blinky", this, imageLoader);
                             blinky = (WillekeurigSpookje) vakje[row][column].getSpookje("blinky");
                         } else if (pinky == null ) {
                             System.out.println("pinky");
-                            vakje[row][column] = new Vakje(row, column, "pinky", this);
+                            vakje[row][column] = new Vakje(row, column, "pinky", this, imageLoader);
                             pinky = (AchtervolgendSpookje) vakje[row][column].getSpookje("pinky");
                         } else if (clyde == null ) {
                             System.out.println("clyde");
-                            vakje[row][column] = new Vakje(row, column, "clyde", this);
+                            vakje[row][column] = new Vakje(row, column, "clyde", this, imageLoader);
                             clyde = (AchtervolgendSpookje) vakje[row][column].getSpookje("clyde");
                         }
                         break;
                     case "5":
                         // Pacman
-                        vakje[row][column] = new Vakje(row, column, "pacman", this);
+                        vakje[row][column] = new Vakje(row, column, "pacman", this, imageLoader);
                         pacman = (Pacman) vakje[row][column].getPacman();
                         xPos = column;
                         yPos = row;
@@ -269,9 +272,10 @@ public class Spelbord extends javax.swing.JPanel {
     
     // Elk vakje moet zijn buren weten
     public void isBuur() {
-        for (int i = 0; i < arrayHoogte; i++) {
-            for (int j = 0; j < arrayBreedte; j++) {
-               isBuurOutOfBounds(i, j);
+        for (int row = 0; row < arrayHoogte; row++) {
+            for (int column = 0; column < arrayBreedte; column++) {
+                if(!vakje[row][column].getElement().equals("muur")) // We checken nooit of een muur een buur heeft!
+                    isBuurOutOfBounds(row, column);
             }
         }
     }
@@ -281,31 +285,39 @@ public class Spelbord extends javax.swing.JPanel {
         try {
             // Noord
             //System.out.println(xPos + "  " + yPos);
-            vakje[xPos-1][yPos].getElement();
-            vakje[xPos][yPos].voegtBuurToe(vakje[xPos-1][yPos]);
+            if(!vakje[xPos-1][yPos].getElement().equals("muur")) {
+                vakje[xPos-1][yPos].getElement();
+                vakje[xPos][yPos].voegtBuurToe(Richting.NOORD, vakje[xPos-1][yPos]);
+            }
         } catch (IndexOutOfBoundsException e) {
             //System.out.println("xPos-1 : " + e );
         }
         try {
             // Oost
-            vakje[xPos][yPos+1].getElement();
-            vakje[xPos][yPos].voegtBuurToe(vakje[xPos][yPos+1]);
+            if(!vakje[xPos][yPos+1].getElement().equals("muur")){
+                vakje[xPos][yPos+1].getElement();
+                vakje[xPos][yPos].voegtBuurToe(Richting.OOST, vakje[xPos][yPos+1]);
+            }
             //System.out.println(xPos + "  " + yPos);
         } catch (IndexOutOfBoundsException e) {
             //System.out.println("xPos+1 : " + e );
         }
         try {
             // Zuid
-            vakje[xPos+1][yPos].getElement();
-            vakje[xPos][yPos].voegtBuurToe(vakje[xPos+1][yPos]);
+            if(!vakje[xPos+1][yPos].getElement().equals("muur")){
+                vakje[xPos+1][yPos].getElement();
+                vakje[xPos][yPos].voegtBuurToe(Richting.ZUID, vakje[xPos+1][yPos]);
+            }
             //System.out.println(xPos + "  " + yPos);
         } catch (IndexOutOfBoundsException e) {
             //System.out.println("yPos-1 : " + e );
         }
         try {
             // West
-            vakje[xPos][yPos-1].getElement();
-            vakje[xPos][yPos].voegtBuurToe(vakje[xPos][yPos-1]);
+            if(!vakje[xPos][yPos-1].getElement().equals("muur")){
+                vakje[xPos][yPos-1].getElement();
+                vakje[xPos][yPos].voegtBuurToe(Richting.WEST, vakje[xPos][yPos-1]);
+            }
             //System.out.println(xPos + "  " + yPos);
         } catch (IndexOutOfBoundsException e) {
             //System.out.println("yPos+1 : " + e );
@@ -362,29 +374,24 @@ public class Spelbord extends javax.swing.JPanel {
     }
     
     // Alle bewegende entiteiten moeten op hun eigen plek verschijnen.
-    public void resetPoppetje() {
+    public void resetPacman() {
         for (int i = 0; i < arrayHoogte; i++) {
             for (int j = 0; j < arrayBreedte; j++) {
                 if (vakje[i][j].getElement().equals("pacman")) {
                     pacman = (Pacman) vakje[i][j].getPacman();
                     vakje[i][j].setElement("pad", null);
                 } 
-                if (vakje[i][j].getSpookje("inky") != null||
-                        vakje[i][j].getSpookje("blinky") != null ||
-                        vakje[i][j].getSpookje("pinky")  != null ||
-                        vakje[i][j].getSpookje("clyde") != null){
-                    // Methode voor spookje, Blinky, Pinky, Inky, Clyde.
-                    // blinky = vakje[i][j].spookje;
-                    //inky = (WillekeurigSpookje) vakje[i][j].getSpookje("inky");
-                    //vakje[i][j].setElement("pad", null);
-                    // StartPositie meegeven aan spookjes!(onthouden)
-                }
             }
         }
         pacman.setVakje(vakje[yPos][xPos]);
         vakje[yPos][xPos].setElement("pacman", pacman);
     }
 
+    public void resetSpookje(Spookje spookje) {
+        spookje.setVakje(spookje.startPositie);
+    }
+    
+    // Repaint 
     public void tekenOpnieuw(){
         repaint();
     }

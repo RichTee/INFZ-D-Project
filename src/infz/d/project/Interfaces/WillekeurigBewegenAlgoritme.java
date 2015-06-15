@@ -5,6 +5,7 @@
  */
 package infz.d.project.Interfaces;
 
+import infz.d.project.Enums.Richting;
 import infz.d.project.GUI.Vakje;
 
 /**
@@ -12,5 +13,5 @@ import infz.d.project.GUI.Vakje;
  * @author Method
  */
 public interface WillekeurigBewegenAlgoritme {
-    public abstract String willekeurigBewegen(Vakje cell, Vakje laatsteCell, int rand);
+    public abstract Richting willekeurigBewegen();
 }

@@ -28,7 +28,9 @@ public class StopWatch {
     private boolean             pacmanTimerIsBezig = false;
     private int seconden = 0;
 
-    public StopWatch() { }
+    public StopWatch(Spelbord spelbord) { 
+        this.spelbord = spelbord;
+    }
     
     
     public void pacmanOnverslaanbaarTimer(Pacman pacman){

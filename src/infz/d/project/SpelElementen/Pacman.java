@@ -57,19 +57,19 @@ public class Pacman extends Poppetje {
     public void bewegen(Richting richting) {
         switch (richting) {
             case NOORD:
-                vakje.pacmanRichting("NOORD");
+                vakje.pacmanRichting(richting);
                 this.setImage(afbeeldingPad[0]);
                 break;
             case OOST:
-                vakje.pacmanRichting("OOST");
+                vakje.pacmanRichting(richting);
                  this.setImage(afbeeldingPad[1]);
                 break;
             case ZUID:
-                vakje.pacmanRichting("ZUID");
+                vakje.pacmanRichting(richting);
                  this.setImage(afbeeldingPad[2]);
                 break;
             case WEST:
-                vakje.pacmanRichting("WEST");
+                vakje.pacmanRichting(richting);
                  this.setImage(afbeeldingPad[3]);
                 break;
             default:

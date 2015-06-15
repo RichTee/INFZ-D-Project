@@ -5,11 +5,14 @@
  */
 package infz.d.project.SpelElementen;
 
+import infz.d.project.Enums.Richting;
 import infz.d.project.GUI.Vakje;
 import infz.d.project.Interfaces.WillekeurigBewegenAlgoritme;
 import java.awt.Graphics;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Map;
 import java.util.Random;
 
 /**
@@ -17,12 +20,13 @@ import java.util.Random;
  * @author Method
  */
 public class WillekeurigSpookje extends Spookje implements WillekeurigBewegenAlgoritme{
-    private final File imgInky = new File("src/afbeelding/inky.png");
-    private final File imgBlinky = new File("src/afbeelding/blinky.png");
+    private final File      imgInky = new File("src/afbeelding/inky.png");
+    private final File      imgBlinky = new File("src/afbeelding/blinky.png");
     
     public WillekeurigSpookje(Vakje vakje, String naam) {
         this.vakje = vakje;
         this.startPositie = vakje;
+        this.laatsteVakje = vakje;
         this.naam = naam; 
         this.punten = 200;
         this.elementNaam = "spookje";
@@ -35,24 +39,19 @@ public class WillekeurigSpookje extends Spookje implements WillekeurigBewegenAlg
     }
 
     @Override
-    public void bewegen() {
-        // Interval vereist zodat ze niet sneller lopen dan mogelijk, bijv 3 vakjes per x seconden.
-        switch(randomRichting()){
-            case 1:
-                System.out.println("NOORD");
-                vakje.spookjeRichting("NOORD", this);
+    public void bewegen() {  
+        switch(willekeurigBewegen()){
+            case NOORD:
+                vakje.spookjeRichting(Richting.NOORD, this);
                 break;
-            case 2:
-                System.out.println("OOST");
-                vakje.spookjeRichting("OOST", this);
+            case OOST:
+                vakje.spookjeRichting(Richting.OOST, this);
                 break;
-            case 3:
-                System.out.println("ZUID");
-                vakje.spookjeRichting("ZUID", this);
+            case ZUID:
+                vakje.spookjeRichting(Richting.ZUID, this);
                 break;
-            case 4:
-                System.out.println("WEST");
-                vakje.spookjeRichting("WEST", this);
+            case WEST:
+                vakje.spookjeRichting(Richting.WEST, this);
                 break;
             default:
                 System.out.println("Tempnummer is wrong");
@@ -69,16 +68,33 @@ public class WillekeurigSpookje extends Spookje implements WillekeurigBewegenAlg
     }
 
     @Override
-    public String willekeurigBewegen(Vakje cell, Vakje laatsteCell, int rand) {
-        // If vakje.getBuurVakjes
-        // TOP > LEFT > DOWN > RIGHT
-        // if cell + RAND = laatsteCell = TOP > LEFT > DOWN > RIGHT
-        String richting = "";
-        ArrayList<Vakje> buurList = vakje.getBuurLijst();
-        
-        if(cell == laatsteCell) {
-            return richting;
+    public Richting willekeurigBewegen() {
+        Random random = new Random();
+        ArrayList<Richting> openRichting = new ArrayList<>();
+        Iterator iter = this.vakje.getBuurLijst().entrySet().iterator();
+
+        while(iter.hasNext()) {
+            Map.Entry pair = (Map.Entry)iter.next();
+            if(pair.getValue() != laatsteVakje) {
+                switch(pair.getKey().toString()){
+                    case "NOORD":
+                        openRichting.add(Richting.NOORD);
+                        break;
+                    case "OOST":
+                        openRichting.add(Richting.OOST);
+                        break;
+                    case "ZUID":
+                        openRichting.add(Richting.ZUID);
+                        break;
+                    case "WEST":
+                        openRichting.add(Richting.WEST);
+                        break;
+                }
+            }
         }
-        return "NOORD";
+        
+        int tempNummer = random.nextInt(openRichting.size());
+        
+        return openRichting.get(tempNummer);
     }
 }
