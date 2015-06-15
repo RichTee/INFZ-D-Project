@@ -46,6 +46,7 @@ public class SpelInformatie {
     public void setScore(int score, String element){
         switch (element) {
             case "bolletje":
+                System.out.println("Bolletjes: " + huidigeAantalBolletjes);
                 this.huidigeAantalBolletjes--;
                 checkKers();
                 checkOfGewonnen();

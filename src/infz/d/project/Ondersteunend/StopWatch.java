@@ -34,7 +34,7 @@ public class StopWatch {
     
     
     public void pacmanOnverslaanbaarTimer(Pacman pacman){
-        int delay = 1000;
+        int delay = 500;
         
         TimerTask task = new TimerTask() {
             public void run() {
@@ -75,9 +75,8 @@ public class StopWatch {
         }
     }
     
-    public void lopenInky(Spookje spookje)
+    public void lopenInky(Spookje spookje, int snelheid)
     {
-        int delay = 500;
 
         TimerTask task = new TimerTask() {
             public void run() {
@@ -85,13 +84,12 @@ public class StopWatch {
             }
         };
         tijdInky = new Timer();
-        tijdInky.scheduleAtFixedRate(task, 0, delay);
+        tijdInky.scheduleAtFixedRate(task, 0, snelheid);
         
     }
     
-    public void lopenBlinky(Spookje spookje)
+    public void lopenBlinky(Spookje spookje, int snelheid)
     {
-        int delay = 500;
 
         TimerTask task = new TimerTask() {
             public void run() {
@@ -99,13 +97,12 @@ public class StopWatch {
             }
         };
         tijdBlinky = new Timer();
-        tijdBlinky.scheduleAtFixedRate(task, 0, delay);
+        tijdBlinky.scheduleAtFixedRate(task, 0, snelheid);
         
     }
     
-    public void lopenPinky(Spookje spookje)
+    public void lopenPinky(Spookje spookje, int snelheid)
     {
-        int delay = 500;
 
         TimerTask task = new TimerTask() {
             public void run() {
@@ -113,13 +110,12 @@ public class StopWatch {
             }
         };
         tijdPinky = new Timer();
-        tijdPinky.scheduleAtFixedRate(task, 0, delay);
+        tijdPinky.scheduleAtFixedRate(task, 0, snelheid);
         
     }
     
-    public void lopenClyde(Spookje spookje)
+    public void lopenClyde(Spookje spookje, int snelheid)
     {
-        int delay = 500;
 
         TimerTask task = new TimerTask() {
             public void run() {
@@ -127,7 +123,7 @@ public class StopWatch {
             }
         };
         tijdClyde = new Timer();
-        tijdClyde.scheduleAtFixedRate(task, 0, delay);
+        tijdClyde.scheduleAtFixedRate(task, 0, snelheid);
         
     }
     

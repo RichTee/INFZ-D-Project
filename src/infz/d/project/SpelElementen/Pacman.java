@@ -9,6 +9,7 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.io.File;
 
+import infz.d.project.Enums.Afbeelding;
 import infz.d.project.Enums.Richting;
 import infz.d.project.GUI.Vakje;
 /**
@@ -17,25 +18,12 @@ import infz.d.project.GUI.Vakje;
  */
 public class Pacman extends Poppetje {
     private boolean             heeftSuperKracht = false;
-    private final File          afbeeldingNoord = new File("src/afbeelding/PacmanNoord.png");
-    private final File          afbeeldingOost = new File("src/afbeelding/PacmanOost.png");
-    private final File          afbeeldingZuid = new File("src/afbeelding/PacmanZuid.png");
-    private final File          afbeeldingWest = new File("src/afbeelding/PacmanWest.png");
-    private Image[]             afbeeldingPad;
-    
+    private boolean             teleportCooldown = false;
+            
     public Pacman(Vakje vak) {
         this.vakje = vak;
         this.elementNaam = "pacman";
-        
-        afbeeldingPad = new Image[4];
-        converteerFileNaarImage(afbeeldingNoord);
-        afbeeldingPad[0] = this.image;
-        converteerFileNaarImage(afbeeldingOost);
-        afbeeldingPad[1] = this.image;
-        converteerFileNaarImage(afbeeldingZuid);
-        afbeeldingPad[2] = this.image;
-        converteerFileNaarImage(afbeeldingWest);
-        afbeeldingPad[3] = this.image;
+        this.image = this.vakje.getImageLoader().selectPacmanAfbeelding(Afbeelding.Pacman.PACMANWEST);
     }
     
     public void setOnverslaanbaar(boolean kracht){
@@ -54,27 +42,35 @@ public class Pacman extends Poppetje {
         return vakje;
     }
     
+    @Override
     public void bewegen(Richting richting) {
-        switch (richting) {
-            case NOORD:
-                vakje.pacmanRichting(richting);
-                this.setImage(afbeeldingPad[0]);
-                break;
-            case OOST:
-                vakje.pacmanRichting(richting);
-                 this.setImage(afbeeldingPad[1]);
-                break;
-            case ZUID:
-                vakje.pacmanRichting(richting);
-                 this.setImage(afbeeldingPad[2]);
-                break;
-            case WEST:
-                vakje.pacmanRichting(richting);
-                 this.setImage(afbeeldingPad[3]);
-                break;
-            default:
-                break;
+        if(this.vakje.getKanTeleporteren() && !teleportCooldown){
+            this.vakje.teleporteerBewegend(this);
+            teleportCooldown = true;
+        } else {
+            switch (richting) {
+                case NOORD:
+                    vakje.pacmanRichting(richting);
+                    this.image = this.vakje.getImageLoader().selectPacmanAfbeelding(Afbeelding.Pacman.PACMANNOORD);
+                    break;
+                case OOST:
+                    vakje.pacmanRichting(richting);
+                     this.image = this.vakje.getImageLoader().selectPacmanAfbeelding(Afbeelding.Pacman.PACMANOOST);
+                    break;
+                case ZUID:
+                    vakje.pacmanRichting(richting);
+                     this.image = this.vakje.getImageLoader().selectPacmanAfbeelding(Afbeelding.Pacman.PACMANZUID);
+                    break;
+                case WEST:
+                    vakje.pacmanRichting(richting);
+                     this.image = this.vakje.getImageLoader().selectPacmanAfbeelding(Afbeelding.Pacman.PACMANWEST);
+                    break;
+                default:
+                    break;
+            }
+        teleportCooldown = false;
         }
+        
     }
 
     @Override

@@ -5,8 +5,11 @@
  */
 package infz.d.project.SpelElementen;
 
+import infz.d.project.Enums.Afbeelding;
 import infz.d.project.Enums.Richting;
+
 import infz.d.project.GUI.Vakje;
+
 import infz.d.project.Interfaces.WillekeurigBewegenAlgoritme;
 import java.awt.Graphics;
 import java.io.File;
@@ -20,8 +23,7 @@ import java.util.Random;
  * @author Method
  */
 public class WillekeurigSpookje extends Spookje implements WillekeurigBewegenAlgoritme{
-    private final File      imgInky = new File("src/afbeelding/inky.png");
-    private final File      imgBlinky = new File("src/afbeelding/blinky.png");
+    private boolean             teleportCooldown = false;
     
     public WillekeurigSpookje(Vakje vakje, String naam) {
         this.vakje = vakje;
@@ -32,31 +34,38 @@ public class WillekeurigSpookje extends Spookje implements WillekeurigBewegenAlg
         this.elementNaam = "spookje";
 
         if (naam.equals("inky")) {
-            converteerFileNaarImage(imgInky);
+            this.image = this.vakje.getImageLoader().selectSpookjeAfbeelding(Afbeelding.Spookje.INKY);
         } else if (naam.equals("blinky")) {
-            converteerFileNaarImage(imgBlinky);
+            this.image = this.vakje.getImageLoader().selectSpookjeAfbeelding(Afbeelding.Spookje.BLINKY);
         }
     }
 
     @Override
-    public void bewegen() {  
-        switch(willekeurigBewegen()){
-            case NOORD:
-                vakje.spookjeRichting(Richting.NOORD, this);
-                break;
-            case OOST:
-                vakje.spookjeRichting(Richting.OOST, this);
-                break;
-            case ZUID:
-                vakje.spookjeRichting(Richting.ZUID, this);
-                break;
-            case WEST:
-                vakje.spookjeRichting(Richting.WEST, this);
-                break;
-            default:
-                System.out.println("Tempnummer is wrong");
-                break;
+    public void bewegen() {
+        if(this.vakje.getKanTeleporteren() && !teleportCooldown){
+            this.vakje.teleporteerBewegend(this);
+            teleportCooldown = true;
+        } else {
+            switch(willekeurigBewegen()){
+                case NOORD:
+                    vakje.spookjeRichting(Richting.NOORD, this);
+                    break;
+                case OOST:
+                    vakje.spookjeRichting(Richting.OOST, this);
+                    break;
+                case ZUID:
+                    vakje.spookjeRichting(Richting.ZUID, this);
+                    break;
+                case WEST:
+                    vakje.spookjeRichting(Richting.WEST, this);
+                    break;
+                default:
+                    System.out.println("Tempnummer is wrong");
+                    break;
+            }
+            teleportCooldown = false;
         }
+        
     }
     
     @Override

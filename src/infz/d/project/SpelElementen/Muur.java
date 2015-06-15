@@ -6,6 +6,7 @@
 
 package infz.d.project.SpelElementen;
 
+import infz.d.project.Enums.Afbeelding;
 import infz.d.project.GUI.Vakje;
 import java.awt.Color;
 import java.awt.Graphics;
@@ -25,12 +26,11 @@ import javax.imageio.ImageIO;
 public class Muur extends SpelElement {
     //ArrayList<String> lines = new ArrayList<String>();
     private Color muurKleur = Color.decode("#003399");
-    private File afbeelding = new File("src/afbeelding/muur.png");
 
     public Muur(Vakje vak) {
         this.vakje = vak;
         this.elementNaam = "muur";
-        converteerFileNaarImage(afbeelding);
+        this.image = this.vakje.getImageLoader().selectStatischeSpelElementAfbeelding(Afbeelding.Statisch.MUUR);
     }
     
     @Override

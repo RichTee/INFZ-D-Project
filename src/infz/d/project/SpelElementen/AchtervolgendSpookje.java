@@ -5,6 +5,7 @@
  */
 package infz.d.project.SpelElementen;
 
+import infz.d.project.Enums.Afbeelding;
 import infz.d.project.Enums.Richting;
 import infz.d.project.GUI.Vakje;
 import java.awt.Graphics;
@@ -20,8 +21,6 @@ import java.util.Scanner;
  * @author Method
  */
 public class AchtervolgendSpookje extends Spookje implements AchtervolgenBewegenAlgoritme{
-    private final File imgPinky = new File("src/afbeelding/pinky.png");
-    private final File imgClyde = new File("src/afbeelding/clyde.png");
     
     public AchtervolgendSpookje(Vakje vakje, String naam) {
         this.vakje = vakje;
@@ -31,9 +30,9 @@ public class AchtervolgendSpookje extends Spookje implements AchtervolgenBewegen
         this.elementNaam = "spookje";
 
         if (naam.equals("pinky")) {
-            converteerFileNaarImage(imgPinky);
+            this.image = this.vakje.getImageLoader().selectSpookjeAfbeelding(Afbeelding.Spookje.PINKY);
         } else if (naam.equals("clyde")) {
-            converteerFileNaarImage(imgClyde);
+            this.image = this.vakje.getImageLoader().selectSpookjeAfbeelding(Afbeelding.Spookje.CLYDE);
         }
     }
     

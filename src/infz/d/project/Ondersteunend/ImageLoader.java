@@ -13,15 +13,18 @@ import java.util.HashMap;
 import java.util.Map;
 import javax.imageio.ImageIO;
 
+import infz.d.project.Enums.Afbeelding;
+
 /**
  *
  * @author Method
  */
 public class ImageLoader {
     //          Key,    Value
-    private Map<String, Image>          mapStatischAfbeelding = new HashMap<>();
-    private Map<String, Image>          mapBewegendeAfbeelding = new HashMap<>();;
-    private File                        afbeelding;
+    private Map<Afbeelding.Statisch, Image> mapStatischAfbeelding = new HashMap<>();
+    private Map<Afbeelding.Pacman, Image>   mapPacmanAfbeelding = new HashMap<>();
+    private Map<Afbeelding.Spookje, Image>  mapSpookjeAfbeelding = new HashMap<>();;
+    private File                            afbeelding;
     
     public ImageLoader(){ 
         laadStatischeSpelElementAfbeelding();
@@ -30,26 +33,26 @@ public class ImageLoader {
     
     private void laadStatischeSpelElementAfbeelding() {
         // Alle statische spelElementen
-        mapStatischAfbeelding.put("muur", converteerFileNaarImage(afbeelding = new File("src/afbeelding/muur.png")));
-        mapStatischAfbeelding.put("bolletje", converteerFileNaarImage(afbeelding = new File("src/afbeelding/bolletje.png")));
-        mapStatischAfbeelding.put("superbolletje", converteerFileNaarImage(afbeelding = new File("src/afbeelding/superbolletje.png")));
-        mapStatischAfbeelding.put("kers", converteerFileNaarImage(afbeelding = new File("src/afbeelding/kers.png")));
+        mapStatischAfbeelding.put(Afbeelding.Statisch.MUUR, converteerFileNaarImage(afbeelding = new File("src/afbeelding/muur.png")));
+        mapStatischAfbeelding.put(Afbeelding.Statisch.BOLLETJE, converteerFileNaarImage(afbeelding = new File("src/afbeelding/bolletje.png")));
+        mapStatischAfbeelding.put(Afbeelding.Statisch.SUPERBOLLETJE, converteerFileNaarImage(afbeelding = new File("src/afbeelding/superbolletje.png")));
+        mapStatischAfbeelding.put(Afbeelding.Statisch.KERS, converteerFileNaarImage(afbeelding = new File("src/afbeelding/kers.png")));
     }
     
     private void laadBewegendeSpelElementAfbeelding() {
         //Pacman
-        mapBewegendeAfbeelding.put("pacmanNoord", converteerFileNaarImage(afbeelding = new File("src/afbeelding/PacmanNoord.png")));
-        mapBewegendeAfbeelding.put("pacmanOost", converteerFileNaarImage(afbeelding = new File("src/afbeelding/PacmanOost.png")));
-        mapBewegendeAfbeelding.put("pacmanZuid", converteerFileNaarImage(afbeelding = new File("src/afbeelding/PacmanZuid.png")));
-        mapBewegendeAfbeelding.put("pacmanWest", converteerFileNaarImage(afbeelding = new File("src/afbeelding/PacmanWest.png")));
+        mapPacmanAfbeelding.put(Afbeelding.Pacman.PACMANNOORD, converteerFileNaarImage(afbeelding = new File("src/afbeelding/PacmanNoord.png")));
+        mapPacmanAfbeelding.put(Afbeelding.Pacman.PACMANOOST, converteerFileNaarImage(afbeelding = new File("src/afbeelding/PacmanOost.png")));
+        mapPacmanAfbeelding.put(Afbeelding.Pacman.PACMANZUID, converteerFileNaarImage(afbeelding = new File("src/afbeelding/PacmanZuid.png")));
+        mapPacmanAfbeelding.put(Afbeelding.Pacman.PACMANWEST, converteerFileNaarImage(afbeelding = new File("src/afbeelding/PacmanWest.png")));
         
         //Spookjes - Willekeurig
-        mapBewegendeAfbeelding.put("inky", converteerFileNaarImage(afbeelding = new File("src/afbeelding/inky.png")));
-        mapBewegendeAfbeelding.put("blinky", converteerFileNaarImage(afbeelding = new File("src/afbeelding/blinky.png")));
+        mapSpookjeAfbeelding.put(Afbeelding.Spookje.INKY, converteerFileNaarImage(afbeelding = new File("src/afbeelding/inky.png")));
+        mapSpookjeAfbeelding.put(Afbeelding.Spookje.BLINKY, converteerFileNaarImage(afbeelding = new File("src/afbeelding/blinky.png")));
         
         // Spookjes - Achtervolgend
-        mapBewegendeAfbeelding.put("pinky", converteerFileNaarImage(afbeelding = new File("src/afbeelding/pinky.png")));
-        mapBewegendeAfbeelding.put("clyde", converteerFileNaarImage(afbeelding = new File("src/afbeelding/clyde.png")));
+        mapSpookjeAfbeelding.put(Afbeelding.Spookje.PINKY, converteerFileNaarImage(afbeelding = new File("src/afbeelding/pinky.png")));
+        mapSpookjeAfbeelding.put(Afbeelding.Spookje.CLYDE, converteerFileNaarImage(afbeelding = new File("src/afbeelding/clyde.png")));
     }
     
     public Image converteerFileNaarImage(File afbeelding) {
@@ -61,42 +64,50 @@ public class ImageLoader {
         }
     }
     
-    public Image selectStatischeSpelElementAfbeelding(String afbeeldingNaam) {
+    public Image selectStatischeSpelElementAfbeelding(Afbeelding.Statisch afbeeldingNaam) {
         switch(afbeeldingNaam){
-            case "muur":
-                return mapStatischAfbeelding.get("muur"); // Kan null zijn
-            case "bolletje":
-                return mapStatischAfbeelding.get("bolletje"); // Kan null zijn
-            case "superbolletje":
-                return mapStatischAfbeelding.get("superbolletje"); // Kan null zijn
-            case "kers":
-                return mapStatischAfbeelding.get("kers"); // Kan null zijn
+            case MUUR:
+                return mapStatischAfbeelding.get(Afbeelding.Statisch.MUUR); // Kan null zijn
+            case BOLLETJE:
+                return mapStatischAfbeelding.get(Afbeelding.Statisch.BOLLETJE); // Kan null zijn
+            case SUPERBOLLETJE:
+                return mapStatischAfbeelding.get(Afbeelding.Statisch.SUPERBOLLETJE); // Kan null zijn
+            case KERS:
+                return mapStatischAfbeelding.get(Afbeelding.Statisch.KERS); // Kan null zijn
             default:
                 System.out.println("ImageLoader - selectStatischeSpelElementAfbeelding: Geen afbeelding voor: " + afbeeldingNaam);
                 return null;
         }
     }
     
-    public Image selectBewegendeSpelElementAfbeelding(String afbeeldingNaam) {
+    public Image selectPacmanAfbeelding(Afbeelding.Pacman afbeeldingNaam) {
         switch(afbeeldingNaam){
-            case "pacmanNoord":
-                return mapBewegendeAfbeelding.get("pacmanNoord"); // Kan null zijn
-            case "pacmanOost":
-                return mapBewegendeAfbeelding.get("pacmanOost"); // Kan null zijn
-            case "pacmanZuid":
-                return mapBewegendeAfbeelding.get("pacmanZuid"); // Kan null zijn
-            case "pacmanWest":
-                return mapBewegendeAfbeelding.get("pacmanWest"); // Kan null zijn
-            case "inky":
-                return mapBewegendeAfbeelding.get("inky"); // Kan null zijn
-            case "blinky":
-                return mapBewegendeAfbeelding.get("blinky"); // Kan null zijn
-            case "pinky":
-                return mapBewegendeAfbeelding.get("pinky"); // Kan null zijn
-            case "clyde":
-                return mapBewegendeAfbeelding.get("clyde"); // Kan null zijn
+            case PACMANNOORD:
+                return mapPacmanAfbeelding.get(Afbeelding.Pacman.PACMANNOORD); // Kan null zijn
+            case PACMANOOST:
+                return mapPacmanAfbeelding.get(Afbeelding.Pacman.PACMANOOST); // Kan null zijn
+            case PACMANZUID:
+                return mapPacmanAfbeelding.get(Afbeelding.Pacman.PACMANZUID); // Kan null zijn
+            case PACMANWEST:
+                return mapPacmanAfbeelding.get(Afbeelding.Pacman.PACMANWEST); // Kan null zijn
             default:
-                System.out.println("ImageLoader - selectBewegendeSpelElementAfbeelding: Geen afbeelding voor: " + afbeeldingNaam);
+                System.out.println("ImageLoader - selectPacmanAfbeelding: Geen afbeelding voor: " + afbeeldingNaam);
+                return null;
+        }
+    }
+    
+    public Image selectSpookjeAfbeelding(Afbeelding.Spookje afbeeldingNaam) {
+        switch(afbeeldingNaam){
+            case INKY:
+                return mapSpookjeAfbeelding.get(Afbeelding.Spookje.INKY); // Kan null zijn
+            case BLINKY:
+                return mapSpookjeAfbeelding.get(Afbeelding.Spookje.BLINKY); // Kan null zijn
+            case PINKY:
+                return mapSpookjeAfbeelding.get(Afbeelding.Spookje.PINKY); // Kan null zijn
+            case CLYDE:
+                return mapSpookjeAfbeelding.get(Afbeelding.Spookje.CLYDE); // Kan null zijn
+            default:
+                System.out.println("ImageLoader - selectSpookjeAfbeelding: Geen afbeelding voor: " + afbeeldingNaam);
                 return null;
         }
     }

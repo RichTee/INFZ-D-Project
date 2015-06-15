@@ -6,6 +6,7 @@
 
 package infz.d.project.SpelElementen;
 
+import infz.d.project.Enums.Afbeelding;
 import infz.d.project.GUI.Vakje;
 import java.awt.Color;
 import java.awt.Graphics;
@@ -22,13 +23,12 @@ import javax.imageio.ImageIO;
 public class Bolletje extends SpelElement {
     private int row;
     private int column;
-    private File afbeelding = new File("src/afbeelding/bolletje.png");
     
     public Bolletje(Vakje vakje) {
         this.vakje = vakje;
         this.punten = 10;
         this.elementNaam = "bolletje";
-        converteerFileNaarImage(afbeelding);
+        this.image = this.vakje.getImageLoader().selectStatischeSpelElementAfbeelding(Afbeelding.Statisch.BOLLETJE);
     }
     
     @Override

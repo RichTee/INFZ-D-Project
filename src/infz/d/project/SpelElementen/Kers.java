@@ -5,6 +5,7 @@
  */
 package infz.d.project.SpelElementen;
 
+import infz.d.project.Enums.Afbeelding;
 import infz.d.project.GUI.Vakje;
 import java.awt.Color;
 import java.awt.Graphics;
@@ -21,13 +22,12 @@ import javax.imageio.ImageIO;
 public class Kers extends SpelElement {
     private int         row;
     private int         column;
-    private File afbeelding = new File("src/afbeelding/kers.png");
     
     public Kers(Vakje vakje) {
         this.vakje = vakje;
         this.punten = 100;
         this.elementNaam = "kers";
-        converteerFileNaarImage(afbeelding);
+        this.image = this.vakje.getImageLoader().selectStatischeSpelElementAfbeelding(Afbeelding.Statisch.KERS);
     }
     
     public void setVakje(Vakje vakje) {

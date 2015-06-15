@@ -5,6 +5,7 @@
  */
 package infz.d.project.SpelElementen;
 
+import infz.d.project.Enums.Afbeelding;
 import infz.d.project.GUI.Vakje;
 import java.awt.Graphics;
 
@@ -15,13 +16,12 @@ import java.io.File;
  * @author Sebastiaan
  */
 public class Superbolletje extends SpelElement {
-    File afbeelding = new File("src/afbeelding/superbolletje.png");
     
     public Superbolletje(Vakje vakje){
         this.vakje = vakje;
         this.punten = 10;
         this.elementNaam = "superbolletje";
-        converteerFileNaarImage(afbeelding);
+        this.image = this.vakje.getImageLoader().selectStatischeSpelElementAfbeelding(Afbeelding.Statisch.SUPERBOLLETJE);
     }
     
     @Override
