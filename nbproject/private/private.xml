@@ -5,12 +5,10 @@
         <group>
             <file>file:/F:/Git/INFZ-D-Project/src/infz/d/project/gui/Spelbord.java</file>
             <file>file:/F:/Git/INFZ-D-Project/src/infz/d/project/gui/Vakje.java</file>
-            <file>file:/F:/Git/INFZ-D-Project/src/infz/d/project/Interfaces/VluchtenBewegenAlgoritme.java</file>
-            <file>file:/F:/Git/INFZ-D-Project/src/infz/d/project/SpelElementen/AchtervolgendSpookje.java</file>
             <file>file:/F:/Git/INFZ-D-Project/src/infz/d/project/SpelElementen/Spookje.java</file>
-            <file>file:/F:/Git/INFZ-D-Project/src/infz/d/project/Interfaces/AchtervolgenBewegen.java</file>
+            <file>file:/F:/Git/INFZ-D-Project/src/infz/d/project/Ondersteunend/ImageLoader.java</file>
+            <file>file:/F:/Git/INFZ-D-Project/src/infz/d/project/Ondersteunend/StopWatch.java</file>
             <file>file:/F:/Git/INFZ-D-Project/src/infz/d/project/SpelElementen/Pacman.java</file>
-            <file>file:/F:/Git/INFZ-D-Project/src/infz/d/project/Interfaces/AchtervolgenBewegenAlgoritme.java</file>
         </group>
     </open-files>
 </project-private>

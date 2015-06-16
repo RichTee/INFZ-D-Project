@@ -7,6 +7,7 @@ package infz.d.project.SpelElementen;
 
 import infz.d.project.Enums.Afbeelding;
 import infz.d.project.Enums.Richting;
+import infz.d.project.Enums.Status;
 
 import infz.d.project.GUI.Vakje;
 import infz.d.project.Interfaces.WillekeurigBewegen;
@@ -53,10 +54,10 @@ public class WillekeurigSpookje extends Spookje {
                         this.vakje.setSpookjeNull(this);
                         vakje.setSpookje(this);
                         this.setVakje(vakje);
-                        if (naam.equals("inky")) {
+                        if (naam.equals("inky") && getStatus() != Status.BANG) {
                             this.image = this.vakje.getImageLoader().selectSpookjeAfbeelding(Afbeelding.Spookje.INKYNOORD);
                         }
-                        if (naam.equals("blinky")) {
+                        if (naam.equals("blinky") && getStatus() != Status.BANG) {
                             this.image = this.vakje.getImageLoader().selectSpookjeAfbeelding(Afbeelding.Spookje.BLINKYNOORD);
                         }
                     }
@@ -67,10 +68,10 @@ public class WillekeurigSpookje extends Spookje {
                         this.vakje.setSpookjeNull(this);
                         vakje.setSpookje(this);
                         this.setVakje(vakje);
-                        if (naam.equals("inky")) {
+                        if (naam.equals("inky") && getStatus() != Status.BANG) {
                             this.image = this.vakje.getImageLoader().selectSpookjeAfbeelding(Afbeelding.Spookje.INKYOOST);
                         }
-                        if (naam.equals("blinky")) {
+                        if (naam.equals("blinky") && getStatus() != Status.BANG) {
                             this.image = this.vakje.getImageLoader().selectSpookjeAfbeelding(Afbeelding.Spookje.BLINKYOOST);
                         }
                     }
@@ -81,10 +82,10 @@ public class WillekeurigSpookje extends Spookje {
                         this.vakje.setSpookjeNull(this);
                         vakje.setSpookje(this);
                         this.setVakje(vakje);
-                        if (naam.equals("inky")) {
+                        if (naam.equals("inky") && getStatus() != Status.BANG) {
                             this.image = this.vakje.getImageLoader().selectSpookjeAfbeelding(Afbeelding.Spookje.INKYZUID);
                         }
-                        if (naam.equals("blinky")) {
+                        if (naam.equals("blinky") && getStatus() != Status.BANG) {
                             this.image = this.vakje.getImageLoader().selectSpookjeAfbeelding(Afbeelding.Spookje.BLINKYZUID);
                         }
                     }
@@ -95,10 +96,10 @@ public class WillekeurigSpookje extends Spookje {
                         this.vakje.setSpookjeNull(this);
                         vakje.setSpookje(this);
                         this.setVakje(vakje);
-                        if (naam.equals("inky")) {
+                        if (naam.equals("inky") && getStatus() != Status.BANG) {
                             this.image = this.vakje.getImageLoader().selectSpookjeAfbeelding(Afbeelding.Spookje.INKYWEST);
                         }
-                        if (naam.equals("blinky")) {
+                        if (naam.equals("blinky") && getStatus() != Status.BANG) {
                             this.image = this.vakje.getImageLoader().selectSpookjeAfbeelding(Afbeelding.Spookje.BLINKYWEST);
                         }
                     }

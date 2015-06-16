@@ -19,6 +19,7 @@ import javax.swing.border.Border;
 import infz.d.project.Enums.Geluid;
 import static infz.d.project.Enums.Geluid.*; // ?
 import infz.d.project.Enums.Richting;
+import infz.d.project.Enums.Status;
 
 import infz.d.project.Geluiden.AudioPlayer;
 import infz.d.project.Ondersteunend.*;
@@ -54,7 +55,7 @@ public class Spelbord extends javax.swing.JPanel {
     private final Border            lineBorder = BorderFactory.createLineBorder(Color.black);
     public int                      level = 0;
     private int                     snelheid = 500;
-    private KeyListener listener;
+    private KeyListener             listener;
     
     /**
      * Creates new form Spelbord
@@ -339,6 +340,29 @@ public class Spelbord extends javax.swing.JPanel {
             spelInformatie.setScoreZonderBolletje(score);
         else
             spelInformatie.setLevens(levens);       
+    }
+    
+    public void setSpookjeStatus(String spookje, Status status) {
+        // Bang
+        if(spookje.equals("") && status == Status.BANG){
+            for (int row = 0; row < arrayHoogte; row++) {
+                for (int column = 0; column < arrayBreedte; column++) {
+                    if(vakje[row][column].getSpookje("inky")!= null){
+                        vakje[row][column].getSpookje("inky").setStatus(status);
+                    }
+                    if(vakje[row][column].getSpookje("blinky")!= null){
+                        vakje[row][column].getSpookje("blinky").setStatus(status);
+                    }
+                    if(vakje[row][column].getSpookje("pinky")!= null){
+                        vakje[row][column].getSpookje("pinky").setStatus(status);
+                    }
+                    if(vakje[row][column].getSpookje("clyde")!= null){
+                        vakje[row][column].getSpookje("clyde").setStatus(status);
+                    }
+                }
+            }
+        }
+        // ToDo: Dood
     }
     
     public void maakKersInLegeVakje() {

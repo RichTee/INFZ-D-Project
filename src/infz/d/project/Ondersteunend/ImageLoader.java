@@ -45,6 +45,9 @@ public class ImageLoader {
         mapPacmanAfbeelding.put(Afbeelding.Pacman.PACMANZUID, converteerFileNaarImage(afbeelding = new File("src/afbeelding/PacmanZuid.png")));
         mapPacmanAfbeelding.put(Afbeelding.Pacman.PACMANWEST, converteerFileNaarImage(afbeelding = new File("src/afbeelding/PacmanWest.png")));
 
+        //Spookjes - Alle
+        mapSpookjeAfbeelding.put(Afbeelding.Spookje.BANG, converteerFileNaarImage(afbeelding = new File("src/afbeelding/SpookjeBang.png")));
+        
         //Spookjes - Willekeurig
         mapSpookjeAfbeelding.put(Afbeelding.Spookje.INKYNOORD, converteerFileNaarImage(afbeelding = new File("src/afbeelding/inkyNOORD.png")));
         mapSpookjeAfbeelding.put(Afbeelding.Spookje.INKYOOST, converteerFileNaarImage(afbeelding = new File("src/afbeelding/inkyOOST.png")));
@@ -111,6 +114,8 @@ public class ImageLoader {
 
     public Image selectSpookjeAfbeelding(Afbeelding.Spookje afbeeldingNaam) {
         switch (afbeeldingNaam) {
+            case BANG:
+                return mapSpookjeAfbeelding.get(Afbeelding.Spookje.BANG); // Kan null zijn
             case INKYNOORD:
                 return mapSpookjeAfbeelding.get(Afbeelding.Spookje.INKYNOORD); // Kan null zijn
             case INKYOOST:

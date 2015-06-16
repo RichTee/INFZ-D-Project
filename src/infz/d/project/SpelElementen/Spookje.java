@@ -6,6 +6,8 @@
 
 package infz.d.project.SpelElementen;
 
+import infz.d.project.Enums.Afbeelding;
+import infz.d.project.Enums.Status;
 import infz.d.project.GUI.Vakje;
 import infz.d.project.Interfaces.VluchtenBewegen;
 import java.util.Random;
@@ -19,6 +21,7 @@ public abstract class Spookje extends Poppetje {
     public String naam;
     public Vakje startPositie;
     public Vakje laatsteVakje;
+    public Status status;
     public VluchtenBewegen vluchtenBewegen = new VluchtenBewegen();
     
     public Spookje() { }
@@ -26,11 +29,22 @@ public abstract class Spookje extends Poppetje {
     public void setVakje(Vakje vakje){
        this.laatsteVakje = this.vakje;
        this.vakje = vakje;
+       this.status = Status.LEVEND;
     }
     
     public Vakje getVakje(){
         return this.vakje;
     }
+    
+    public Status getStatus() {
+        return this.status;
+    }
+    
+    public void setStatus(Status status) {
+        this.status = status;
+        this.image = this.vakje.getImageLoader().selectSpookjeAfbeelding(Afbeelding.Spookje.BANG);
+    }
+    
     // Indien we willen zoeken, dan gaan we in random richtingen.
     public int randomRichting() {
         Random rand = new Random();

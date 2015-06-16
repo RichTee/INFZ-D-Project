@@ -11,6 +11,7 @@ import java.io.File;
 
 import infz.d.project.Enums.Afbeelding;
 import infz.d.project.Enums.Richting;
+import infz.d.project.Enums.Status;
 import infz.d.project.GUI.Vakje;
 import java.util.Timer;
 /**
@@ -55,6 +56,9 @@ public class Pacman extends Poppetje {
         if(!magLopen)
             return;
 
+        if(getKracht())
+            this.vakje.getSpelbord().setSpookjeStatus("", Status.BANG);
+        
         this.checkSpookje();
         
         // bewegen

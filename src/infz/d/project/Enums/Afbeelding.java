@@ -27,6 +27,9 @@ public class Afbeelding {
     }
 
     public enum Spookje {
+        // Alle
+        BANG,
+        
         // Inky
         INKYNOORD,
         INKYOOST,
