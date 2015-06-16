@@ -29,8 +29,8 @@ public class AchtervolgenBewegen implements AchtervolgenBewegenAlgoritme{
         
         this.huidigVakje = huidigVakje;
         
-        pacmanRichting = interceptPacman(huidigVakje);
-        return mainBfs(huidigVakje);
+        pacmanRichting = interceptPacman(this.huidigVakje);
+        return mainBfs(this.huidigVakje);
     }
 
     @Override
