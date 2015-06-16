@@ -388,7 +388,7 @@ public class Spelbord extends javax.swing.JPanel {
     public void resetPacman() {
         for (int i = 0; i < arrayHoogte; i++) {
             for (int j = 0; j < arrayBreedte; j++) {
-                if (vakje[i][j].getElement().equals("pacman")) {
+                if (vakje[i][j].getPacman() != null) {
                     pacman = (Pacman) vakje[i][j].getPacman();
                     vakje[i][j].setElement("pad", null);
                 } 
