@@ -10,25 +10,41 @@ package infz.d.project.Enums;
  * @author Method
  */
 public class Afbeelding {
-    public enum Statisch { 
+
+    public enum Statisch {
+
         PAD,
         MUUR,
         BOLLETJE,
         SUPERBOLLETJE,
         KERS
     }
-    
-    public enum Pacman { 
+
+    public enum Pacman {
+
         PACMANNOORD,
         PACMANOOST,
         PACMANZUID,
         PACMANWEST,
     }
-    
-    public enum Spookje { 
-        INKY,
-        BLINKY,
-        PINKY,
-        CLYDE,
+
+    public enum Spookje {
+
+        INKYNOORD,
+        INKYOOST,
+        INKYZUID,
+        INKYWEST,
+        BLINKYNOORD,
+        BLINKYOOST,
+        BLINKYZUID,
+        BLINKYWEST,
+        PINKYNOORD,
+        PINKYOOST,
+        PINKYZUID,
+        PINKYWEST,
+        CLYDENOORD,
+        CLYDEOOST,
+        CLYDEZUID,
+        CLYDEWEST,
     }
 }

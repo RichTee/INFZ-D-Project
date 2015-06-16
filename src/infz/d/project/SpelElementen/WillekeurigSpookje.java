@@ -22,64 +22,89 @@ import java.util.Random;
  *
  * @author Method
  */
-public class WillekeurigSpookje extends Spookje implements WillekeurigBewegenAlgoritme{
-    private boolean             teleportCooldown = false;
-    
+public class WillekeurigSpookje extends Spookje implements WillekeurigBewegenAlgoritme {
+
+    private boolean teleportCooldown = false;
+
     public WillekeurigSpookje(Vakje vakje, String naam) {
         this.vakje = vakje;
         this.startPositie = vakje;
         this.laatsteVakje = vakje;
-        this.naam = naam; 
+        this.naam = naam;
         this.punten = 200;
         this.elementNaam = "spookje";
 
         if (naam.equals("inky")) {
-            this.image = this.vakje.getImageLoader().selectSpookjeAfbeelding(Afbeelding.Spookje.INKY);
+            this.image = this.vakje.getImageLoader().selectSpookjeAfbeelding(Afbeelding.Spookje.INKYOOST);
         } else if (naam.equals("blinky")) {
-            this.image = this.vakje.getImageLoader().selectSpookjeAfbeelding(Afbeelding.Spookje.BLINKY);
+            this.image = this.vakje.getImageLoader().selectSpookjeAfbeelding(Afbeelding.Spookje.BLINKYOOST);
         }
     }
 
     @Override
     public void bewegen() {
-        
+
         checkPacman();
-        
-        if(this.vakje.getKanTeleporteren() && !teleportCooldown){
+
+        if (this.vakje.getKanTeleporteren() && !teleportCooldown) {
             this.vakje.teleporteerBewegend(this);
             teleportCooldown = true;
         } else {
-            switch(willekeurigBewegen()){
+            switch (willekeurigBewegen()) {
                 case NOORD:
-                    if(vakje.getBuurLijst().containsKey(Richting.NOORD)){
+                    if (vakje.getBuurLijst().containsKey(Richting.NOORD)) {
                         Vakje vakje = (Vakje) this.vakje.getBuurLijst().get(Richting.NOORD);
                         this.vakje.setSpookjeNull(this);
                         vakje.setSpookje(this);
-                        this.setVakje(vakje); 
+                        this.setVakje(vakje);
+                        if (naam.equals("inky")) {
+                            this.image = this.vakje.getImageLoader().selectSpookjeAfbeelding(Afbeelding.Spookje.INKYNOORD);
+                        }
+                        if (naam.equals("blinky")) {
+                            this.image = this.vakje.getImageLoader().selectSpookjeAfbeelding(Afbeelding.Spookje.BLINKYNOORD);
+                        }
                     }
                     break;
                 case OOST:
-                    if(vakje.getBuurLijst().containsKey(Richting.OOST)){
+                    if (vakje.getBuurLijst().containsKey(Richting.OOST)) {
                         Vakje vakje = (Vakje) this.vakje.getBuurLijst().get(Richting.OOST);
                         this.vakje.setSpookjeNull(this);
                         vakje.setSpookje(this);
-                        this.setVakje(vakje); 
+                        this.setVakje(vakje);
+                        if (naam.equals("inky")) {
+                            this.image = this.vakje.getImageLoader().selectSpookjeAfbeelding(Afbeelding.Spookje.INKYOOST);
+                        }
+                        if (naam.equals("blinky")) {
+                            this.image = this.vakje.getImageLoader().selectSpookjeAfbeelding(Afbeelding.Spookje.BLINKYOOST);
+                        }
                     }
                     break;
                 case ZUID:
-                    if(vakje.getBuurLijst().containsKey(Richting.ZUID)){
+                    if (vakje.getBuurLijst().containsKey(Richting.ZUID)) {
                         Vakje vakje = (Vakje) this.vakje.getBuurLijst().get(Richting.ZUID);
                         this.vakje.setSpookjeNull(this);
                         vakje.setSpookje(this);
-                        this.setVakje(vakje); 
+                        this.setVakje(vakje);
+                        if (naam.equals("inky")) {
+                            this.image = this.vakje.getImageLoader().selectSpookjeAfbeelding(Afbeelding.Spookje.INKYZUID);
+                        }
+                        if (naam.equals("blinky")) {
+                            this.image = this.vakje.getImageLoader().selectSpookjeAfbeelding(Afbeelding.Spookje.BLINKYZUID);
+                        }
                     }
                     break;
                 case WEST:
-                    if(vakje.getBuurLijst().containsKey(Richting.WEST)){
+                    if (vakje.getBuurLijst().containsKey(Richting.WEST)) {
                         Vakje vakje = (Vakje) this.vakje.getBuurLijst().get(Richting.WEST);
                         this.vakje.setSpookjeNull(this);
                         vakje.setSpookje(this);
-                        this.setVakje(vakje); 
+                        this.setVakje(vakje);
+                        if (naam.equals("inky")) {
+                            this.image = this.vakje.getImageLoader().selectSpookjeAfbeelding(Afbeelding.Spookje.INKYWEST);
+                        }
+                        if (naam.equals("blinky")) {
+                            this.image = this.vakje.getImageLoader().selectSpookjeAfbeelding(Afbeelding.Spookje.BLINKYWEST);
+                        }
                     }
                     break;
                 default:
@@ -88,12 +113,12 @@ public class WillekeurigSpookje extends Spookje implements WillekeurigBewegenAlg
             }
             teleportCooldown = false;
         }
-        
+
         checkPacman();
-        
+
         this.vakje.getSpelbord().tekenOpnieuw();
     }
-    
+
     @Override
     public void draw(Graphics g) {
         this.row = vakje.getXPositie();
@@ -108,10 +133,10 @@ public class WillekeurigSpookje extends Spookje implements WillekeurigBewegenAlg
         ArrayList<Richting> openRichting = new ArrayList<>();
         Iterator iter = this.vakje.getBuurLijst().entrySet().iterator();
 
-        while(iter.hasNext()) {
-            Map.Entry pair = (Map.Entry)iter.next();
-            if(pair.getValue() != laatsteVakje) {
-                switch(pair.getKey().toString()){
+        while (iter.hasNext()) {
+            Map.Entry pair = (Map.Entry) iter.next();
+            if (pair.getValue() != laatsteVakje) {
+                switch (pair.getKey().toString()) {
                     case "NOORD":
                         openRichting.add(Richting.NOORD);
                         break;
@@ -127,9 +152,9 @@ public class WillekeurigSpookje extends Spookje implements WillekeurigBewegenAlg
                 }
             }
         }
-        
+
         int tempNummer = random.nextInt(openRichting.size());
-        
+
         return openRichting.get(tempNummer);
     }
 }
