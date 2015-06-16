@@ -12,6 +12,7 @@ import java.io.File;
 import infz.d.project.Enums.Afbeelding;
 import infz.d.project.Enums.Richting;
 import infz.d.project.GUI.Vakje;
+import java.util.Timer;
 /**
  *
  * @author Method
@@ -19,7 +20,8 @@ import infz.d.project.GUI.Vakje;
 public class Pacman extends Poppetje {
     private boolean             heeftSuperKracht = false;
     private boolean             teleportCooldown = false;
-            
+    public  boolean             magLopen = true;
+    
     public Pacman(Vakje vak) {
         this.vakje = vak;
         this.elementNaam = "pacman";
@@ -44,7 +46,10 @@ public class Pacman extends Poppetje {
     
     @Override
     public void bewegen(Richting richting) {
-        if(this.vakje.getKanTeleporteren() && !teleportCooldown){
+        if(!magLopen)
+            return;
+        
+        if (this.vakje.getKanTeleporteren() && !teleportCooldown) {
             this.vakje.teleporteerBewegend(this);
             teleportCooldown = true;
         } else {
@@ -55,22 +60,21 @@ public class Pacman extends Poppetje {
                     break;
                 case OOST:
                     vakje.pacmanRichting(richting);
-                     this.image = this.vakje.getImageLoader().selectPacmanAfbeelding(Afbeelding.Pacman.PACMANOOST);
+                    this.image = this.vakje.getImageLoader().selectPacmanAfbeelding(Afbeelding.Pacman.PACMANOOST);
                     break;
                 case ZUID:
                     vakje.pacmanRichting(richting);
-                     this.image = this.vakje.getImageLoader().selectPacmanAfbeelding(Afbeelding.Pacman.PACMANZUID);
+                    this.image = this.vakje.getImageLoader().selectPacmanAfbeelding(Afbeelding.Pacman.PACMANZUID);
                     break;
                 case WEST:
                     vakje.pacmanRichting(richting);
-                     this.image = this.vakje.getImageLoader().selectPacmanAfbeelding(Afbeelding.Pacman.PACMANWEST);
+                    this.image = this.vakje.getImageLoader().selectPacmanAfbeelding(Afbeelding.Pacman.PACMANWEST);
                     break;
                 default:
                     break;
             }
-        teleportCooldown = false;
+            teleportCooldown = false;
         }
-        
     }
 
     @Override

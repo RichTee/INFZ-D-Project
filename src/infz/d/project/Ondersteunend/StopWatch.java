@@ -34,7 +34,7 @@ public class StopWatch {
     
     
     public void pacmanOnverslaanbaarTimer(Pacman pacman){
-        int delay = 500;
+        int delay = 1000;
         
         TimerTask task = new TimerTask() {
             public void run() {

@@ -37,7 +37,6 @@ public class KeyboardListener implements KeyListener {
             timer.purge();
             timer = null;
         }
-        
         TimerTask task = new TimerTask() {
             public void run() {
                 switch (ke.getKeyCode()) {
@@ -56,8 +55,7 @@ public class KeyboardListener implements KeyListener {
                 }
             }
         };
-
-        timer = new Timer();
+                timer = new Timer();
         timer.scheduleAtFixedRate(task, 0, delay);
     }
 

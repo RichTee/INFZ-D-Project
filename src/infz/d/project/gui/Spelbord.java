@@ -144,6 +144,7 @@ public class Spelbord extends javax.swing.JPanel {
         if (!spelInformatie.getPauze()) {
             stopMuziek();
             stopwatch.pauzeerTimer();
+            pacman.magLopen = false;
             stopwatch.stopLopenSpookjes();
             
             this.setRequestFocusEnabled(false);
@@ -158,6 +159,7 @@ public class Spelbord extends javax.swing.JPanel {
             spel.setTekstPauze();
             this.requestFocusInWindow();
             spelInformatie.setPauze(false);
+            pacman.magLopen = true;
             stopwatch.lopenInky(inky, snelheid);
             stopwatch.lopenBlinky(blinky, snelheid);
         }

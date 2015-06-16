@@ -246,25 +246,23 @@ public class Vakje {
                 spelbord.tekenOpnieuw();
             }
         }
-        /* ToDo:
         // Alleen Spookjes
         if (spelElement instanceof Spookje) {
             Spookje spookje = (Spookje) spelElement;
             if (this.getYPositie() == 0) {
-                spelbord.getSpecifiekVakje(10, 18).setSpookje(spookje);
+                spelbord.getSpecifiekVakje(10, 17).setSpookje(spookje);
                 this.element = "pad";
-                spookje.setVakje(spelbord.getSpecifiekVakje(10, 18));
+                spookje.setVakje(spelbord.getSpecifiekVakje(10, 17));
                 spelbord.tekenOpnieuw();
             }
 
             if (this.getYPositie() == 18) {
-                spelbord.getSpecifiekVakje(10, 0).setSpookje(spookje);
+                spelbord.getSpecifiekVakje(10, 1).setSpookje(spookje);
                 this.element = "pad";
-                spookje.setVakje(spelbord.getSpecifiekVakje(10, 0));
+                spookje.setVakje(spelbord.getSpecifiekVakje(10, 1));
                 spelbord.tekenOpnieuw();
             }
         }
-        */
     }
     
     public void pacmanRichting(Richting richting) {
@@ -384,14 +382,7 @@ public class Vakje {
                 pacman.setVakje(vakje);
                 spelbord.tekenOpnieuw();
                 spelbord.setSpelInformatie(punten, 0, "");
-            } else if (!pacman.getKracht()) {
-                System.out.println("Called #3");
-                System.out.println("VERLOREN");
-                verlorenSwitchConditie = true;
-                spelbord.resetPacman();
-                spelbord.setSpelInformatie(0, -1, "");
-                spelbord.tekenOpnieuw();
-            }
+            } 
         }
         if(!verlorenSwitchConditie){
             switch(vakje.getElement()){
@@ -453,28 +444,18 @@ public class Vakje {
                 spelbord.tekenOpnieuw();
                 break;
             case "pacman":
-                /* ToDo: Pacman laten regelen
-                if (pacman.getKracht()) {
-                    spookje.setVakje(vakje);
-                    vakje.setSpookje(spookje);
-                    if(spookje.naam.equals("inky"))
-                        this.inky = null;
-                    if(spookje.naam.equals("blinky"))
-                        this.blinky = null;
-                    spelbord.tekenOpnieuw();
-                    
-                } else if (!pacman.getKracht()) {
+                if (vakje.getPacman() != null){
+                    if (!vakje.pacman.getKracht()) {
                     System.out.println("VERLOREN");
                     spelbord.setSpelInformatie(0, -1, "");
                     spelbord.resetPacman();
                     spelbord.tekenOpnieuw();
-                    
-                }*/
+                    }
+                }
                 break;
             default:
                 break;
         }
-        teleporteerBewegend(spookje);
     }
     
     // Logischer in Spelbord voor minder Memory intake en makkelijkere toegang.
