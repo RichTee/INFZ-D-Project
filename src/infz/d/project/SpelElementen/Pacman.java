@@ -132,7 +132,7 @@ public class Pacman extends Poppetje {
                     vakje.setSpookjeNull(vakje.getSpookje("clyde"));
                 }
                 this.vakje.getSpelbord().tekenOpnieuw();
-                this.vakje.getSpelbord().setSpelInformatie(punten, 0, "");
+                this.vakje.getSpelbord().setSpelInformatie(spelPunten, 0, "");
             } else if ((!this.getKracht()) && vakje.getResetProcess() != true) {
                 if (vakje.getSpookje("inky") != null) {
                     vakje.setResetProcess(true);
@@ -167,11 +167,15 @@ public class Pacman extends Poppetje {
             case "pad":
                 break;
             case "bolletje":
-            case "kers":
                 spelPunten = this.vakje.puntenOptellenVanVakje(vakje);
                 this.vakje.getSpelbord().maakKersInLegeVakje();
                 this.vakje.setElement("pad", null);
                 this.vakje.getSpelbord().setSpelInformatie(spelPunten, 0, "bolletje");
+                break;
+            case "kers":
+                spelPunten = this.vakje.puntenOptellenVanVakje(vakje);
+                this.vakje.setElement("pad", null);
+                this.vakje.getSpelbord().setSpelInformatie(spelPunten, 0, "");
                 break;
             case "superbolletje":
                 spelPunten = this.vakje.puntenOptellenVanVakje(vakje);
@@ -192,6 +196,4 @@ public class Pacman extends Poppetje {
         
         g.drawImage(this.image, column * CELL, row * CELL, 35, 35, null);
     }
-
-    // Moet in speelbord
 }

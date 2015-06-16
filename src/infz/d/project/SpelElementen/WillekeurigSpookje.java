@@ -42,22 +42,45 @@ public class WillekeurigSpookje extends Spookje implements WillekeurigBewegenAlg
 
     @Override
     public void bewegen() {
+        
+        checkPacman();
+        
         if(this.vakje.getKanTeleporteren() && !teleportCooldown){
             this.vakje.teleporteerBewegend(this);
             teleportCooldown = true;
         } else {
             switch(willekeurigBewegen()){
                 case NOORD:
-                    vakje.spookjeRichting(Richting.NOORD, this);
+                    if(vakje.getBuurLijst().containsKey(Richting.NOORD)){
+                        Vakje vakje = (Vakje) this.vakje.getBuurLijst().get(Richting.NOORD);
+                        this.vakje.setSpookjeNull(this);
+                        vakje.setSpookje(this);
+                        this.setVakje(vakje); 
+                    }
                     break;
                 case OOST:
-                    vakje.spookjeRichting(Richting.OOST, this);
+                    if(vakje.getBuurLijst().containsKey(Richting.OOST)){
+                        Vakje vakje = (Vakje) this.vakje.getBuurLijst().get(Richting.OOST);
+                        this.vakje.setSpookjeNull(this);
+                        vakje.setSpookje(this);
+                        this.setVakje(vakje); 
+                    }
                     break;
                 case ZUID:
-                    vakje.spookjeRichting(Richting.ZUID, this);
+                    if(vakje.getBuurLijst().containsKey(Richting.ZUID)){
+                        Vakje vakje = (Vakje) this.vakje.getBuurLijst().get(Richting.ZUID);
+                        this.vakje.setSpookjeNull(this);
+                        vakje.setSpookje(this);
+                        this.setVakje(vakje); 
+                    }
                     break;
                 case WEST:
-                    vakje.spookjeRichting(Richting.WEST, this);
+                    if(vakje.getBuurLijst().containsKey(Richting.WEST)){
+                        Vakje vakje = (Vakje) this.vakje.getBuurLijst().get(Richting.WEST);
+                        this.vakje.setSpookjeNull(this);
+                        vakje.setSpookje(this);
+                        this.setVakje(vakje); 
+                    }
                     break;
                 default:
                     System.out.println("Tempnummer is wrong");
@@ -66,6 +89,9 @@ public class WillekeurigSpookje extends Spookje implements WillekeurigBewegenAlg
             teleportCooldown = false;
         }
         
+        checkPacman();
+        
+        this.vakje.getSpelbord().tekenOpnieuw();
     }
     
     @Override

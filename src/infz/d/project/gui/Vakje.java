@@ -8,15 +8,7 @@ package infz.d.project.GUI;
 
 import infz.d.project.Enums.Richting;
 import infz.d.project.Ondersteunend.ImageLoader;
-import infz.d.project.SpelElementen.Spookje;
-import infz.d.project.SpelElementen.Pacman;
-import infz.d.project.SpelElementen.SpelElement;
-import infz.d.project.SpelElementen.Superbolletje;
-import infz.d.project.SpelElementen.Muur;
-import infz.d.project.SpelElementen.AchtervolgendSpookje;
-import infz.d.project.SpelElementen.WillekeurigSpookje;
-import infz.d.project.SpelElementen.Bolletje;
-import java.awt.Color;
+import infz.d.project.SpelElementen.*;
 
 import java.awt.Graphics;
 
@@ -294,72 +286,6 @@ public class Vakje {
                 spookje.setVakje(spelbord.getSpecifiekVakje(10, 1));
                 spelbord.tekenOpnieuw();
             }
-        }
-    }
- 
-    public void spookjeRichting(Richting richting, Spookje spookje) {
-        /*
-        * NOORD = 0
-        * OOST  = 1
-        * ZUID  = 2
-        * WEST  = 3
-        */
-        switch(richting) {
-            case NOORD:
-                checkSpookjeCollisie(buurVakje.get(Richting.NOORD), spookje);
-                break;
-            case OOST:
-                checkSpookjeCollisie(buurVakje.get(Richting.OOST), spookje);
-                break;
-            case ZUID:
-                checkSpookjeCollisie(buurVakje.get(Richting.ZUID), spookje);
-                break;
-            case WEST:
-                checkSpookjeCollisie(buurVakje.get(Richting.WEST), spookje);
-                break;
-            default:
-                System.out.println("Vakje - spookjeRichting: Richting is onbekend");
-                break;
-        }
-    }
-
-    private void checkSpookjeCollisie(Vakje vakje, Spookje spookje){ 
-        if(vakje == null)
-            return;
-        
-        if(spookje == null)
-            return;
-        
-        if(spelbord == null)
-            return;
-        
-        switch(vakje.getElement()){
-            case "muur":
-                break;
-            case "pad":
-            case "bolletje":
-            case "superbolletje":
-            case "kers":
-                spookje.setVakje(vakje);
-                vakje.setSpookje(spookje);
-                if(spookje.naam.equals("inky"))
-                    this.inky = null;
-                if(spookje.naam.equals("blinky"))
-                    this.blinky = null;
-                spelbord.tekenOpnieuw();
-                break;
-            case "pacman":
-                if (vakje.getPacman() != null){
-                    if (!vakje.pacman.getKracht()) {
-                    System.out.println("VERLOREN");
-                    spelbord.setSpelInformatie(0, -1, "");
-                    spelbord.resetPacman();
-                    spelbord.tekenOpnieuw();
-                    }
-                }
-                break;
-            default:
-                break;
         }
     }
     

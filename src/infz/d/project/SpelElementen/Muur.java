@@ -10,14 +10,6 @@ import infz.d.project.Enums.Afbeelding;
 import infz.d.project.GUI.Vakje;
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Image;
-import java.io.File;
-import java.io.IOException;
-
-import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.imageio.ImageIO;
 
 /**
  *
@@ -25,7 +17,7 @@ import javax.imageio.ImageIO;
  */
 public class Muur extends SpelElement {
     //ArrayList<String> lines = new ArrayList<String>();
-    private Color muurKleur = Color.decode("#003399");
+    private Color muurKleur = Color.decode("#f2f2f2");
 
     public Muur(Vakje vak) {
         this.vakje = vak;
@@ -39,5 +31,7 @@ public class Muur extends SpelElement {
         column = vakje.getYPositie();
 
         g.drawImage(this.image, column * CELL, row * CELL, 35, 35, null);
+        //g.setColor(muurKleur);
+        //g.drawRect(column * CELL, row * CELL, CELL, CELL);
     }
 }

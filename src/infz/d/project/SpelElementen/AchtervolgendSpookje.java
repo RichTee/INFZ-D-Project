@@ -7,20 +7,21 @@ package infz.d.project.SpelElementen;
 
 import infz.d.project.Enums.Afbeelding;
 import infz.d.project.Enums.Richting;
-import infz.d.project.GUI.Vakje;
-import java.awt.Graphics;
-import java.io.File;
 
+import infz.d.project.GUI.Vakje;
 import infz.d.project.Interfaces.AchtervolgenBewegenAlgoritme;
+import java.awt.Graphics;
 import java.util.LinkedList;
 import java.util.Queue;
-import java.util.Scanner;
+import java.util.Stack;
 
 /**
  *
  * @author Method
  */
 public class AchtervolgendSpookje extends Spookje implements AchtervolgenBewegenAlgoritme{
+    Stack<Vakje> openStack = new Stack<>();
+    Stack<Vakje> closedStack = new Stack<>();
     
     public AchtervolgendSpookje(Vakje vakje, String naam) {
         this.vakje = vakje;
@@ -38,23 +39,7 @@ public class AchtervolgendSpookje extends Spookje implements AchtervolgenBewegen
     
     @Override
     public void bewegen() {
-        switch(randomRichting()){
-            case 1:
-                vakje.spookjeRichting(Richting.NOORD, this);
-                break;
-            case 2:
-                vakje.spookjeRichting(Richting.OOST, this);
-                break;
-            case 3:
-                vakje.spookjeRichting(Richting.ZUID, this);
-                break;
-            case 4:
-                vakje.spookjeRichting(Richting.WEST, this);
-                break;
-            default:
-                System.out.println("Tempnummer is wrong");
-                break;
-        }
+
     }
     
     @Override
@@ -67,13 +52,13 @@ public class AchtervolgendSpookje extends Spookje implements AchtervolgenBewegen
 
     @Override
     public boolean bfs() {
+        /*
         int r = 0, c = 0;
         int startXPos = this.vakje.getXPositie(), startYPos = this.vakje.getYPositie();
-        int finXPos = 0, finYPos = 0;
         int[] dx = {1, -1, 0, 0};//right, left, NA, NA
         int[] dy = {0, 0, 1, -1};//NA, NA, bottom, top
-        char[][] grid = new char[r][c];//Main grid
-        if (startXPos == finXPos && startYPos == finYPos) {
+        Vakje[][] grid = new Vakje[r][c];//Main grid
+        if (this.vakje.getPacman() != null) {
             return true;//He's already there
         } else {
             grid[finXPos][finYPos] = 'G';//finish
@@ -104,6 +89,7 @@ public class AchtervolgendSpookje extends Spookje implements AchtervolgenBewegen
                 }
             }
             return false;//Will return false if no route possible
-        }
+        }*/
+        return true;
     }
 }

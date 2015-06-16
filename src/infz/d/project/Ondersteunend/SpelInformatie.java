@@ -78,6 +78,8 @@ public class SpelInformatie {
     }
     
     private void checkOfGewonnen() {
+        System.out.println("Totaal:" + totaalAantalBolletjes);
+        System.out.println("Huidig: " + huidigeAantalBolletjes);
         if (this.huidigeAantalBolletjes == 0) {
             spel.heeftGewonnenOfVerloren("gewonnen");
 

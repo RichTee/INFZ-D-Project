@@ -37,6 +37,19 @@ public abstract class Spookje extends Poppetje implements VluchtenBewegenAlgorit
         return tempNummer;
     }
     
+    public void checkPacman() { 
+        if(this.vakje.getPacman() != null){
+            if(!this.vakje.getPacman().getKracht() && vakje.getResetProcess() != true) {
+                vakje.setResetProcess(true);
+                vakje.getSpelbord().resetPacman();
+                vakje.pacman = null; // getter setter?
+                vakje.getSpelbord().setSpelInformatie(0, -1, "");
+                
+                vakje.setResetProcess(false);
+            }
+        }
+    }
+
     public void bewegen(){}
     
 

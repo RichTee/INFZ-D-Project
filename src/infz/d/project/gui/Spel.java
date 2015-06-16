@@ -189,6 +189,7 @@ public class Spel extends javax.swing.JFrame {
     public void resetScore() {
         this.punten = 0;
         
+        System.out.println("ResetScore");
         lblScore.setText("Score: " + punten);
 
     }
@@ -197,12 +198,14 @@ public class Spel extends javax.swing.JFrame {
         if (invoer.equals("verloren")) {
             System.out.println("GameOver");
             String[] options = new String[]{"Herstarten", "Stoppen"};
+            spelbord2.pauzeer();
             int response = JOptionPane.showOptionDialog(null, "Wilt u herstarten of stoppen?", "GAME OVER",
                     JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,
                     null, options, options[0]);
             resetVerloren(response);
         } else if (invoer.equals("gewonnen")) {
             JOptionPane.showMessageDialog(null, "U heeft gewonnen!");
+            spelbord2.pauzeer();
             spelbord2.levelIncrement(1);
             this.spelbord2.nextLevel();
             lblLevel.setText("Level: " + spelbord2.level);

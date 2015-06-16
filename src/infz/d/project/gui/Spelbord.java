@@ -32,9 +32,9 @@ import infz.d.project.SpelElementen.WillekeurigSpookje;
  * @author Method
  */
 public class Spelbord extends javax.swing.JPanel {
-    private LevelLoader             levelLoader;
+    private final LevelLoader       levelLoader;
     private SpelInformatie          spelInformatie;
-    private AudioPlayer             player; 
+    private final AudioPlayer       player; 
     private Pacman                  pacman;
     private Kers                    kers;
     private Spel                    spel;
@@ -42,14 +42,14 @@ public class Spelbord extends javax.swing.JPanel {
     private WillekeurigSpookje      blinky;
     private AchtervolgendSpookje    pinky;
     private AchtervolgendSpookje    clyde;
-    private StopWatch               stopwatch;
-    private ImageLoader             imageLoader = new ImageLoader();
+    private final StopWatch         stopwatch;
+    private final ImageLoader       imageLoader = new ImageLoader();
     private int                     xPos, yPos; // Positie
     private int                     arrayBreedte, arrayHoogte; // Cell dimensies
     private final static int        CELL = 35;
     private Vakje[][]               vakje;
-    private ArrayList<String>       vakjesInhoud = new ArrayList<String>();
-    private Border                  lineBorder = BorderFactory.createLineBorder(Color.black);
+    private ArrayList<String>       vakjesInhoud = new ArrayList<>();
+    private final Border            lineBorder = BorderFactory.createLineBorder(Color.black);
     public int                      level = 0;
     private int                     snelheid = 500;
     private KeyListener listener;
@@ -132,8 +132,6 @@ public class Spelbord extends javax.swing.JPanel {
         for( int i = 0; i < vakje.length; i++ )
             vakje[i] = null;
         
-        vakje = null;
-        
         repaint();
         
         genereerSpelbordPanelGegevens();
@@ -196,9 +194,7 @@ public class Spelbord extends javax.swing.JPanel {
         for( int i = 0; i < vakje.length; i++ )
             vakje[i] = null;
         
-        vakje = null;
-        
-        repaint();
+        //repaint();
     }
 
     // Moet anders kunnen...
