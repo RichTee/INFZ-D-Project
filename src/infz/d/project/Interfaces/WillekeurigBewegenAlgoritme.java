@@ -13,5 +13,5 @@ import infz.d.project.GUI.Vakje;
  * @author Method
  */
 public interface WillekeurigBewegenAlgoritme {
-    public abstract Richting willekeurigBewegen();
+    public abstract Richting willekeurigBewegen(Vakje vakje, Vakje laatsteVakje);
 }

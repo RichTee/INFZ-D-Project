@@ -32,15 +32,16 @@ public class Vakje {
     private ArrayList<SpelElement>  spelElementList = new ArrayList<>();
     private final Spelbord          spelbord;
     private final ImageLoader       imageLoader;
-    private SpelElement             spelElement;
-    private Muur                    muur;
-    private WillekeurigSpookje      inky;
-    private WillekeurigSpookje      blinky;
-    private AchtervolgendSpookje    pinky;
-    private AchtervolgendSpookje    clyde;
+    private SpelElement             spelElement;  // Kan in PriorityQueue
+    private Muur                    muur;   // Kan in PriorityQueue
+    private WillekeurigSpookje      inky;   // Kan in PriorityQueue
+    private WillekeurigSpookje      blinky; // Kan in PriorityQueue
+    private AchtervolgendSpookje    pinky;  // Kan in PriorityQueue
+    private AchtervolgendSpookje    clyde;  // Kan in PriorityQueue
     public Pacman                   pacman; // Getter / setter ?
     private boolean                 kanTeleporteren = false;
     private boolean                 resetProcess = false;
+    private Vakje parent;
     
     public Vakje(int xPositie, int yPositie, String element, Spelbord spelBord, ImageLoader imageLoader) {
         this.xPositie = xPositie;
@@ -74,6 +75,14 @@ public class Vakje {
     
     public ImageLoader getImageLoader() {
         return imageLoader;
+    }
+    
+    public Vakje getParent() {
+        return parent;
+    }
+    
+    public void setParent(Vakje parent) {
+        this.parent = parent;
     }
 
     public void setElement(String element, SpelElement spelElement) {

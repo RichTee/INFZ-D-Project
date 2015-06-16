@@ -9,23 +9,19 @@ import infz.d.project.Enums.Afbeelding;
 import infz.d.project.Enums.Richting;
 
 import infz.d.project.GUI.Vakje;
+import infz.d.project.Interfaces.WillekeurigBewegen;
 
-import infz.d.project.Interfaces.WillekeurigBewegenAlgoritme;
 import java.awt.Graphics;
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Random;
+
 
 /**
  *
  * @author Method
  */
-public class WillekeurigSpookje extends Spookje implements WillekeurigBewegenAlgoritme {
-
+public class WillekeurigSpookje extends Spookje {
     private boolean teleportCooldown = false;
-
+    private WillekeurigBewegen willekeurigBewegen = new WillekeurigBewegen();
+    
     public WillekeurigSpookje(Vakje vakje, String naam) {
         this.vakje = vakje;
         this.startPositie = vakje;
@@ -50,7 +46,7 @@ public class WillekeurigSpookje extends Spookje implements WillekeurigBewegenAlg
             this.vakje.teleporteerBewegend(this);
             teleportCooldown = true;
         } else {
-            switch (willekeurigBewegen()) {
+            switch (willekeurigBewegen.willekeurigBewegen(vakje, laatsteVakje)) {
                 case NOORD:
                     if (vakje.getBuurLijst().containsKey(Richting.NOORD)) {
                         Vakje vakje = (Vakje) this.vakje.getBuurLijst().get(Richting.NOORD);
@@ -125,36 +121,5 @@ public class WillekeurigSpookje extends Spookje implements WillekeurigBewegenAlg
         this.column = vakje.getYPositie();
 
         g.drawImage(this.image, column * CELL, row * CELL, 35, 35, null);
-    }
-
-    @Override
-    public Richting willekeurigBewegen() {
-        Random random = new Random();
-        ArrayList<Richting> openRichting = new ArrayList<>();
-        Iterator iter = this.vakje.getBuurLijst().entrySet().iterator();
-
-        while (iter.hasNext()) {
-            Map.Entry pair = (Map.Entry) iter.next();
-            if (pair.getValue() != laatsteVakje) {
-                switch (pair.getKey().toString()) {
-                    case "NOORD":
-                        openRichting.add(Richting.NOORD);
-                        break;
-                    case "OOST":
-                        openRichting.add(Richting.OOST);
-                        break;
-                    case "ZUID":
-                        openRichting.add(Richting.ZUID);
-                        break;
-                    case "WEST":
-                        openRichting.add(Richting.WEST);
-                        break;
-                }
-            }
-        }
-
-        int tempNummer = random.nextInt(openRichting.size());
-
-        return openRichting.get(tempNummer);
     }
 }

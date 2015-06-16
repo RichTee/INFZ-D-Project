@@ -6,10 +6,15 @@
 
 package infz.d.project.Interfaces;
 
+import infz.d.project.GUI.Vakje;
+
 /**
  *
  * @author Method
  */
 public interface AchtervolgenBewegenAlgoritme {
-    public abstract boolean bfs();
+    public abstract Vakje geefCell(Vakje huidigVakje);
+    public abstract Vakje interceptPacman(Vakje root);
+    public abstract Vakje mainBfs(Vakje root);
+    public abstract Vakje retrievePad(Vakje node);
 }

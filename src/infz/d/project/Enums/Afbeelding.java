@@ -12,7 +12,6 @@ package infz.d.project.Enums;
 public class Afbeelding {
 
     public enum Statisch {
-
         PAD,
         MUUR,
         BOLLETJE,
@@ -21,7 +20,6 @@ public class Afbeelding {
     }
 
     public enum Pacman {
-
         PACMANNOORD,
         PACMANOOST,
         PACMANZUID,
@@ -29,19 +27,25 @@ public class Afbeelding {
     }
 
     public enum Spookje {
-
+        // Inky
         INKYNOORD,
         INKYOOST,
         INKYZUID,
         INKYWEST,
+        
+        // Blinky
         BLINKYNOORD,
         BLINKYOOST,
         BLINKYZUID,
         BLINKYWEST,
+        
+        // Pinky
         PINKYNOORD,
         PINKYOOST,
         PINKYZUID,
         PINKYWEST,
+        
+        // Clyde
         CLYDENOORD,
         CLYDEOOST,
         CLYDEZUID,

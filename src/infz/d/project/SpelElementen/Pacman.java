@@ -21,6 +21,7 @@ public class Pacman extends Poppetje {
     private boolean             heeftSuperKracht    = false;
     private boolean             teleportCooldown    = false;
     private int                 spelPunten          = 0;
+    private Richting            richting;
     public  boolean             magLopen            = true;
     
     public Pacman(Vakje vak) {
@@ -35,6 +36,10 @@ public class Pacman extends Poppetje {
     
     public boolean getKracht(){
         return heeftSuperKracht;
+    }
+    
+    public Richting getRichting() {
+        return richting;
     }
 
     public void setVakje(Vakje vakje) {
@@ -64,6 +69,7 @@ public class Pacman extends Poppetje {
                         this.vakje.pacman = null;
                         vakje.setElement("pacman", this);
                         this.setVakje(vakje);
+                        richting = Richting.NOORD;
                         this.image = this.vakje.getImageLoader().selectPacmanAfbeelding(Afbeelding.Pacman.PACMANNOORD);   
                     }
                     break;
@@ -73,6 +79,7 @@ public class Pacman extends Poppetje {
                         this.vakje.pacman = null;
                         vakje.setElement("pacman", this);
                         this.setVakje(vakje);
+                        richting = Richting.OOST;
                         this.image = this.vakje.getImageLoader().selectPacmanAfbeelding(Afbeelding.Pacman.PACMANOOST);   
                     }
                     break;
@@ -82,6 +89,7 @@ public class Pacman extends Poppetje {
                         this.vakje.pacman = null;
                         vakje.setElement("pacman", this);
                         this.setVakje(vakje);
+                        richting = Richting.ZUID;
                         this.image = this.vakje.getImageLoader().selectPacmanAfbeelding(Afbeelding.Pacman.PACMANZUID);   
                     }
                     break;
@@ -91,6 +99,7 @@ public class Pacman extends Poppetje {
                         this.vakje.pacman = null;
                         vakje.setElement("pacman", this);
                         this.setVakje(vakje);
+                        richting = Richting.WEST;
                         this.image = this.vakje.getImageLoader().selectPacmanAfbeelding(Afbeelding.Pacman.PACMANWEST);   
                     }
                     break;

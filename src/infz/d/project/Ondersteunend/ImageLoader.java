@@ -19,13 +19,10 @@ import infz.d.project.Enums.Afbeelding;
  * @author Method
  */
 public class ImageLoader {
-
     //          Key,    Value
-
     private Map<Afbeelding.Statisch, Image> mapStatischAfbeelding = new HashMap<>();
     private Map<Afbeelding.Pacman, Image> mapPacmanAfbeelding = new HashMap<>();
     private Map<Afbeelding.Spookje, Image> mapSpookjeAfbeelding = new HashMap<>();
-    ;
     private File afbeelding;
 
     public ImageLoader() {

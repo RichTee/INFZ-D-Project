@@ -6,10 +6,14 @@
 
 package infz.d.project.Interfaces;
 
+import infz.d.project.GUI.Vakje;
+
 /**
  *
  * @author Method
  */
 public interface VluchtenBewegenAlgoritme {
-    
+    public abstract Vakje geefCell(Vakje huidigVakje);
+    public abstract Vakje mainBfs(Vakje root);
+    public abstract Vakje retrievePad(Vakje node);
 }

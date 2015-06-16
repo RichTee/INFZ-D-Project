@@ -7,6 +7,7 @@
 package infz.d.project.SpelElementen;
 
 import infz.d.project.GUI.Vakje;
+import infz.d.project.Interfaces.VluchtenBewegen;
 import java.util.Random;
 
 import infz.d.project.Interfaces.VluchtenBewegenAlgoritme;
@@ -14,10 +15,11 @@ import infz.d.project.Interfaces.VluchtenBewegenAlgoritme;
  *
  * @author Method
  */
-public abstract class Spookje extends Poppetje implements VluchtenBewegenAlgoritme {
+public abstract class Spookje extends Poppetje {
     public String naam;
     public Vakje startPositie;
     public Vakje laatsteVakje;
+    public VluchtenBewegen vluchtenBewegen = new VluchtenBewegen();
     
     public Spookje() { }
     

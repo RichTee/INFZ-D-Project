@@ -16,11 +16,13 @@ import java.util.Random;
 import javax.swing.BorderFactory;
 import javax.swing.border.Border;
 
-import infz.d.project.Geluiden.AudioPlayer;
 import infz.d.project.Enums.Geluid;
 import static infz.d.project.Enums.Geluid.*; // ?
 import infz.d.project.Enums.Richting;
+
+import infz.d.project.Geluiden.AudioPlayer;
 import infz.d.project.Ondersteunend.*;
+
 import infz.d.project.SpelElementen.Kers;
 import infz.d.project.SpelElementen.Pacman;
 import infz.d.project.SpelElementen.AchtervolgendSpookje;
@@ -112,28 +114,12 @@ public class Spelbord extends javax.swing.JPanel {
     }
  
     public void nextLevel() {
-        // Set moeilijkheid
         if(level <= 3){
             snelheid = snelheid * (level / 10);
         }
-        
-        stopwatch.stopTimer();
-  
-        inky = null;
-        blinky = null;
-        pinky = null;
-        clyde = null;
-        
-        spelInformatie.setTotaalAantalBolletjes(0);
-        spelInformatie.nextLevelReset();
 
-        this.vakjesInhoud.clear();
-        
-        for( int i = 0; i < vakje.length; i++ )
-            vakje[i] = null;
-        
-        repaint();
-        
+        reset();
+        this.startMuziek(BACKGROUND_GELUID, true);
         genereerSpelbordPanelGegevens();
         panelListener();
     }
@@ -161,6 +147,8 @@ public class Spelbord extends javax.swing.JPanel {
             pacman.magLopen = true;
             stopwatch.lopenInky(inky, snelheid);
             stopwatch.lopenBlinky(blinky, snelheid);
+            stopwatch.lopenPinky(pinky, snelheid);
+            //stopwatch.lopenClyde(clyde, snelheid);
         }
     }
     
@@ -172,8 +160,8 @@ public class Spelbord extends javax.swing.JPanel {
         
         stopwatch.lopenInky(inky, snelheid);
         stopwatch.lopenBlinky(blinky, snelheid);
-        //stopwatch.lopenSpookjes(pinky);
-        //stopwatch.lopenSpookjes(clyde);
+        stopwatch.lopenPinky(pinky, snelheid);
+        //stopwatch.lopenClyde(clyde, snelheid);
     }
     
     public void reset() {
@@ -212,6 +200,19 @@ public class Spelbord extends javax.swing.JPanel {
             vakjesInhoud = levelLoader.laadLevel(level);
             arrayHoogte = vakjesInhoud.size();
             arrayBreedte = vakjesInhoud.get(0).length();
+    }
+    
+    public Pacman getPacman() {
+        for (int row = 0; row < arrayHoogte; row++) {
+            for (int column = 0; column < arrayBreedte; column++) {
+                if(vakje[row][column].getPacman() != null){
+                    if(vakje[row][column].getPacman() instanceof Pacman)
+                        return vakje[row][column].getPacman();
+                }
+            }
+        }
+        
+        return null;
     }
     
     // Genereer de map voor de GUI nadat de TXT is gelezen
