@@ -32,7 +32,7 @@ public class AudioPlayer {
                     muziekPad = "src/Geluid/siren_sound.wav";
                     break;
                 case SUPERBOLLETJE_GELUID:
-                    muziekPad = "geluid/pacman_intermission.wav";
+                    muziekPad = "geluid/invinciblejb.wav";
                     break;
             }
                    
