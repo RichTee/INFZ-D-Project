@@ -104,6 +104,7 @@ public class Spelbord extends javax.swing.JPanel {
     
     public void herstart() {
         spel.setTekstPauze();
+        stopwatch.stopLopenSpookjes();
         reset();
         this.startMuziek(BACKGROUND_GELUID, true);
         genereerSpelbordPanelGegevens();
@@ -179,6 +180,7 @@ public class Spelbord extends javax.swing.JPanel {
     
     public void reset() {
         stopwatch.stopTimer();
+        
         this.stopMuziek();
         
         inky = null;

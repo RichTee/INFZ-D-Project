@@ -85,7 +85,6 @@ public class StopWatch {
         };
         tijdInky = new Timer();
         tijdInky.scheduleAtFixedRate(task, 0, snelheid);
-        
     }
     
     public void lopenBlinky(Spookje spookje, int snelheid)

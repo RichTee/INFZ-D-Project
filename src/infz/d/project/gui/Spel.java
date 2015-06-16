@@ -216,7 +216,7 @@ public class Spel extends javax.swing.JFrame {
             spelbord2.herstart();
             lblLevel.setText("Level: " + spelbord2.level);
         } else {
-            this.dispose();
+            System.exit(1);
         }
     }
     

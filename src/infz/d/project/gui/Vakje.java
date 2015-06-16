@@ -325,6 +325,9 @@ public class Vakje {
         if(vakje == null)
             return;
         
+        if(spelbord == null)
+            return;
+        
         if(!vakje.getElement().equals("muur")){
             WillekeurigSpookje inky = (WillekeurigSpookje) vakje.getSpookje("inky");
             WillekeurigSpookje blinky = (WillekeurigSpookje) vakje.getSpookje("blinky");
@@ -428,6 +431,15 @@ public class Vakje {
     }
 
     private void checkSpookjeCollisie(Vakje vakje, Spookje spookje){ 
+        if(vakje == null)
+            return;
+        
+        if(spookje == null)
+            return;
+        
+        if(spelbord == null)
+            return;
+        
         switch(vakje.getElement()){
             case "muur":
                 break;
