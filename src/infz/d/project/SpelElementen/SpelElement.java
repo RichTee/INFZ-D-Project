@@ -29,14 +29,6 @@ public abstract class SpelElement {
     
     public SpelElement() { }
     
-    public void converteerFileNaarImage(File afbeelding) {
-        try{
-            this.image = ImageIO.read(afbeelding);
-        } catch (IOException e){
-            
-        }
-    }
-    
     public void setImage(Image image) {
         this.image = image;
     }

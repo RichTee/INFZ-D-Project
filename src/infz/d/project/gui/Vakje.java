@@ -29,7 +29,7 @@ public class Vakje {
     private int                     yPositie;
     private String                  element   = "pad";
     private Map<Richting, Vakje>    buurVakje = new HashMap<>();
-    private ArrayList<SpelElement>  spelElementList = new ArrayList<>();
+    //private ArrayList<SpelElement>  spelElementList = new ArrayList<>();
     private final Spelbord          spelbord;
     private final ImageLoader       imageLoader;
     private SpelElement             spelElement;  // Kan in PriorityQueue

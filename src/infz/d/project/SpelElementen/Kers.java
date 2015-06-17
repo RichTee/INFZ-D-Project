@@ -20,22 +20,11 @@ import javax.imageio.ImageIO;
  * @author Sebastiaan
  */
 public class Kers extends SpelElement {
-    private int         row;
-    private int         column;
-    
     public Kers(Vakje vakje) {
         this.vakje = vakje;
         this.punten = 100;
         this.elementNaam = "kers";
         this.image = this.vakje.getImageLoader().selectStatischeSpelElementAfbeelding(Afbeelding.Statisch.KERS);
-    }
-    
-    public void setVakje(Vakje vakje) {
-        this.vakje = vakje;
-    }
-    
-    public Vakje getVakje(){
-        return vakje;
     }
 
     @Override

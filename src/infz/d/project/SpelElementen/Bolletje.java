@@ -21,9 +21,7 @@ import javax.imageio.ImageIO;
  * @author Method
  */
 public class Bolletje extends SpelElement {
-    private int row;
-    private int column;
-    
+
     public Bolletje(Vakje vakje) {
         this.vakje = vakje;
         this.punten = 10;

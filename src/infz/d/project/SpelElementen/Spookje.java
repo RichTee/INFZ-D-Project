@@ -10,6 +10,7 @@ import infz.d.project.Enums.Afbeelding;
 import infz.d.project.Enums.Status;
 import infz.d.project.GUI.Vakje;
 import infz.d.project.Interfaces.VluchtenBewegen;
+
 import java.util.Random;
 
 import infz.d.project.Interfaces.VluchtenBewegenAlgoritme;
@@ -29,7 +30,6 @@ public abstract class Spookje extends Poppetje {
     public void setVakje(Vakje vakje){
        this.laatsteVakje = this.vakje;
        this.vakje = vakje;
-       this.status = Status.LEVEND;
     }
     
     public Vakje getVakje(){

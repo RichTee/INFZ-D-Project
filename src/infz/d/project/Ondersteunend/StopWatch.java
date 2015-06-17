@@ -32,7 +32,6 @@ public class StopWatch {
         this.spelbord = spelbord;
     }
     
-    
     public void pacmanOnverslaanbaarTimer(Pacman pacman){
         int delay = 1000;
         

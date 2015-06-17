@@ -56,11 +56,12 @@ public class Pacman extends Poppetje {
         if(!magLopen)
             return;
 
-        if(getKracht())
-            this.vakje.getSpelbord().setSpookjeStatus("", Status.BANG);
-        else
-            this.vakje.getSpelbord().setSpookjeStatus("", Status.LEVEND);
         this.checkSpookje();
+        
+        Vakje vakje = (Vakje) this.vakje.getBuurLijst().get(richting);
+        
+        if(vakje == null)
+            return;
         
         // bewegen
         if (this.vakje.getKanTeleporteren() && !teleportCooldown) {
@@ -69,44 +70,21 @@ public class Pacman extends Poppetje {
         } else {
             switch (richting) {
                 case NOORD:
-                    if(vakje.getBuurLijst().containsKey(Richting.NOORD)){
-                        Vakje vakje = (Vakje) this.vakje.getBuurLijst().get(Richting.NOORD);
-                        this.vakje.pacman = null;
-                        vakje.setElement("pacman", this);
-                        this.setVakje(vakje);
-                        richting = Richting.NOORD;
-                        this.image = this.vakje.getImageLoader().selectPacmanAfbeelding(Afbeelding.Pacman.PACMANNOORD);   
-                    }
-                    break;
                 case OOST:
-                    if(vakje.getBuurLijst().containsKey(Richting.OOST)){
-                        Vakje vakje = (Vakje) this.vakje.getBuurLijst().get(Richting.OOST);
-                        this.vakje.pacman = null;
-                        vakje.setElement("pacman", this);
-                        this.setVakje(vakje);
-                        richting = Richting.OOST;
-                        this.image = this.vakje.getImageLoader().selectPacmanAfbeelding(Afbeelding.Pacman.PACMANOOST);   
-                    }
-                    break;
                 case ZUID:
-                    if(vakje.getBuurLijst().containsKey(Richting.ZUID)){
-                        Vakje vakje = (Vakje) this.vakje.getBuurLijst().get(Richting.ZUID);
-                        this.vakje.pacman = null;
-                        vakje.setElement("pacman", this);
-                        this.setVakje(vakje);
-                        richting = Richting.ZUID;
-                        this.image = this.vakje.getImageLoader().selectPacmanAfbeelding(Afbeelding.Pacman.PACMANZUID);   
-                    }
-                    break;
                 case WEST:
-                    if(vakje.getBuurLijst().containsKey(Richting.WEST)){
-                        Vakje vakje = (Vakje) this.vakje.getBuurLijst().get(Richting.WEST);
-                        this.vakje.pacman = null;
-                        vakje.setElement("pacman", this);
-                        this.setVakje(vakje);
-                        richting = Richting.WEST;
-                        this.image = this.vakje.getImageLoader().selectPacmanAfbeelding(Afbeelding.Pacman.PACMANWEST);   
-                    }
+                    this.vakje.pacman = null;
+                    vakje.setElement("pacman", this);
+                    this.setVakje(vakje);
+                    richting = richting;
+                    if(richting == Richting.NOORD)  
+                        this.image = this.vakje.getImageLoader().selectPacmanAfbeelding(Afbeelding.Pacman.PACMANNOORD);
+                    else if (richting == Richting.OOST)
+                        this.image = this.vakje.getImageLoader().selectPacmanAfbeelding(Afbeelding.Pacman.PACMANOOST);
+                    else if (richting == Richting.ZUID)
+                        this.image = this.vakje.getImageLoader().selectPacmanAfbeelding(Afbeelding.Pacman.PACMANZUID);
+                    else if (richting == Richting.WEST)
+                        this.image = this.vakje.getImageLoader().selectPacmanAfbeelding(Afbeelding.Pacman.PACMANWEST);
                     break;
                 default:
                     break;
@@ -130,18 +108,22 @@ public class Pacman extends Poppetje {
             if (this.getKracht()) {
                 vakje.puntenOptellenVanVakje(vakje);
                 if (vakje.getSpookje("inky") != null) {
+                    spelPunten = this.vakje.puntenOptellenVanVakje(vakje);
                     vakje.getSpelbord().resetSpookje(this.vakje.getSpookje("inky"));
                     vakje.setSpookjeNull(vakje.getSpookje("inky"));
                 }
                 if (vakje.getSpookje("blinky") != null) {
+                    spelPunten = this.vakje.puntenOptellenVanVakje(vakje);
                     vakje.getSpelbord().resetSpookje(this.vakje.getSpookje("blinky"));
                     vakje.setSpookjeNull(vakje.getSpookje("blinky"));
                 }
                 if (vakje.getSpookje("pinky") != null) {
+                    spelPunten = this.vakje.puntenOptellenVanVakje(vakje);
                     vakje.getSpelbord().resetSpookje(this.vakje.getSpookje("pinky"));
                     vakje.setSpookjeNull(vakje.getSpookje("pinky"));
                 }
                 if (vakje.getSpookje("clyde") != null) {
+                    spelPunten = this.vakje.puntenOptellenVanVakje(vakje);
                     vakje.getSpelbord().resetSpookje(this.vakje.getSpookje("clyde"));
                     vakje.setSpookjeNull(vakje.getSpookje("clyde"));
                 }
@@ -149,22 +131,26 @@ public class Pacman extends Poppetje {
                 this.vakje.getSpelbord().setSpelInformatie(spelPunten, 0, "");
             } else if ((!this.getKracht()) && vakje.getResetProcess() != true) {
                 if (vakje.getSpookje("inky") != null) {
+                    System.out.println("Opgegeten door Inky!");
                     vakje.setResetProcess(true);
                     vakje.getSpelbord().resetPacman();
                     vakje.getSpelbord().setSpelInformatie(0, -1, "");
                     
                 } else if (vakje.getSpookje("blinky") != null) {
+                    System.out.println("Opgegeten door Blinky!");
                     vakje.setResetProcess(true);
                     vakje.getSpelbord().resetPacman();
                     vakje.getSpelbord().setSpelInformatie(0, -1, "");
                     
                 } else if (vakje.getSpookje("pinky") != null) {
+                    System.out.println("Opgegeten door Pinky!");
                     vakje.setResetProcess(true);
                     vakje.getSpelbord().resetSpookje(this.vakje.getSpookje("pinky"));
                     vakje.getSpelbord().resetPacman();
                     vakje.getSpelbord().setSpelInformatie(0, -1, "");
                     
                 } else if (vakje.getSpookje("clyde") != null) {
+                    System.out.println("Opgegeten door Clyde!");
                     vakje.setResetProcess(true);
                     vakje.getSpelbord().resetPacman();
                     vakje.getSpelbord().setSpelInformatie(0, -1, "");

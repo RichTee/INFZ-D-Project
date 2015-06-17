@@ -17,7 +17,7 @@ import java.awt.Graphics;
  */
 public class Muur extends SpelElement {
     //ArrayList<String> lines = new ArrayList<String>();
-    private Color muurKleur = Color.decode("#f2f2f2");
+    //private Color muurKleur = Color.decode("#f2f2f2");
 
     public Muur(Vakje vak) {
         this.vakje = vak;

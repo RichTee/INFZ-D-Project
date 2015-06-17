@@ -71,7 +71,7 @@ public class ImageLoader {
         mapSpookjeAfbeelding.put(Afbeelding.Spookje.CLYDEWEST, converteerFileNaarImage(afbeelding = new File("src/afbeelding/clydeWEST.png")));
     }
 
-    public Image converteerFileNaarImage(File afbeelding) {
+    private Image converteerFileNaarImage(File afbeelding) {
         try {
             return ImageIO.read(afbeelding);
         } catch (IOException e) {

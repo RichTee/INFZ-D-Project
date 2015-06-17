@@ -38,13 +38,13 @@ public class Spelbord extends javax.swing.JPanel {
     private final LevelLoader       levelLoader;
     private SpelInformatie          spelInformatie;
     private final AudioPlayer       player; 
-    private Pacman                  pacman;
-    private Kers                    kers;
-    private Spel                    spel;
-    private WillekeurigSpookje      inky;
-    private WillekeurigSpookje      blinky;
-    private AchtervolgendSpookje    pinky;
-    private AchtervolgendSpookje    clyde;
+    private Pacman                  pacman; // Temp
+    private Kers                    kers;   // Temp
+    private Spel                    spel;   
+    private WillekeurigSpookje      inky;   // Temp
+    private WillekeurigSpookje      blinky; // Temp
+    private AchtervolgendSpookje    pinky;  // Temp
+    private AchtervolgendSpookje    clyde;  // Temp
     private final StopWatch         stopwatch;
     private final ImageLoader       imageLoader = new ImageLoader();
     private int                     xPos, yPos; // Positie
@@ -280,7 +280,7 @@ public class Spelbord extends javax.swing.JPanel {
     }
     
     // Elk vakje moet zijn buren weten
-    public void isBuur() {
+    private void isBuur() {
         for (int row = 0; row < arrayHoogte; row++) {
             for (int column = 0; column < arrayBreedte; column++) {
                 if(!vakje[row][column].getElement().equals("muur")) // We checken nooit of een muur een buur heeft!
@@ -349,8 +349,10 @@ public class Spelbord extends javax.swing.JPanel {
                 for (int column = 0; column < arrayBreedte; column++) {
                     if(vakje[row][column].getSpookje("inky")!= null){
                         vakje[row][column].getSpookje("inky").setStatus(status);
+                        System.out.println("Gevonden: Inky");
                     }
                     if(vakje[row][column].getSpookje("blinky")!= null){
+                        System.out.println("Gevonden: Blinky");
                         vakje[row][column].getSpookje("blinky").setStatus(status);
                     }
                     if(vakje[row][column].getSpookje("pinky")!= null){
@@ -384,7 +386,6 @@ public class Spelbord extends javax.swing.JPanel {
             
             vakje[XPositie][YPositie].setElement("kers", kers = new Kers(vakje[XPositie][YPositie]));
             kers = (Kers) vakje[XPositie][YPositie].getSpelElement();
-            kers.setVakje(vakje[XPositie][YPositie]);
             
             legeVakjes.clear();
 

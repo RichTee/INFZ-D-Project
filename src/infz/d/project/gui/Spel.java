@@ -226,8 +226,6 @@ public class Spel extends javax.swing.JFrame {
     public void setLevens(int levens) {
         if (this.levens == 1) {
             heeftGewonnenOfVerloren("verloren");
-            
-
         } else {
             this.levens += levens;
 

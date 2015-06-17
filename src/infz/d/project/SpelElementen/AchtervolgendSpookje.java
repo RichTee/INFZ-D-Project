@@ -54,6 +54,13 @@ public class AchtervolgendSpookje extends Spookje {
         if(zoekenIsBezig)
             return;
         
+        if(this.vakje.getSpelbord().getPacman().getKracht()) {
+            this.status = Status.BANG;
+            this.image = this.vakje.getImageLoader().selectSpookjeAfbeelding(Afbeelding.Spookje.BANG);
+        } else{
+            this.status = Status.LEVEND;
+        }
+        
         checkPacman();
         
         Iterator iter = this.vakje.getBuurLijst().entrySet().iterator();
@@ -115,37 +122,37 @@ public class AchtervolgendSpookje extends Spookje {
         
         switch (richting.toString()) {
             case "NOORD":
-                if (naam.equals("pinky"))
+                if (naam.equals("pinky") && this.status != Status.BANG)
                     this.image = this.vakje.getImageLoader().selectSpookjeAfbeelding(Afbeelding.Spookje.PINKYNOORD);
                 
-                if (naam.equals("clyde"))
+                if (naam.equals("clyde") && this.status != Status.BANG)
                     this.image = this.vakje.getImageLoader().selectSpookjeAfbeelding(Afbeelding.Spookje.CLYDENOORD);
                 
                 vakje = (Vakje) this.vakje.getBuurLijst().get(Richting.NOORD);
                 break;
             case "OOST":
-                if (naam.equals("pinky")) 
+                if (naam.equals("pinky") && this.status != Status.BANG) 
                     this.image = this.vakje.getImageLoader().selectSpookjeAfbeelding(Afbeelding.Spookje.PINKYOOST);
                 
-                if (naam.equals("clyde"))
+                if (naam.equals("clyde") && this.status != Status.BANG)
                     this.image = this.vakje.getImageLoader().selectSpookjeAfbeelding(Afbeelding.Spookje.CLYDEOOST);
                 
                 vakje = (Vakje) this.vakje.getBuurLijst().get(Richting.OOST);
                 break;
             case "ZUID":
-                if (naam.equals("pinky"))
+                if (naam.equals("pinky") && this.status != Status.BANG)
                     this.image = this.vakje.getImageLoader().selectSpookjeAfbeelding(Afbeelding.Spookje.PINKYZUID);
                 
-                if (naam.equals("clyde"))
+                if (naam.equals("clyde") && this.status != Status.BANG)
                     this.image = this.vakje.getImageLoader().selectSpookjeAfbeelding(Afbeelding.Spookje.CLYDEZUID);
                
                 vakje = (Vakje) this.vakje.getBuurLijst().get(Richting.ZUID);
                 break;
             case "WEST":
-                if (naam.equals("pinky"))
+                if (naam.equals("pinky") && this.status != Status.BANG)
                     this.image = this.vakje.getImageLoader().selectSpookjeAfbeelding(Afbeelding.Spookje.PINKYWEST);
                
-                if (naam.equals("clyde"))
+                if (naam.equals("clyde") && this.status != Status.BANG)
                     this.image = this.vakje.getImageLoader().selectSpookjeAfbeelding(Afbeelding.Spookje.CLYDEWEST);
                 
                 vakje = (Vakje) this.vakje.getBuurLijst().get(Richting.WEST);
