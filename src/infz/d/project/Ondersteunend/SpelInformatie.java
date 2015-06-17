@@ -28,6 +28,7 @@ public class SpelInformatie {
         }
         spel.resetScore();
         this.huidigeAantalBolletjes = 0;
+        this.totaalAantalBolletjes = 0;
     }
     
     public boolean getPauze() {

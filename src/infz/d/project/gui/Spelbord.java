@@ -117,7 +117,23 @@ public class Spelbord extends javax.swing.JPanel {
     }
  
     public void nextLevel() {
-        reset();
+        stopwatch.stopTimer();
+        
+        this.stopMuziek();
+        
+        inky = null;
+        blinky = null;
+        pinky = null;
+        clyde = null;
+        
+        spelInformatie.setTotaalAantalBolletjes(0);
+        spelInformatie.nextLevelReset();
+
+        this.vakjesInhoud.clear();
+        
+        for( int i = 0; i < vakje.length; i++ )
+            vakje[i] = null;
+        
         this.startMuziek(BACKGROUND_GELUID, true);
         genereerSpelbordPanelGegevens();
         panelListener();
@@ -150,8 +166,9 @@ public class Spelbord extends javax.swing.JPanel {
     }
     
     private void panelListener() {
+        int snelheid = this.snelheid;
         if(level < 4){
-            snelheid = (snelheid - (snelheid / 10) * level);
+            snelheid = (this.snelheid - (this.snelheid / 10) * level);
         }
         this.removeKeyListener(listener);
         this.listener = new KeyboardListener(pacman);
