@@ -182,7 +182,7 @@ public class Pacman extends Poppetje {
                 spelPunten = this.vakje.puntenOptellenVanVakje(vakje);
                 this.vakje.setElement("pad", null);
                 this.vakje.getSpelbord().geefPacmanSuperkracht(this);
-                this.vakje.getSpelbord().setSpelInformatie(spelPunten, 0, "superbolletje");
+                this.vakje.getSpelbord().setSpelInformatie(spelPunten, 0, "");
                 break;
             default:
                 break;

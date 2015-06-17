@@ -5,9 +5,11 @@
         <group>
             <file>file:/C:/Users/Method/Documents/GitHub/INFZ-D-Project/src/infz/d/project/SpelElementen/SpelElement.java</file>
             <file>file:/C:/Users/Method/Documents/GitHub/INFZ-D-Project/src/infz/d/project/gui/Spelbord.java</file>
+            <file>file:/C:/Users/Method/Documents/GitHub/INFZ-D-Project/test/infz/d/project/gui/VakjeTest.java</file>
             <file>file:/C:/Users/Method/Documents/GitHub/INFZ-D-Project/src/infz/d/project/Interfaces/WillekeurigBewegenAlgoritme.java</file>
             <file>file:/C:/Users/Method/Documents/GitHub/INFZ-D-Project/src/infz/d/project/Ondersteunend/StopWatch.java</file>
             <file>file:/C:/Users/Method/Documents/GitHub/INFZ-D-Project/src/infz/d/project/SpelElementen/Pacman.java</file>
+            <file>file:/C:/Users/Method/Documents/GitHub/INFZ-D-Project/src/infz/d/project/SpelElementen/Spookje.java</file>
         </group>
     </open-files>
 </project-private>

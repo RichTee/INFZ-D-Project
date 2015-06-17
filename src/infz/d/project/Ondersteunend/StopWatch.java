@@ -127,20 +127,30 @@ public class StopWatch {
     
     public void stopLopenSpookjes(){
         // Inky
-        tijdInky.cancel();
-        tijdInky.purge();
-        
+        if (tijdInky != null) {
+            tijdInky.cancel();
+            tijdInky.purge();
+            tijdInky = null;
+        }
+
         // Blinky
-        tijdBlinky.cancel();
-        tijdBlinky.purge();
-        
+        if (tijdBlinky != null) {
+            tijdBlinky.cancel();
+            tijdBlinky.purge();
+            tijdBlinky = null;
+        }
+
         // Pinky
-        tijdPinky.cancel();
-        tijdPinky.purge();
-        
+        if (tijdPinky != null) {
+            tijdPinky.cancel();
+            tijdPinky.purge();
+            tijdClyde = null;
+        }
+
         // Clyde
         //tijdClyde.cancel();
         //tijdClyde.purge();
+        //tijdClyde = null;
     }
     
     public void stopTimer() {

@@ -115,10 +115,6 @@ public class Spelbord extends javax.swing.JPanel {
     }
  
     public void nextLevel() {
-        if(level <= 3){
-            snelheid = snelheid * (level / 10);
-        }
-
         reset();
         this.startMuziek(BACKGROUND_GELUID, true);
         genereerSpelbordPanelGegevens();
@@ -154,6 +150,9 @@ public class Spelbord extends javax.swing.JPanel {
     }
     
     private void panelListener() {
+        if(level <= 3){
+            snelheid = (snelheid - (snelheid / 10) * level);
+        }
         this.removeKeyListener(listener);
         this.listener = new KeyboardListener(pacman);
         this.addKeyListener(listener);

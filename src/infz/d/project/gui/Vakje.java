@@ -81,6 +81,10 @@ public class Vakje {
         return parent;
     }
     
+    public void setPacman(Pacman pacman) {
+        this.pacman = pacman;
+    }
+    
     public void setParent(Vakje parent) {
         this.parent = parent;
     }

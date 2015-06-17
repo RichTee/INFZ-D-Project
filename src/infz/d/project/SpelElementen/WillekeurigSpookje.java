@@ -42,7 +42,7 @@ public class WillekeurigSpookje extends Spookje {
 
     @Override
     public void bewegen() {
-        if(this.vakje.getSpelbord().getPacman().getKracht()) {
+        if(this.vakje.getSpelbord().getPacman() != null ? this.vakje.getSpelbord().getPacman().getKracht() : false) {
             this.status = Status.BANG;
             this.image = this.vakje.getImageLoader().selectSpookjeAfbeelding(Afbeelding.Spookje.BANG);
         } else{
