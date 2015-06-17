@@ -52,6 +52,7 @@ public class WillekeurigSpookje extends Spookje {
         checkPacman();
 
         if (this.vakje.getKanTeleporteren() && !teleportCooldown) {
+            this.vakje.setSpookjeNull(this);
             this.vakje.teleporteerBewegend(this);
             teleportCooldown = true;
         } else {
@@ -69,6 +70,7 @@ public class WillekeurigSpookje extends Spookje {
         checkPacman();
 
         if (this.vakje.getKanTeleporteren() && !teleportCooldown) {
+            this.vakje.setSpookjeNull(this);
             this.vakje.teleporteerBewegend(this);
             teleportCooldown = true;
         } 

@@ -269,6 +269,7 @@ public class Spelbord extends javax.swing.JPanel {
                         break;
                     case "9":
                         vakje[row][column] = new Vakje(row, column, "bolletje", this, imageLoader);
+                        spelInformatie.setTotaalAantalBolletjesIncrement(1);
                         vakje[row][column].setKanTeleporteren(true);
                         break;
                     default:

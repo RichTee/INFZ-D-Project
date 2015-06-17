@@ -73,6 +73,7 @@ public class AchtervolgendSpookje extends Spookje {
         
         Iterator iter = this.vakje.getBuurLijst().entrySet().iterator();
         if (this.vakje.getKanTeleporteren() && !teleportCooldown) {
+            this.vakje.setSpookjeNull(this);
             this.vakje.teleporteerBewegend(this);
             teleportCooldown = true;
         }
@@ -155,6 +156,7 @@ public class AchtervolgendSpookje extends Spookje {
         checkPacman();
         
         if (this.vakje.getKanTeleporteren() && !teleportCooldown) {
+            this.vakje.setSpookjeNull(this);
             this.vakje.teleporteerBewegend(this);
             teleportCooldown = true;
         } 

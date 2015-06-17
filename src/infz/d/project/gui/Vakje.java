@@ -273,6 +273,7 @@ public class Vakje {
                 spelbord.getSpecifiekVakje(10, 18).setElement("pacman", spelElement);
                 this.element = "pad";
                 pacman.setVakje(spelbord.getSpecifiekVakje(10, 18));
+                this.pacman = null;
                 spelbord.tekenOpnieuw();
             }
 
@@ -280,6 +281,7 @@ public class Vakje {
                 spelbord.getSpecifiekVakje(10, 0).setElement("pacman", spelElement);
                 this.element = "pad";
                 pacman.setVakje(spelbord.getSpecifiekVakje(10, 0));
+                this.pacman = null;
                 spelbord.tekenOpnieuw();
             }
         }

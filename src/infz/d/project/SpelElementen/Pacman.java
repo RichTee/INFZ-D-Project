@@ -65,6 +65,8 @@ public class Pacman extends Poppetje {
         
         // bewegen
         if (this.vakje.getKanTeleporteren() && !teleportCooldown) {
+            checkSpookje();
+            checkElement();
             this.vakje.teleporteerBewegend(this);
             teleportCooldown = true;
         } else {
@@ -99,6 +101,8 @@ public class Pacman extends Poppetje {
         // einde checkElement
         
         if (this.vakje.getKanTeleporteren() && !teleportCooldown) {
+            checkSpookje();
+            checkElement();
             this.vakje.teleporteerBewegend(this);
             teleportCooldown = true;
         } 
