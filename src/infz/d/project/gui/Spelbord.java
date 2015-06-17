@@ -29,6 +29,9 @@ import infz.d.project.SpelElementen.Pacman;
 import infz.d.project.SpelElementen.AchtervolgendSpookje;
 import infz.d.project.SpelElementen.Spookje;
 import infz.d.project.SpelElementen.WillekeurigSpookje;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.Timer;
 
 /**
  *
@@ -56,7 +59,8 @@ public class Spelbord extends javax.swing.JPanel {
     public int                      level = 0;
     private int                     snelheid = 500;
     private KeyListener             listener;
-    
+    private Timer moveTimer;
+    private MyListener listen = new MyListener();
     /**
      * Creates new form Spelbord
      */
@@ -78,7 +82,10 @@ public class Spelbord extends javax.swing.JPanel {
     public void stopMuziek(){
         player.stopGeluid();
     }
-    
+    public boolean getTimerStatus() {
+        return moveTimer.isRunning();
+    }
+
     public void levelIncrement(int level){
         this.level = this.level + level;
     }
@@ -103,6 +110,10 @@ public class Spelbord extends javax.swing.JPanel {
         this.startMuziek(BACKGROUND_GELUID, true);
         genereerSpelbordPanelGegevens();
         panelListener();
+        listen = new MyListener();
+        moveTimer = new Timer(1000, listen);
+        moveTimer.start();
+        System.out.println("s: " + getTimerStatus());
     }
     
     public void herstart() {
@@ -112,6 +123,8 @@ public class Spelbord extends javax.swing.JPanel {
         this.startMuziek(BACKGROUND_GELUID, true);
         genereerSpelbordPanelGegevens();
         panelListener();
+        moveTimer = new Timer(1000, listen);
+        moveTimer.start();
     }
  
     public void nextLevel() {
@@ -119,6 +132,8 @@ public class Spelbord extends javax.swing.JPanel {
         this.startMuziek(BACKGROUND_GELUID, true);
         genereerSpelbordPanelGegevens();
         panelListener();
+        moveTimer = new Timer(1000, listen);
+        moveTimer.start();
     }
     
     public void pauzeer() {
@@ -128,7 +143,7 @@ public class Spelbord extends javax.swing.JPanel {
             stopwatch.pauzeerTimer();
             pacman.magLopen = false;
             stopwatch.stopLopenSpookjes();
-            
+            moveTimer.stop();
             this.setRequestFocusEnabled(false);
             spelInformatie.setPauze(true);
         } else {
@@ -145,7 +160,9 @@ public class Spelbord extends javax.swing.JPanel {
             stopwatch.lopenInky(inky, snelheid);
             stopwatch.lopenBlinky(blinky, snelheid);
             stopwatch.lopenPinky(pinky, snelheid);
-            stopwatch.lopenClyde(clyde, snelheid);
+            moveTimer = new Timer(1000, listen);
+            moveTimer.start();
+            //stopwatch.lopenClyde(clyde, snelheid);
         }
     }
     
@@ -161,7 +178,7 @@ public class Spelbord extends javax.swing.JPanel {
         stopwatch.lopenInky(inky, snelheid);
         stopwatch.lopenBlinky(blinky, snelheid);
         stopwatch.lopenPinky(pinky, snelheid);
-        stopwatch.lopenClyde(clyde, snelheid);
+        //stopwatch.lopenClyde(clyde, snelheid);
     }
     
     public void reset() {
@@ -474,6 +491,15 @@ public class Spelbord extends javax.swing.JPanel {
     // Makkelijk info halen uit een rij en kolom van vakjesInhoud.
     private char charAt(int row, int column) {
         return vakjesInhoud.get(row).charAt(column);
+    }
+    
+        class MyListener implements ActionListener{
+        @Override
+        public void actionPerformed(ActionEvent e){
+            System.out.println("status: " + getTimerStatus());
+            clyde.veranderStrategie("volg");
+            clyde.bewegen();
+        }  
     }
 
     /**

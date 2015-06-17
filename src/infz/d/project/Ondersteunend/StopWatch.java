@@ -127,7 +127,7 @@ public class StopWatch {
 //                    } else {
 //                        secondenTwee++;
 //                    }
-                    clyde.veranderStrategie("random");
+                    clyde.veranderStrategie("volg");
 //                } else {
 //                    clyde.veranderStrategie("random");
 //                }

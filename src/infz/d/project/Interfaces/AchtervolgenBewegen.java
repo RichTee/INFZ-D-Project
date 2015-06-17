@@ -7,6 +7,7 @@ package infz.d.project.Interfaces;
 
 import infz.d.project.Enums.Richting;
 import infz.d.project.GUI.Vakje;
+import infz.d.project.SpelElementen.Muur;
 import infz.d.project.SpelElementen.Pacman;
 import java.util.ArrayList;
 import java.util.EmptyStackException;
@@ -21,17 +22,11 @@ import java.util.Stack;
  */
 public class AchtervolgenBewegen implements AchtervolgenBewegenAlgoritme{
     private Vakje pacmanRichting;
-    private Vakje huidigVakje;
     
     @Override
     public Vakje geefCell(Vakje huidigVakje) {
-        if(huidigVakje == null)
-            return null;
-        
-        this.huidigVakje = huidigVakje;
-        
-        pacmanRichting = interceptPacman(this.huidigVakje);
-        return mainBfs(this.huidigVakje);
+        pacmanRichting = interceptPacman(huidigVakje);
+        return mainBfs(huidigVakje);
     }
 
     @Override
@@ -42,8 +37,21 @@ public class AchtervolgenBewegen implements AchtervolgenBewegenAlgoritme{
         while(!queue.isEmpty()){
             Vakje node = queue.poll();
             
-            if(node.getPacman() instanceof Pacman)
+            if(node.getPacman() instanceof Pacman) {
+                Richting pRichting = ((Pacman)node.getPacman()).getRichting();
+                boolean looper = false;
+                
+                Vakje richting = (Vakje) node.getBuurLijst().get(pRichting);
+                if(richting != null &&pRichting != null) {
+                    while(!looper){
+                        if(!(richting.getSpelElement() instanceof Muur)) {
+                            richting = (Vakje) richting.getBuurLijst().get(pRichting);
+                        }
+                        return richting;
+                    }
+                }
                 return node;
+            }
             
             Map<Richting, Vakje> map = node.getBuurLijst();
             for(Map.Entry<Richting, Vakje> entry : map.entrySet()){
@@ -67,7 +75,7 @@ public class AchtervolgenBewegen implements AchtervolgenBewegenAlgoritme{
         while(!queue.isEmpty()){
             Vakje node = queue.poll();
             
-            if(node == huidigVakje.getSpelbord().getPacman().getVakje())
+            if(node == pacmanRichting)
                 return retrievePad(node);
                 
             seen.add(node);
@@ -93,11 +101,9 @@ public class AchtervolgenBewegen implements AchtervolgenBewegenAlgoritme{
             parents.add(node);
             node = node.getParent();
         }
-        try {
-            return parents.pop(); // NullPtr
-        } catch (EmptyStackException e) {
-            return null;
-        }
+
+        return parents.pop(); // NullPtr
+
     }
     
 }

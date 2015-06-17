@@ -113,6 +113,7 @@ public class Pacman extends Poppetje {
         if (vakje.getSpookje("inky") != null || vakje.getSpookje("blinky") != null
                 || vakje.getSpookje("pinky") != null || vakje.getSpookje("clyde") != null) {
 
+            // Eet spookje op indien aanwezig
             if (this.getKracht()) {
                 vakje.puntenOptellenVanVakje(vakje);
                 if (vakje.getSpookje("inky") != null) {
@@ -137,7 +138,9 @@ public class Pacman extends Poppetje {
                 }
                 this.vakje.getSpelbord().tekenOpnieuw();
                 this.vakje.getSpelbord().setSpelInformatie(spelPunten, 0, "");
-            } else if ((!this.getKracht()) && vakje.getResetProcess() != true) {
+            } 
+            // Start dit als hij geen Superkrachten heeft en dus zal worden opgegeten
+            else if ((!this.getKracht()) && vakje.getResetProcess() != true) {
                 if (vakje.getSpookje("inky") != null) {
                     System.out.println("Opgegeten door Inky!");
                     vakje.setResetProcess(true);
