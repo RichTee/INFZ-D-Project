@@ -10,6 +10,7 @@ import infz.d.project.Enums.Richting;
 import infz.d.project.Enums.Status;
 
 import infz.d.project.GUI.Vakje;
+import infz.d.project.Interfaces.VluchtenBewegen;
 import infz.d.project.Interfaces.WillekeurigBewegen;
 
 import java.awt.Graphics;
@@ -20,8 +21,7 @@ import java.awt.Graphics;
  * @author Method
  */
 public class WillekeurigSpookje extends Spookje {
-    private boolean teleportCooldown = false;
-    private WillekeurigBewegen willekeurigBewegen = new WillekeurigBewegen();
+    private WillekeurigBewegen willekeurigBewegen;
     
     public WillekeurigSpookje(Vakje vakje, String naam) {
         this.vakje = vakje;
@@ -56,9 +56,11 @@ public class WillekeurigSpookje extends Spookje {
             teleportCooldown = true;
         } else {
             if(this.status != Status.BANG){
+                willekeurigBewegen = new WillekeurigBewegen();
                 willekeurigBewegen();
             } else {
                 willekeurigBewegen();
+                //vluchtenBewegen = new VluchtenBewegen();
                 //vluchtenBewegen.geefCell(this.vakje);
             }
             teleportCooldown = false;
@@ -66,6 +68,11 @@ public class WillekeurigSpookje extends Spookje {
 
         checkPacman();
 
+        if (this.vakje.getKanTeleporteren() && !teleportCooldown) {
+            this.vakje.teleporteerBewegend(this);
+            teleportCooldown = true;
+        } 
+        
         this.vakje.getSpelbord().tekenOpnieuw();
     }
 

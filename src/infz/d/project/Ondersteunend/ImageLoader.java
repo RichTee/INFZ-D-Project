@@ -5,14 +5,16 @@
  */
 package infz.d.project.Ondersteunend;
 
+import infz.d.project.Enums.Afbeelding;
 import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import javax.imageio.ImageIO;
-
-import infz.d.project.Enums.Afbeelding;
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -20,9 +22,9 @@ import infz.d.project.Enums.Afbeelding;
  */
 public class ImageLoader {
     //          Key,    Value
-    private Map<Afbeelding.Statisch, Image> mapStatischAfbeelding = new HashMap<>();
-    private Map<Afbeelding.Pacman, Image> mapPacmanAfbeelding = new HashMap<>();
-    private Map<Afbeelding.Spookje, Image> mapSpookjeAfbeelding = new HashMap<>();
+    private final Map<Afbeelding.Statisch, Image> mapStatischAfbeelding = new HashMap<>();
+    private final Map<Afbeelding.Pacman, Image> mapPacmanAfbeelding = new HashMap<>();
+    private final Map<Afbeelding.Spookje, Image> mapSpookjeAfbeelding = new HashMap<>();
     private File afbeelding;
 
     public ImageLoader() {
@@ -73,7 +75,9 @@ public class ImageLoader {
 
     private Image converteerFileNaarImage(File afbeelding) {
         try {
-            return ImageIO.read(afbeelding);
+            BufferedImage bit = ImageIO.read(afbeelding);
+            afbeelding = null;
+            return bit;
         } catch (IOException e) {
             System.out.println("ImageLoader - converteerFileNaarImage: afbeelding pad niet gevonden, return null");
             return null;

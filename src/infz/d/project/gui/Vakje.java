@@ -288,14 +288,12 @@ public class Vakje {
             Spookje spookje = (Spookje) spelElement;
             if (this.getYPositie() == 0) {
                 spelbord.getSpecifiekVakje(10, 17).setSpookje(spookje);
-                this.element = "pad";
                 spookje.setVakje(spelbord.getSpecifiekVakje(10, 17));
                 spelbord.tekenOpnieuw();
             }
 
             if (this.getYPositie() == 18) {
                 spelbord.getSpecifiekVakje(10, 1).setSpookje(spookje);
-                this.element = "pad";
                 spookje.setVakje(spelbord.getSpecifiekVakje(10, 1));
                 spelbord.tekenOpnieuw();
             }

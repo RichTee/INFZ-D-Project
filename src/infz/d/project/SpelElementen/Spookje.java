@@ -23,7 +23,8 @@ public abstract class Spookje extends Poppetje {
     public Vakje startPositie;
     public Vakje laatsteVakje;
     public Status status;
-    public VluchtenBewegen vluchtenBewegen = new VluchtenBewegen();
+    protected boolean teleportCooldown = false;
+    public VluchtenBewegen vluchtenBewegen;
     
     public Spookje() { }
     
@@ -58,6 +59,7 @@ public abstract class Spookje extends Poppetje {
             if(!this.vakje.getPacman().getKracht() && vakje.getResetProcess() != true) {
                 vakje.setResetProcess(true);
                 vakje.getSpelbord().resetPacman();
+                //vakje.getSpelbord().resetAlleSpookjes();
                 vakje.pacman = null; // getter setter?
                 vakje.getSpelbord().setSpelInformatie(0, -1, "");
                 

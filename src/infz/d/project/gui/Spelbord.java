@@ -145,7 +145,7 @@ public class Spelbord extends javax.swing.JPanel {
             stopwatch.lopenInky(inky, snelheid);
             stopwatch.lopenBlinky(blinky, snelheid);
             stopwatch.lopenPinky(pinky, snelheid);
-            //stopwatch.lopenClyde(clyde, snelheid);
+            stopwatch.lopenClyde(clyde, snelheid);
         }
     }
     
@@ -161,7 +161,7 @@ public class Spelbord extends javax.swing.JPanel {
         stopwatch.lopenInky(inky, snelheid);
         stopwatch.lopenBlinky(blinky, snelheid);
         stopwatch.lopenPinky(pinky, snelheid);
-        //stopwatch.lopenClyde(clyde, snelheid);
+        stopwatch.lopenClyde(clyde, snelheid);
     }
     
     public void reset() {

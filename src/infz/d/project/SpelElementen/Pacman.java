@@ -76,7 +76,6 @@ public class Pacman extends Poppetje {
                     this.vakje.pacman = null;
                     vakje.setElement("pacman", this);
                     this.setVakje(vakje);
-                    richting = richting;
                     if(richting == Richting.NOORD)  
                         this.image = this.vakje.getImageLoader().selectPacmanAfbeelding(Afbeelding.Pacman.PACMANNOORD);
                     else if (richting == Richting.OOST)
@@ -98,6 +97,11 @@ public class Pacman extends Poppetje {
         // checkElement
         this.checkElement();
         // einde checkElement
+        
+        if (this.vakje.getKanTeleporteren() && !teleportCooldown) {
+            this.vakje.teleporteerBewegend(this);
+            teleportCooldown = true;
+        } 
                 
     }
     
