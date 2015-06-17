@@ -136,8 +136,8 @@ public class StopWatch {
         tijdBlinky.purge();
         
         // Pinky
-        //tijdPinky.cancel();
-        //tijdPinky.purge();
+        tijdPinky.cancel();
+        tijdPinky.purge();
         
         // Clyde
         //tijdClyde.cancel();

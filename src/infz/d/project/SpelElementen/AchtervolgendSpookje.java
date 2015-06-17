@@ -7,6 +7,7 @@ package infz.d.project.SpelElementen;
 
 import infz.d.project.Enums.Afbeelding;
 import infz.d.project.Enums.Richting;
+import infz.d.project.Enums.Status;
 
 import infz.d.project.GUI.Vakje;
 import infz.d.project.Interfaces.AchtervolgenBewegenAlgoritme;
@@ -26,6 +27,7 @@ import java.util.Stack;
 public class AchtervolgendSpookje extends Spookje {
     private Vakje pacmanRichting;
     private AchtervolgenBewegen bewegen = new AchtervolgenBewegen();
+    private boolean zoekenIsBezig = false;
     
     public AchtervolgendSpookje(Vakje vakje, String naam) {
         this.vakje = vakje;
@@ -49,14 +51,22 @@ public class AchtervolgendSpookje extends Spookje {
         if(this.vakje.getPacman() != null)
             return;
         
+        if(zoekenIsBezig)
+            return;
+        
         checkPacman();
         
         Iterator iter = this.vakje.getBuurLijst().entrySet().iterator();
 
         while (iter.hasNext()) {
             Map.Entry pair = (Map.Entry) iter.next();
-            if (pair.getValue() == bewegen.geefCell(this.vakje)) {
-                switch(pair.getKey().toString()){
+            if (pair.getValue() == (this.status == Status.BANG ? vluchtenBewegen.geefCell(this.vakje) : bewegen.geefCell(this.vakje))) {
+                zoekenIsBezig = true;
+                
+                if((this.vakje == vluchtenBewegen.geefCell(this.vakje)))
+                    return;
+                System.out.println("Reached");
+                switch (pair.getKey().toString()) {
                     case "NOORD":
                         if (vakje.getBuurLijst().containsKey(Richting.NOORD)) {
                             Vakje vakje = (Vakje) this.vakje.getBuurLijst().get(Richting.NOORD);
@@ -86,7 +96,13 @@ public class AchtervolgendSpookje extends Spookje {
                         break;
                 }
             }
+            if(!(this.vakje.getPacman() == null) || (this.vakje == vluchtenBewegen.geefCell(this.vakje))){
+                System.out.println("Reached");
+                break;
+            }
         }
+
+        zoekenIsBezig = false;
         
         checkPacman();
         

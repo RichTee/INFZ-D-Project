@@ -58,7 +58,8 @@ public class Pacman extends Poppetje {
 
         if(getKracht())
             this.vakje.getSpelbord().setSpookjeStatus("", Status.BANG);
-        
+        else
+            this.vakje.getSpelbord().setSpookjeStatus("", Status.LEVEND);
         this.checkSpookje();
         
         // bewegen
@@ -159,6 +160,7 @@ public class Pacman extends Poppetje {
                     
                 } else if (vakje.getSpookje("pinky") != null) {
                     vakje.setResetProcess(true);
+                    vakje.getSpelbord().resetSpookje(this.vakje.getSpookje("pinky"));
                     vakje.getSpelbord().resetPacman();
                     vakje.getSpelbord().setSpelInformatie(0, -1, "");
                     

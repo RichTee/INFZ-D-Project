@@ -9,6 +9,7 @@ import infz.d.project.Enums.Richting;
 import infz.d.project.GUI.Vakje;
 import infz.d.project.SpelElementen.Pacman;
 import java.util.ArrayList;
+import java.util.EmptyStackException;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.Queue;
@@ -92,8 +93,11 @@ public class AchtervolgenBewegen implements AchtervolgenBewegenAlgoritme{
             parents.add(node);
             node = node.getParent();
         }
-        
-        return parents.pop(); // NullPtr
+        try {
+            return parents.pop(); // NullPtr
+        } catch (EmptyStackException e) {
+            return null;
+        }
     }
     
 }

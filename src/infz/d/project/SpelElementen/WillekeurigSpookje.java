@@ -47,66 +47,70 @@ public class WillekeurigSpookje extends Spookje {
             this.vakje.teleporteerBewegend(this);
             teleportCooldown = true;
         } else {
-            switch (willekeurigBewegen.willekeurigBewegen(vakje, laatsteVakje)) {
-                case NOORD:
-                    if (vakje.getBuurLijst().containsKey(Richting.NOORD)) {
-                        Vakje vakje = (Vakje) this.vakje.getBuurLijst().get(Richting.NOORD);
-                        this.vakje.setSpookjeNull(this);
-                        vakje.setSpookje(this);
-                        this.setVakje(vakje);
-                        if (naam.equals("inky") && getStatus() != Status.BANG) {
-                            this.image = this.vakje.getImageLoader().selectSpookjeAfbeelding(Afbeelding.Spookje.INKYNOORD);
+            if(this.status != Status.BANG){
+                switch (willekeurigBewegen.willekeurigBewegen(vakje, laatsteVakje)) {
+                    case NOORD:
+                        if (vakje.getBuurLijst().containsKey(Richting.NOORD)) {
+                            Vakje vakje = (Vakje) this.vakje.getBuurLijst().get(Richting.NOORD);
+                            this.vakje.setSpookjeNull(this);
+                            vakje.setSpookje(this);
+                            this.setVakje(vakje);
+                            if (naam.equals("inky") && getStatus() != Status.BANG) {
+                                this.image = this.vakje.getImageLoader().selectSpookjeAfbeelding(Afbeelding.Spookje.INKYNOORD);
+                            }
+                            if (naam.equals("blinky") && getStatus() != Status.BANG) {
+                                this.image = this.vakje.getImageLoader().selectSpookjeAfbeelding(Afbeelding.Spookje.BLINKYNOORD);
+                            }
                         }
-                        if (naam.equals("blinky") && getStatus() != Status.BANG) {
-                            this.image = this.vakje.getImageLoader().selectSpookjeAfbeelding(Afbeelding.Spookje.BLINKYNOORD);
+                        break;
+                    case OOST:
+                        if (vakje.getBuurLijst().containsKey(Richting.OOST)) {
+                            Vakje vakje = (Vakje) this.vakje.getBuurLijst().get(Richting.OOST);
+                            this.vakje.setSpookjeNull(this);
+                            vakje.setSpookje(this);
+                            this.setVakje(vakje);
+                            if (naam.equals("inky") && getStatus() != Status.BANG) {
+                                this.image = this.vakje.getImageLoader().selectSpookjeAfbeelding(Afbeelding.Spookje.INKYOOST);
+                            }
+                            if (naam.equals("blinky") && getStatus() != Status.BANG) {
+                                this.image = this.vakje.getImageLoader().selectSpookjeAfbeelding(Afbeelding.Spookje.BLINKYOOST);
+                            }
                         }
-                    }
-                    break;
-                case OOST:
-                    if (vakje.getBuurLijst().containsKey(Richting.OOST)) {
-                        Vakje vakje = (Vakje) this.vakje.getBuurLijst().get(Richting.OOST);
-                        this.vakje.setSpookjeNull(this);
-                        vakje.setSpookje(this);
-                        this.setVakje(vakje);
-                        if (naam.equals("inky") && getStatus() != Status.BANG) {
-                            this.image = this.vakje.getImageLoader().selectSpookjeAfbeelding(Afbeelding.Spookje.INKYOOST);
+                        break;
+                    case ZUID:
+                        if (vakje.getBuurLijst().containsKey(Richting.ZUID)) {
+                            Vakje vakje = (Vakje) this.vakje.getBuurLijst().get(Richting.ZUID);
+                            this.vakje.setSpookjeNull(this);
+                            vakje.setSpookje(this);
+                            this.setVakje(vakje);
+                            if (naam.equals("inky") && getStatus() != Status.BANG) {
+                                this.image = this.vakje.getImageLoader().selectSpookjeAfbeelding(Afbeelding.Spookje.INKYZUID);
+                            }
+                            if (naam.equals("blinky") && getStatus() != Status.BANG) {
+                                this.image = this.vakje.getImageLoader().selectSpookjeAfbeelding(Afbeelding.Spookje.BLINKYZUID);
+                            }
                         }
-                        if (naam.equals("blinky") && getStatus() != Status.BANG) {
-                            this.image = this.vakje.getImageLoader().selectSpookjeAfbeelding(Afbeelding.Spookje.BLINKYOOST);
+                        break;
+                    case WEST:
+                        if (vakje.getBuurLijst().containsKey(Richting.WEST)) {
+                            Vakje vakje = (Vakje) this.vakje.getBuurLijst().get(Richting.WEST);
+                            this.vakje.setSpookjeNull(this);
+                            vakje.setSpookje(this);
+                            this.setVakje(vakje);
+                            if (naam.equals("inky") && getStatus() != Status.BANG) {
+                                this.image = this.vakje.getImageLoader().selectSpookjeAfbeelding(Afbeelding.Spookje.INKYWEST);
+                            }
+                            if (naam.equals("blinky") && getStatus() != Status.BANG) {
+                                this.image = this.vakje.getImageLoader().selectSpookjeAfbeelding(Afbeelding.Spookje.BLINKYWEST);
+                            }
                         }
-                    }
-                    break;
-                case ZUID:
-                    if (vakje.getBuurLijst().containsKey(Richting.ZUID)) {
-                        Vakje vakje = (Vakje) this.vakje.getBuurLijst().get(Richting.ZUID);
-                        this.vakje.setSpookjeNull(this);
-                        vakje.setSpookje(this);
-                        this.setVakje(vakje);
-                        if (naam.equals("inky") && getStatus() != Status.BANG) {
-                            this.image = this.vakje.getImageLoader().selectSpookjeAfbeelding(Afbeelding.Spookje.INKYZUID);
-                        }
-                        if (naam.equals("blinky") && getStatus() != Status.BANG) {
-                            this.image = this.vakje.getImageLoader().selectSpookjeAfbeelding(Afbeelding.Spookje.BLINKYZUID);
-                        }
-                    }
-                    break;
-                case WEST:
-                    if (vakje.getBuurLijst().containsKey(Richting.WEST)) {
-                        Vakje vakje = (Vakje) this.vakje.getBuurLijst().get(Richting.WEST);
-                        this.vakje.setSpookjeNull(this);
-                        vakje.setSpookje(this);
-                        this.setVakje(vakje);
-                        if (naam.equals("inky") && getStatus() != Status.BANG) {
-                            this.image = this.vakje.getImageLoader().selectSpookjeAfbeelding(Afbeelding.Spookje.INKYWEST);
-                        }
-                        if (naam.equals("blinky") && getStatus() != Status.BANG) {
-                            this.image = this.vakje.getImageLoader().selectSpookjeAfbeelding(Afbeelding.Spookje.BLINKYWEST);
-                        }
-                    }
-                    break;
-                default:
-                    System.out.println("Tempnummer is wrong");
-                    break;
+                        break;
+                    default:
+                        System.out.println("Tempnummer is wrong");
+                        break;
+                }
+            } else {
+                // vluchtenBewegen.geefCell(this.vakje);
             }
             teleportCooldown = false;
         }

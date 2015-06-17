@@ -423,6 +423,36 @@ public class Spelbord extends javax.swing.JPanel {
         spookje.setVakje(spookje.startPositie);
     }
     
+    public void resetAlleSpookjes() {
+        for (int i = 0; i < arrayHoogte; i++) {
+            for (int j = 0; j < arrayBreedte; j++) {
+                if (vakje[i][j].getSpookje("inky") != null) {
+                    vakje[i][j].getSpookje("inky").setVakje(vakje[i][j].getSpookje("inky").startPositie);
+                } 
+            }
+        }
+        for (int i = 0; i < arrayHoogte; i++) {
+            for (int j = 0; j < arrayBreedte; j++) {
+                if (vakje[i][j].getSpookje("blinky") != null) {
+                    vakje[i][j].getSpookje("blinky").setVakje(vakje[i][j].getSpookje("blinky").startPositie);
+                } 
+            }
+        }
+        for (int i = 0; i < arrayHoogte; i++) {
+            for (int j = 0; j < arrayBreedte; j++) {
+                if (vakje[i][j].getSpookje("pinky") != null) {
+                    vakje[i][j].getSpookje("pinky").setVakje(vakje[i][j].getSpookje("pinky").startPositie);
+                } 
+            }
+        }
+        for (int i = 0; i < arrayHoogte; i++) {
+            for (int j = 0; j < arrayBreedte; j++) {
+                if (vakje[i][j].getSpookje("clyde") != null) {
+                    vakje[i][j].getSpookje("clyde").setVakje(vakje[i][j].getSpookje("clyde").startPositie);
+                } 
+            }
+        }
+    }
     // Repaint 
     public void tekenOpnieuw(){
         repaint();
