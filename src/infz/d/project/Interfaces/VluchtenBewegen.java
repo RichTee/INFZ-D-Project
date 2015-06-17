@@ -34,7 +34,7 @@ public class VluchtenBewegen implements VluchtenBewegenAlgoritme{
         
         this.huidigVakje = huidigVakje;
         randomPos();
-        return mainBfs(this.huidigVakje);
+        return mainBfs(huidigVakje);
     }
 
     private void randomPos() {

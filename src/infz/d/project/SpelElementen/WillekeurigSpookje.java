@@ -61,8 +61,6 @@ public class WillekeurigSpookje extends Spookje {
                 willekeurigBewegen();
             } else {
                 willekeurigBewegen();
-                //vluchtenBewegen = new VluchtenBewegen();
-                //vluchtenBewegen.geefCell(this.vakje);
             }
             teleportCooldown = false;
         }

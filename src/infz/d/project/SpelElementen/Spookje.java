@@ -59,7 +59,7 @@ public abstract class Spookje extends Poppetje {
             if(!this.vakje.getPacman().getKracht() && vakje.getResetProcess() != true) {
                 vakje.setResetProcess(true);
                 vakje.getSpelbord().resetPacman();
-                //vakje.getSpelbord().resetAlleSpookjes();
+                vakje.getSpelbord().resetAlleSpookjes();
                 vakje.pacman = null; // getter setter?
                 vakje.getSpelbord().setSpelInformatie(0, -1, "");
                 

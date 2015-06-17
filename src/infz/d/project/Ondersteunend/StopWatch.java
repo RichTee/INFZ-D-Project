@@ -12,8 +12,11 @@ import infz.d.project.SpelElementen.AchtervolgendSpookje;
 import infz.d.project.SpelElementen.Pacman;
 import infz.d.project.SpelElementen.SpelElement;
 import infz.d.project.SpelElementen.Spookje;
-import java.util.Timer;
+import infz.d.project.SpelElementen.WillekeurigSpookje;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.TimerTask;
+import javax.swing.Timer;
 /**
  *
  * @author Sebastiaan
@@ -25,6 +28,9 @@ public class StopWatch {
     private Timer               tijdBlinky;
     private Timer               tijdPinky;
     private Timer               tijdClyde;
+    private SpookjeBeweegListener          spookjeListener;
+    private stomSpookjeBeweegListener   stomSpookjeListener;
+    private PacmanBeweegListener pacmanListener;
     private boolean             pacmanTimerIsBezig = false;
     private int seconden = 0;
     private int secondenTwee = 0;
@@ -34,12 +40,109 @@ public class StopWatch {
     }
     
     public void pacmanOnverslaanbaarTimer(Pacman pacman){
-        int delay = 1000;
-        
-        TimerTask task = new TimerTask() {
-            public void run() {
 
-                seconden++;
+        if (pacmanTimerIsBezig) {
+            spelbord.stopMuziek();
+            spelbord.startMuziek(SUPERBOLLETJE_GELUID, true);
+            tijdPacman.stop();
+            seconden = 0;
+            pacmanListener = new PacmanBeweegListener();
+            tijdPacman  = new Timer(0, pacmanListener);
+            tijdPacman.setDelay(1000);
+            pacmanListener.setPacman(pacman);
+            tijdPacman.start();
+
+        } else {
+            spelbord.stopMuziek();
+            spelbord.startMuziek(SUPERBOLLETJE_GELUID, true);
+            pacmanTimerIsBezig = true;
+            pacman.setOnverslaanbaar(true);
+            pacmanListener = new PacmanBeweegListener();
+            tijdPacman = new Timer(0, pacmanListener);
+            tijdPacman.setDelay(1000);
+            pacmanListener.setPacman(pacman);
+            tijdPacman.start();
+        }
+    }
+    
+    public void lopenInky(Spookje spookje, int snelheid)
+    {
+        stomSpookjeListener = new stomSpookjeBeweegListener();
+        tijdInky = new Timer(0, stomSpookjeListener);
+        tijdInky.setDelay(snelheid);
+        stomSpookjeListener.setSpookje(spookje);
+        tijdInky.start();
+    }
+    
+    public void lopenBlinky(Spookje spookje, int snelheid)
+    {
+        stomSpookjeListener = new stomSpookjeBeweegListener();
+        tijdBlinky = new Timer(0, stomSpookjeListener);
+        tijdBlinky.setDelay(snelheid);
+        stomSpookjeListener.setSpookje(spookje);
+        tijdBlinky.start();
+    }
+    
+    public void lopenPinky(Spookje spookje, int snelheid)
+    {
+        spookjeListener = new SpookjeBeweegListener();
+        spookjeListener.setSpookje(spookje);
+        tijdPinky = new javax.swing.Timer(snelheid, spookjeListener);
+        tijdPinky.start();
+    }
+    
+    public void lopenClyde(Spookje spookje, int snelheid)
+    {
+        spookjeListener = new SpookjeBeweegListener();
+        spookjeListener.setSpookje(spookje);
+        tijdClyde = new javax.swing.Timer(snelheid, spookjeListener);
+        tijdClyde.start();
+    }
+    
+    public void stopLopenSpookjes(){
+        // Inky
+        if (tijdInky != null) {
+            tijdInky.stop();
+        }
+
+        // Blinky
+        if (tijdBlinky != null) {
+            tijdBlinky.stop();
+        }
+
+        // Pinky
+        if (tijdPinky != null) {
+            tijdPinky.stop();
+        }
+
+        // Clyde
+        if(tijdClyde != null ){
+            tijdClyde.stop();
+        }
+    }
+    
+    public void stopTimer() {
+        if (pacmanTimerIsBezig) {
+            tijdPacman.stop();
+            pacmanTimerIsBezig = false;
+            seconden = 0;
+        } 
+    }
+    
+    public void pauzeerTimer(){
+      if (pacmanTimerIsBezig) {
+            tijdPacman.stop();
+            pacmanTimerIsBezig = false;
+        }
+    }
+    class PacmanBeweegListener implements ActionListener {
+        private Pacman pacman;
+        public void setPacman(Pacman pacman) {
+            this.pacman = pacman;
+        }
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            seconden++;
                 System.out.println(seconden);
 
                 if (seconden == 10) {
@@ -49,139 +152,56 @@ public class StopWatch {
                   
                     pacman.setOnverslaanbaar(false);
                     seconden = 0;
-                    tijdPacman.cancel();
-                    tijdPacman.purge();
+                    tijdPacman.stop();
                     System.out.println("Klaar");
                 }
-            }
-        };
-
-        if (pacmanTimerIsBezig) {
-            spelbord.stopMuziek();
-            spelbord.startMuziek(SUPERBOLLETJE_GELUID, true);
-            tijdPacman.cancel();
-            tijdPacman.purge();
-            seconden = 0;
-            tijdPacman = new Timer();
-            tijdPacman.scheduleAtFixedRate(task, 0, delay);
-
-        } else {
-            spelbord.stopMuziek();
-            spelbord.startMuziek(SUPERBOLLETJE_GELUID, true);
-            pacmanTimerIsBezig = true;
-            pacman.setOnverslaanbaar(true);
-            tijdPacman = new Timer();
-            tijdPacman.scheduleAtFixedRate(task, 0, delay);
         }
     }
-    
-    public void lopenInky(Spookje spookje, int snelheid)
-    {
-        TimerTask task = new TimerTask() {
-            public void run() {
-                spookje.bewegen();
-            }
-        };
-        tijdInky = new Timer();
-        tijdInky.scheduleAtFixedRate(task, 0, snelheid);
-    }
-    
-    public void lopenBlinky(Spookje spookje, int snelheid)
-    {
-        TimerTask task = new TimerTask() {
-            public void run() {
-                spookje.bewegen();
-            }
-        };
-        tijdBlinky = new Timer();
-        tijdBlinky.scheduleAtFixedRate(task, 0, snelheid);
-    }
-    
-    public void lopenPinky(Spookje spookje, int snelheid)
-    {
-        AchtervolgendSpookje pinky = (AchtervolgendSpookje) spookje;
-        TimerTask task = new TimerTask() {
-            public void run() {
-//                if(secondenTwee < 10) {
-//                    secondenTwee++;
-                    pinky.veranderStrategie("volg");
-//                } else {
-//                    pinky.veranderStrategie("random");
-//                }
-//                
-                spookje.bewegen();
-            }
-        };
-        tijdPinky = new Timer();
-        tijdPinky.scheduleAtFixedRate(task, 0, snelheid);
-    }
-    
-    public void lopenClyde(Spookje spookje, int snelheid)
-    {
-        AchtervolgendSpookje clyde = (AchtervolgendSpookje) spookje;
-        TimerTask task = new TimerTask() {
-            public void run() {
-//                if(secondenTwee >= 10) {
-//                    if(secondenTwee >= 20) {
-//                        secondenTwee = 0;
-//                    } else {
-//                        secondenTwee++;
-//                    }
-                    clyde.veranderStrategie("volg");
-//                } else {
-//                    clyde.veranderStrategie("random");
-//                }
-                spookje.bewegen();
-            }
-        };
-        tijdClyde = new Timer();
-        tijdClyde.scheduleAtFixedRate(task, 0, snelheid);   
-    }
-    
-    public void stopLopenSpookjes(){
-        // Inky
-        if (tijdInky != null) {
-            tijdInky.cancel();
-            tijdInky.purge();
-            tijdInky = null;
+    class stomSpookjeBeweegListener implements ActionListener {
+
+        private WillekeurigSpookje inky;
+        private WillekeurigSpookje blinky;
+        
+        public void setSpookje(Spookje spookje) {
+            if(spookje.naam.equals("clyde"))
+                this.inky = (WillekeurigSpookje) spookje;
+            else
+                this.blinky = (WillekeurigSpookje) spookje;
         }
 
-        // Blinky
-        if (tijdBlinky != null) {
-            tijdBlinky.cancel();
-            tijdBlinky.purge();
-            tijdBlinky = null;
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            if(inky != null) {
+                inky.bewegen();
+            }
+            if(blinky != null){
+                blinky.bewegen();
+            }
+        }
+    }
+    class SpookjeBeweegListener implements ActionListener {
+
+        private AchtervolgendSpookje clyde;
+        private AchtervolgendSpookje pinky;
+        
+        public void setSpookje(Spookje spookje) {
+            if(spookje.naam.equals("clyde"))
+                this.clyde = (AchtervolgendSpookje) spookje;
+            else
+                this.pinky = (AchtervolgendSpookje) spookje;
         }
 
-        // Pinky
-        if (tijdPinky != null) {
-            tijdPinky.cancel();
-            tijdPinky.purge();
-            tijdPinky = null;
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            if(clyde != null) {
+                clyde.veranderStrategie("volg");
+                clyde.bewegen();
+            }
+            if(pinky != null){
+                pinky.veranderStrategie("volg");
+                pinky.bewegen();
+            }
         }
+    }
 
-        // Clyde
-        if(tijdClyde != null ){
-            tijdClyde.cancel();
-            tijdClyde.purge();
-            tijdClyde = null;
-        }
-    }
-    
-    public void stopTimer() {
-        if (pacmanTimerIsBezig) {
-            tijdPacman.cancel();
-            tijdPacman.purge();
-            pacmanTimerIsBezig = false;
-            seconden = 0;
-        } 
-    }
-    
-    public void pauzeerTimer(){
-      if (pacmanTimerIsBezig) {
-            tijdPacman.cancel();
-            tijdPacman.purge();
-            pacmanTimerIsBezig = false;
-        }
-    }
 }

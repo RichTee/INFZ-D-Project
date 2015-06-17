@@ -31,7 +31,6 @@ import infz.d.project.SpelElementen.Spookje;
 import infz.d.project.SpelElementen.WillekeurigSpookje;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.Timer;
 
 /**
  *
@@ -59,8 +58,7 @@ public class Spelbord extends javax.swing.JPanel {
     public int                      level = 0;
     private int                     snelheid = 500;
     private KeyListener             listener;
-    private Timer moveTimer;
-    private MyListener listen = new MyListener();
+
     /**
      * Creates new form Spelbord
      */
@@ -81,9 +79,6 @@ public class Spelbord extends javax.swing.JPanel {
     
     public void stopMuziek(){
         player.stopGeluid();
-    }
-    public boolean getTimerStatus() {
-        return moveTimer.isRunning();
     }
 
     public void levelIncrement(int level){
@@ -110,10 +105,6 @@ public class Spelbord extends javax.swing.JPanel {
         this.startMuziek(BACKGROUND_GELUID, true);
         genereerSpelbordPanelGegevens();
         panelListener();
-        listen = new MyListener();
-        moveTimer = new Timer(1000, listen);
-        moveTimer.start();
-        System.out.println("s: " + getTimerStatus());
     }
     
     public void herstart() {
@@ -123,8 +114,6 @@ public class Spelbord extends javax.swing.JPanel {
         this.startMuziek(BACKGROUND_GELUID, true);
         genereerSpelbordPanelGegevens();
         panelListener();
-        moveTimer = new Timer(1000, listen);
-        moveTimer.start();
     }
  
     public void nextLevel() {
@@ -132,18 +121,14 @@ public class Spelbord extends javax.swing.JPanel {
         this.startMuziek(BACKGROUND_GELUID, true);
         genereerSpelbordPanelGegevens();
         panelListener();
-        moveTimer = new Timer(1000, listen);
-        moveTimer.start();
     }
     
     public void pauzeer() {
-        // Moet nog timer stoppen.
         if (!spelInformatie.getPauze()) {
             stopMuziek();
             stopwatch.pauzeerTimer();
             pacman.magLopen = false;
             stopwatch.stopLopenSpookjes();
-            moveTimer.stop();
             this.setRequestFocusEnabled(false);
             spelInformatie.setPauze(true);
         } else {
@@ -160,14 +145,12 @@ public class Spelbord extends javax.swing.JPanel {
             stopwatch.lopenInky(inky, snelheid);
             stopwatch.lopenBlinky(blinky, snelheid);
             stopwatch.lopenPinky(pinky, snelheid);
-            moveTimer = new Timer(1000, listen);
-            moveTimer.start();
-            //stopwatch.lopenClyde(clyde, snelheid);
+            stopwatch.lopenClyde(clyde, snelheid);
         }
     }
     
     private void panelListener() {
-        if(level <= 3){
+        if(level < 4){
             snelheid = (snelheid - (snelheid / 10) * level);
         }
         this.removeKeyListener(listener);
@@ -178,7 +161,7 @@ public class Spelbord extends javax.swing.JPanel {
         stopwatch.lopenInky(inky, snelheid);
         stopwatch.lopenBlinky(blinky, snelheid);
         stopwatch.lopenPinky(pinky, snelheid);
-        //stopwatch.lopenClyde(clyde, snelheid);
+        stopwatch.lopenClyde(clyde, snelheid);
     }
     
     public void reset() {
@@ -430,6 +413,7 @@ public class Spelbord extends javax.swing.JPanel {
                 if (vakje[i][j].getPacman() != null) {
                     pacman = (Pacman) vakje[i][j].getPacman();
                     vakje[i][j].setElement("pad", null);
+                    vakje[i][j].pacman = null;
                 } 
             }
         }
@@ -445,28 +429,36 @@ public class Spelbord extends javax.swing.JPanel {
         for (int i = 0; i < arrayHoogte; i++) {
             for (int j = 0; j < arrayBreedte; j++) {
                 if (vakje[i][j].getSpookje("inky") != null) {
-                    vakje[i][j].getSpookje("inky").setVakje(vakje[i][j].getSpookje("inky").startPositie);
+                    WillekeurigSpookje inky = (WillekeurigSpookje) vakje[i][j].getSpookje("inky");
+                    inky.setVakje(inky.startPositie);
+                    vakje[i][j].setSpookjeNull(inky);
                 } 
             }
         }
         for (int i = 0; i < arrayHoogte; i++) {
             for (int j = 0; j < arrayBreedte; j++) {
                 if (vakje[i][j].getSpookje("blinky") != null) {
-                    vakje[i][j].getSpookje("blinky").setVakje(vakje[i][j].getSpookje("blinky").startPositie);
+                    WillekeurigSpookje blinky = (WillekeurigSpookje) vakje[i][j].getSpookje("blinky");
+                    blinky.setVakje(blinky.startPositie);
+                    vakje[i][j].setSpookjeNull(blinky);
                 } 
             }
         }
         for (int i = 0; i < arrayHoogte; i++) {
             for (int j = 0; j < arrayBreedte; j++) {
                 if (vakje[i][j].getSpookje("pinky") != null) {
-                    vakje[i][j].getSpookje("pinky").setVakje(vakje[i][j].getSpookje("pinky").startPositie);
+                    AchtervolgendSpookje pinky = (AchtervolgendSpookje) vakje[i][j].getSpookje("pinky");
+                    pinky.setVakje(pinky.startPositie);
+                    vakje[i][j].setSpookjeNull(pinky);
                 } 
             }
         }
         for (int i = 0; i < arrayHoogte; i++) {
             for (int j = 0; j < arrayBreedte; j++) {
                 if (vakje[i][j].getSpookje("clyde") != null) {
-                    vakje[i][j].getSpookje("clyde").setVakje(vakje[i][j].getSpookje("clyde").startPositie);
+                    AchtervolgendSpookje clyde = (AchtervolgendSpookje) vakje[i][j].getSpookje("clyde");
+                    clyde.setVakje(clyde.startPositie);
+                    vakje[i][j].setSpookjeNull(clyde);
                 } 
             }
         }
@@ -491,15 +483,6 @@ public class Spelbord extends javax.swing.JPanel {
     // Makkelijk info halen uit een rij en kolom van vakjesInhoud.
     private char charAt(int row, int column) {
         return vakjesInhoud.get(row).charAt(column);
-    }
-    
-        class MyListener implements ActionListener{
-        @Override
-        public void actionPerformed(ActionEvent e){
-            System.out.println("status: " + getTimerStatus());
-            clyde.veranderStrategie("volg");
-            clyde.bewegen();
-        }  
     }
 
     /**
