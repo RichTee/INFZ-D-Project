@@ -29,7 +29,7 @@ public class AudioPlayer {
                     muziekPad = "src/Geluid/pacman_beginning.wav";
                     break;   
                 case BACKGROUND_GELUID:
-                    muziekPad = "src/Geluid/siren_sound.wav";
+                    muziekPad = "src/Geluid/siren-sound.wav";
                     break;
                 case SUPERBOLLETJE_GELUID:
                     muziekPad = "geluid/invinciblejb.wav";
